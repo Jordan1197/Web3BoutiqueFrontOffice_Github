@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'PartsGladiatorClient.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'a21_web3_1632884',
+        'USER':'dev-1632884',
+        'PASSWORD':'Grap22069900',
+        'HOST':'sql.decinfo-cchic.ca',
+        'PORT':'33306'
     }
 }
 

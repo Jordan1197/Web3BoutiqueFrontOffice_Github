@@ -3,11 +3,11 @@ import datetime
 
 #CLASS ADDRESS
 class Address(models.Model):
-    ZipCode = models.Charfield(max_length = 6)
-    City = models.Charfield(max_length = 50)
-    Country = models.Charfield(max_length = 50)
-    State = models.Charfield(max_length = 50)
-    Street = models.Charfield(max_length = 50)
+    ZipCode = models.CharField(max_length = 6)
+    City = models.CharField(max_length = 50)
+    Country = models.CharField(max_length = 50)
+    State = models.CharField(max_length = 50)
+    Street = models.CharField(max_length = 50)
 
     def GetZipCode(self):
         return "%s" % (self.ZipCode)
@@ -24,58 +24,33 @@ class Address(models.Model):
     def GetStreet(self):
         return "%s" % (self.Street)
 
-#CLASS ADMINUSER
-class AdminUser(BaseObject):
-    ROLE_ADMIN = "Admin"
-    ROLE_CLIENT = "Client"
-
-    Name = models.Charfield(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
-
-    Email = models.Charfield(max_length = 50)
-    def GetEmail(self):
-        return "%s" % (self.Email)
-
-    Password = models.Charfield(max_length = 50)
-    def GetPassword(self):
-        return "%s" % (self.Password)
-
-    ActivationCode = models.Charfield(max_length = 50)
-    def GetActivationCode(self):
-        return "%s" % (self.ActivationCode)
-
-    Role = models.Charfield(max_length = 50)
-    def GetRole(self):
-        return "%s" % (self.Role)
-
 #CLASS BASE OBJECT
 class BaseObject(models.Model):
     Id = models.IntegerField()
     def GetId(self):
         return "%s" % (self.Id)
 
-    CreatedDate = models.DatetimeField()
+    CreatedDate = models.DateTimeField()
     def GetCreatedDate(self):
         return "%s" % (self.CreatedDate)
 
-    CreatedBy = models.Charfield(max_length = 50)
+    CreatedBy = models.CharField(max_length = 50)
     def GetCreatedBy(self):
         return "%s" % (self.CreatedBy)
 
-    LastUpdatedDate = models.DatetimeField()
+    LastUpdatedDate = models.DateTimeField()
     def GetLastUpdatedDate(self):
         return "%s" % (self.LastUpdatedDate)
 
-    LastupdateBy = models.Charfield(max_length = 50)
+    LastupdateBy = models.CharField(max_length = 50)
     def GetLastUpdatedBy(self):
         return "%s" % (self.LastupdateBy)
 
-    DeletedDate = models.DatetimeField()
+    DeletedDate = models.DateTimeField()
     def GetDeletedDate(self):
         return "%s" % (self.DeletedDate)
 
-    DeletedBy = models.Charfield(max_length = 50)
+    DeletedBy = models.CharField(max_length = 50)
     def GetDeletedBy(self):
         return "%s" % (self.DeletedBy)
 
@@ -83,72 +58,67 @@ class BaseObject(models.Model):
     class Meta:
         abstract = True
 
-#CLASS BRAND
-class Brand(BaseObject):
-    Name = models.Charfield(max_length = 50)
+#CLASS ADMINUSER
+class AdminUser(BaseObject):
+    ROLE_ADMIN = "Admin"
+    ROLE_CLIENT = "Client"
+
+    Name = models.CharField(max_length = 50)
     def GetName(self):
         return "%s" % (self.Name)
 
-    Description = models.Charfield(max_length = 50)
+    Email = models.CharField(max_length = 50)
+    def GetEmail(self):
+        return "%s" % (self.Email)
+
+    Password = models.CharField(max_length = 50)
+    def GetPassword(self):
+        return "%s" % (self.Password)
+
+    ActivationCode = models.CharField(max_length = 50)
+    def GetActivationCode(self):
+        return "%s" % (self.ActivationCode)
+
+    Role = models.CharField(max_length = 50)
+    def GetRole(self):
+        return "%s" % (self.Role)
+
+
+#CLASS BRAND
+class Brand(BaseObject):
+    Name = models.CharField(max_length = 50)
+    def GetName(self):
+        return "%s" % (self.Name)
+
+    Description = models.CharField(max_length = 50)
     def GetDescription(self):
         return "%s" % (self.Description)
 
 #CLASS CARRIER
 class Carrier(BaseObject):
-    Name = models.Charfield(max_length = 50)
+    Name = models.CharField(max_length = 50)
     def GetName(self):
         return "%s" % (self.Name)
 
-    Description = models.Charfield(max_length = 50)
+    Description = models.CharField(max_length = 50)
     def GetDescription(self):
         return "%s" % (self.Description)
-
-#CLASS CART
-class Cart(BaseObject):
-    Client = models.ForeignKey(Client,on_delete=models.CASCADE)
-    def GetClient(self):
-        return "%s" % (self.Client)
-
-    
-    #À été vérifier avec Steve suposer marcher
-    ProductId = models.ForeignKey(Produit,on_delete=models.CASCADE
-    
-
-#CLASS CATEGORY
-class Category(BaseObject):
-    Name = models.Charfield(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
-
-    Description = models.Charfield(max_length = 50)
-    def GetDescription(self):
-        return "%s" % (self.Description)
-
-    ImagePath = models.Charfield(max_length = 50)
-    def GetImagePath(self):
-        return "%s" % (self.ImagePath)
-
-#CLASS CHARACTERISTIC
-class Characteristic(BaseObject):
-    Name = models.Charfield(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
 
 #CLASS CLIENT
 class Client(BaseObject):
-    LastName = models.Charfield(max_length = 50)
+    LastName = models.CharField(max_length = 50)
     def GetLastName(self):
         return "%s" % (self.LastName)
 
-    FirstName = models.Charfield(max_length = 50)
+    FirstName = models.CharField(max_length = 50)
     def GetFirstName(self):
         return "%s" % (self.FirstName)
 
-    Email = models.Charfield(max_length = 50)
+    Email = models.CharField(max_length = 50)
     def GetEmail(self):
         return "%s" % (self.Email)
         
-    Password = models.Charfield(max_length = 50)
+    Password = models.CharField(max_length = 50)
     def GetPassword(self):
         return "%s" % (self.Password)
 
@@ -158,17 +128,17 @@ class Client(BaseObject):
 
 #CLASS IMAGE
 class Image(BaseObject):
-    Path = models.Charfield(max_length = 50)
+    Path = models.CharField(max_length = 50)
     def GetPath(self):
         return "%s" % (self.Path)
 
 #CLASS PRODUCT
 class Product(BaseObject):
-    Name = models.Charfield(max_length = 50)
+    Name = models.CharField(max_length = 50)
     def GetName(self):
         return "%s" % (self.Name)
 
-    Description = models.Charfield(max_length = 50)
+    Description = models.CharField(max_length = 50)
     def GetDescription(self):
         return "%s" % (self.Description)
         
@@ -188,11 +158,45 @@ class Product(BaseObject):
     PromotionId = models.IntegerField()
     
     
-    Images = models.ForeignKey(Image,on_delete=models.CASCADE
+    Images = models.ForeignKey(Image,on_delete=models.CASCADE)
+
+#CLASS CART
+class Cart(BaseObject):
+    Client = models.ForeignKey(Client,on_delete=models.CASCADE)
+    def GetClient(self):
+        return "%s" % (self.Client)
+
+    
+    #À été vérifier avec Steve suposer marcher
+    ProductId = models.ForeignKey(Product,on_delete=models.CASCADE)
+    
+
+#CLASS CATEGORY
+class Category(BaseObject):
+    Name = models.CharField(max_length = 50)
+    def GetName(self):
+        return "%s" % (self.Name)
+
+    Description = models.CharField(max_length = 50)
+    def GetDescription(self):
+        return "%s" % (self.Description)
+
+    ImagePath = models.CharField(max_length = 50)
+    def GetImagePath(self):
+        return "%s" % (self.ImagePath)
+
+#CLASS CHARACTERISTIC
+class Characteristic(BaseObject):
+    Name = models.CharField(max_length = 50)
+    def GetName(self):
+        return "%s" % (self.Name)
+
+
+
 
 #CLASS PROMOTION
 class Promotion(BaseObject):
-    Name = models.Charfield(max_length = 50)
+    Name = models.CharField(max_length = 50)
     def GetName(self):
         return "%s" % (self.Name)
 
@@ -202,25 +206,25 @@ class Promotion(BaseObject):
 
 #CLASS RETAILER
 class Retailer(BaseObject):
-    Name = models.Charfield(max_length = 50)
+    Name = models.CharField(max_length = 50)
     def GetName(self):
         return "%s" % (self.Name)
 
-    Description = models.Charfield(max_length = 50)
+    Description = models.CharField(max_length = 50)
     def GetDescription(self):
         return "%s" % (self.Description)
 
 #CLASS TRANSACTION
 class Transaction(BaseObject):
-    PaypalId = models.Charfield(max_length = 50)
+    PaypalId = models.CharField(max_length = 50)
     def GetPaypalId(self):
         return "%s" % (self.PaypalId)
 
-    CurrentState = models.Charfield(max_length = 50)
+    CurrentState = models.CharField(max_length = 50)
     def GetCurrentState(self):
         return "%s" % (self.CurrentState)
 
-    PaymentMethod = models.Charfield(max_length = 50)
+    PaymentMethod = models.CharField(max_length = 50)
     def GetPaymentMethod(self):
         return "%s" % (self.PaymentMethod)
 
@@ -244,13 +248,13 @@ class TransactionProduct(BaseObject):
 
 #CLASS TYPEATTRIBUT
 class TypeAttribut(BaseObject):
-    Attribut = models.Charfield(max_length = 50)
+    Attribut = models.CharField(max_length = 50)
     def GetAttribut(self):
         return "%s" % (self.Attribut)
 
 #CLASS VALEURATTRIBUT
 class ValeurAttribut(BaseObject):
-    Name = models.Charfield(max_length = 50)
+    Name = models.CharField(max_length = 50)
     def GetName(self):
         return "%s" % (self.Name)
 

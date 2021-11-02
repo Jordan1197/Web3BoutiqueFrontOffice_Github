@@ -10,17 +10,18 @@ from PartsGladiatorClient.Models.models import *
 from django.shortcuts import get_object_or_404
 
 
+
 def index(request):
     template = loader.get_template("index.html")
-    products = Product.objects.all()
-    promotions = Promotions.objects.all()
-    categories = Category.objects.all()
+    #products = Product.objects.all()
+    #promotions = Promotions.objects.all()
+    #categories = Category.objects.all()
     
 
     context = {
-        "products": products,
-        "promotions": promotions,
-        "categories": categories,
+        #"products": products,
+        #"promotions": promotions,
+        #"categories": categories,
     }
 
     return HttpResponse(template.render(context, request))

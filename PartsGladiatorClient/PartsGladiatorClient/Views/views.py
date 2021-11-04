@@ -8,6 +8,9 @@ from django.views.decorators.http import require_http_methods
 from django.template import RequestContext
 from PartsGladiatorClient.Models.models import *
 from django.shortcuts import get_object_or_404
+from django.core.mail import send_mail
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 
@@ -27,21 +30,28 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
-
+@csrf_exempt
 def contact(request):
     template = loader.get_template("contact.html")
-
+    form = ContactForm(request.POST)
     if request.method == "POST":
-
-   
+        if form.is_valid():
+            send_mail(
+                request.POST['subject'],
+                request.POST['message'],
+                request.POST['mail'],
+                ['1831154@etu.cchic.ca'],
+                fail_silently = False,
+            )
+            return HttpResponseRedirect("/contact")
     
         return HttpResponseRedirect("/contact")
     else:
         context = {
-                
+                'form':form
         }
 
-    return HttpResponse(template.render(context, request))
+        return HttpResponse(template.render(context, request))
 
 
 

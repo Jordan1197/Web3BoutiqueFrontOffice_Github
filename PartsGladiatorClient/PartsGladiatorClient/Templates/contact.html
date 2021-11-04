@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<!-- ======= Contact Section ======= -->
+<section id="contact" class="contact">
+
+    <div class="container" data-aos="fade-up">
+
+      <header class="section-header">
+        <h2>Contact</h2>
+        <p>Contacter nous</p>
+      </header>
+
+      <div class="row gy-4">
+
+        <div class="col-lg-6">
+
+          <div class="row gy-4">
+            <div class="col-md-6">
+              <div class="info-box">
+                <i class="bi bi-geo-alt"></i>
+                <h3>Addresse</h3>
+                <p>534 Rue Jacques-Cartier,<br>Chicoutimi, QC G7H 1Z6</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-box">
+                <i class="bi bi-telephone"></i>
+                <h3>Appeler nous</h3>
+                <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-box">
+                <i class="bi bi-envelope"></i>
+                <h3>Email Us</h3>
+                <p>info@example.com<br>contact@example.com</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-box">
+                <i class="bi bi-clock"></i>
+                <h3>Heures d'ouverture</h3>
+                <p>Lundi - Vendredi<br>9:00AM - 05:00PM</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
+          <form action="" method="post">
+              {% csrf_token %}
+              {{form}}
+            <!--<div class="row gy-4">
+
+              <div class="col-md-6">
+                <input type="text" name="name" class="form-control" placeholder="Votre Nom" required>
+              </div>
+
+              <div class="col-md-6 ">
+                <input type="email" class="form-control" name="email" placeholder="Votre Mail" required>
+              </div>
+
+              <div class="col-md-12">
+                <input type="text" class="form-control" name="subject" placeholder="Sujet" required>
+              </div>
+
+              <div class="col-md-12">
+                <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+              </div>
+
+              <div class="col-md-12 text-center">
+                <div class="loading">Chargement</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Votre message à bien été envoyé merci !</div>
+
+                <button type="submit">Envoyer</button>
+              </div>
+
+            </div>-->
+            <button type="submit">Envoyer</button>
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section><!-- End Contact Section -->
+  {% endblock %}

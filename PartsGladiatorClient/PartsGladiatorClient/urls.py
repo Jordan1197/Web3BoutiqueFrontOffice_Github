@@ -18,7 +18,7 @@ from django.urls import path
 from PartsGladiatorClient import views
 
 urlpatterns = [
-    path('', views.index),
+    path('index', views.index),
     path('product/<int:productId>', views.product),
     path('contact', views.contact),
     path('information', views.information),

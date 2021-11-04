@@ -15,11 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from PartsGladiatorClient import views
+from PartsGladiatorClient.Views import viewproduct
+from PartsGladiatorClient.Views import views
 
 urlpatterns = [
     path('', views.index),
-    path('product/<int:productId>', views.product),
+    path('product/<int:productId>', viewproduct.product),
+    path('product/category/<int:categoryId>', viewproduct.category),
+    path('product/brand/<int:brandId>', viewproduct.brand),
+    path('product/promotion/<int:promoId>', viewproduct.promotion),
+    path('product/search/<slug:search>', viewproduct.category), #utiliser slug ou str pour string
     path('contact', views.contact),
     path('information', views.information),
+    
 ]

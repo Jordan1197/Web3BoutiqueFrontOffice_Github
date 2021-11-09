@@ -9,65 +9,90 @@ from django.template import RequestContext
 from PartsGladiatorClient.Models.models import *
 from django.shortcuts import get_object_or_404
 
-def allProducts(request):
-    template = loader.get_template("category.html")
-    products = Product.objects.all()
 
+def allProducts(request):
+    template = loader.get_template("product.html")
+    Produits = Product.objects.all()
 
     context = {
-
+        'products': Produits
     }
+    return HttpResponse(template.render(context, request))
+
+
 
 def category(request, categoryId):
     template = loader.get_template("category.html")
     Produits = Product.objects.filter(
-        CategoryId = categoryId
+        CategoryId=categoryId
     )
-    
+
     context = {
         'products': Produits
     }
+    
+    return HttpResponse(template.render(context, request))
+
 
 
 def brand(request, brandId):
     template = loader.get_template("product.html")
     Produits = Product.objects.filter(
-        PromotionId = promoId
+        PromotionId=promoId
     )
-    
+
     context = {
         'products': Produits
     }
 
-    return HttpResponse(template.render(context, request)) 
+    return HttpResponse(template.render(context, request))
+
 
 def promotion(request, promoId):
     template = loader.get_template("product.html")
     Produits = Product.objects.filter(
-        PromotionId = promoId
+        PromotionId=promoId
     )
-    
+
     context = {
         'products': Produits
     }
 
-    return HttpResponse(template.render(context, request)) 
- 
-def search(request, search):
+    return HttpResponse(template.render(context, request))
+
+
+def search(request):
     template = loader.get_template("product.html")
-    Produits = Product.objects.filter(
-        Name = search
-    )
-    
-    context = {
-        'products': Produits
-    }
+    form = SearchForm(method.POST)
+
+     if request.method == 'POST':
+         Produits = Product.objects.filter(
+            Name=request.POST['Name']
+        ).filter(
+            CategoryId=request.POST['Category']
+        ).filter(
+            CharacteristicId=request.POST['Characteristic']
+        ).filter(
+            BrandId=request.POST['Brand']
+        )          
+        
+        context = {
+            'products': Produits,
+            'form':form
+        }
+        return HttpResponseRedirect("/search")
+    else:
+            
+        context = {
+            'products': Product.objects.all(),
+            'form': form,
+        }
 
     return HttpResponse(template.render(context, request)) 
 
 
-def product(request, productId):
-    template = loader.get_template("product.html")
+def details(request, productId):
+    template = loader.get_template("details.html")
     Product = get_object_or_404(Product, pk=productId)
     
     context = {

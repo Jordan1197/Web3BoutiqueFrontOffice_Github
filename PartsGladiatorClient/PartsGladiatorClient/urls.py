@@ -27,5 +27,6 @@ urlpatterns = [
     path('product/search', viewproduct.search), #utiliser slug ou str pour string
     path('contact', views.contact),
     path('information', views.information),
+    path('cart',views.cart),
     
 ]

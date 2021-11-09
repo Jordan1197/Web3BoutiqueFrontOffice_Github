@@ -19,7 +19,7 @@ from PartsGladiatorClient.Views import viewproduct
 from PartsGladiatorClient.Views import views
 
 urlpatterns = [
-    path('index', views.index),
+    path('', views.index),
     path('product/<int:productId>', viewproduct.product),
     path('product/category/<int:categoryId>', viewproduct.category),
     path('product/brand/<int:brandId>', viewproduct.brand),

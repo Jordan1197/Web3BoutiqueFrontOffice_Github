@@ -33,25 +33,26 @@ def index(request):
 
 @csrf_exempt
 def contact(request):
-    
-
     template = loader.get_template("contact.html")
-    form = ContactForm(request.POST)
+    form = request.POST.get('contactForm')
     if request.method == "POST":
-        if form.is_valid():
-            subject = request.POST['subject']
-            message = request.POST['message'] +'\n'+ request.POST['mail']
-            email_from = request.POST['mail']
-            recipient_list = ['partgaldiator@gmail.com']
+        
+        subject = request.POST['subject']
+        message = request.POST['message'] +'\n'+ request.POST['mail']
+        email_from = request.POST['mail']
+        recipient_list = ['partgaldiator@gmail.com']
 
-            send_mail(subject, message, email_from, recipient_list)
-
-            return HttpResponseRedirect("/contact")
+        send_mail(subject, message, email_from, recipient_list)
+        context = {
+            "SendingMessage": "Votre message à bien été envoyé merci !!"
+        }
+        return HttpResponse(template.render(context,request))
     
-        return HttpResponseRedirect("/contact")
+       
     else:
         context = {
-                'form':form
+                'form':form,
+                
         }
 
         return HttpResponse(template.render(context, request))

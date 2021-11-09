@@ -48,17 +48,17 @@
         </div>
 
         <div class="col-lg-6">
-          <form action="" method="post">
+          <form action="" method="post" name="contactForm">
               {% csrf_token %}
-              {{form}}
-            <!--<div class="row gy-4">
+              <!--{{form}}-->
+            <div class="row gy-4">
 
               <div class="col-md-6">
                 <input type="text" name="name" class="form-control" placeholder="Votre Nom" required>
               </div>
 
               <div class="col-md-6 ">
-                <input type="email" class="form-control" name="email" placeholder="Votre Mail" required>
+                <input type="email" class="form-control" name="mail" placeholder="Votre Mail" required>
               </div>
 
               <div class="col-md-12">
@@ -70,15 +70,12 @@
               </div>
 
               <div class="col-md-12 text-center">
-                <div class="loading">Chargement</div>
                 <div class="error-message"></div>
-                <div class="sent-message">Votre message à bien été envoyé merci !</div>
+                <div class="sent-message"><label name="sendmessage">{{SendingMessage}}</label></div>
 
                 <button type="submit">Envoyer</button>
               </div>
-
-            </div>-->
-            <button type="submit">Envoyer</button>
+            </div>
           </form>
 
         </div>

@@ -10,6 +10,7 @@ from PartsGladiatorClient.Models.models import *
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 
 
@@ -32,17 +33,19 @@ def index(request):
 
 @csrf_exempt
 def contact(request):
+    
+
     template = loader.get_template("contact.html")
     form = ContactForm(request.POST)
     if request.method == "POST":
         if form.is_valid():
-            send_mail(
-                request.POST['subject'],
-                request.POST['message'],
-                request.POST['mail'],
-                ['1831154@etu.cchic.ca'],
-                fail_silently = False,
-            )
+            subject = request.POST['subject']
+            message = request.POST['message'] +'\n'+ request.POST['mail']
+            email_from = request.POST['mail']
+            recipient_list = ['partgaldiator@gmail.com']
+
+            send_mail(subject, message, email_from, recipient_list)
+
             return HttpResponseRedirect("/contact")
     
         return HttpResponseRedirect("/contact")

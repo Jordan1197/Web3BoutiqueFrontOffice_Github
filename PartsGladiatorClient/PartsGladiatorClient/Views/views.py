@@ -70,4 +70,13 @@ def information(request):
 
     return HttpResponse(template.render(context, request))
 
+def cart(request):
+    template = loader.get_template("cart.html")
+
+    context = {
+        #"products": products,
+    }
+
+    return HttpResponse(template.render(context, request))
+
 

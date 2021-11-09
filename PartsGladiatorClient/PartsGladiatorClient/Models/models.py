@@ -1,264 +1,310 @@
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-import datetime
 
-#CLASS ADDRESS
-class Address(models.Model):
-    ZipCode = models.CharField(max_length = 6)
-    City = models.CharField(max_length = 50)
-    Country = models.CharField(max_length = 50)
-    State = models.CharField(max_length = 50)
-    Street = models.CharField(max_length = 50)
 
-    def GetZipCode(self):
-        return "%s" % (self.ZipCode)
-
-    def GetCity(self):
-        return "%s" % (self.City)
-
-    def GetCoutry(self):
-        return "%s" % (self.Country)
-
-    def GetState(self):
-        return "%s" % (self.State)
-
-    def GetStreet(self):
-        return "%s" % (self.Street)
-
-#CLASS BASE OBJECT
-class BaseObject(models.Model):
-    Id = models.IntegerField()
-    def GetId(self):
-        return "%s" % (self.Id)
-
-    CreatedDate = models.DateTimeField()
-    def GetCreatedDate(self):
-        return "%s" % (self.CreatedDate)
-
-    CreatedBy = models.CharField(max_length = 50)
-    def GetCreatedBy(self):
-        return "%s" % (self.CreatedBy)
-
-    LastUpdatedDate = models.DateTimeField()
-    def GetLastUpdatedDate(self):
-        return "%s" % (self.LastUpdatedDate)
-
-    LastupdateBy = models.CharField(max_length = 50)
-    def GetLastUpdatedBy(self):
-        return "%s" % (self.LastupdateBy)
-
-    DeletedDate = models.DateTimeField()
-    def GetDeletedDate(self):
-        return "%s" % (self.DeletedDate)
-
-    DeletedBy = models.CharField(max_length = 50)
-    def GetDeletedBy(self):
-        return "%s" % (self.DeletedBy)
-
+class Efmigrationshistory(models.Model):
+    migrationid = models.CharField(db_column='MigrationId', primary_key=True, max_length=150)  # Field name made lowercase.
+    productversion = models.CharField(db_column='ProductVersion', max_length=32)  # Field name made lowercase.
 
     class Meta:
-        abstract = True
-
-#CLASS ADMINUSER
-class AdminUser(BaseObject):
-    ROLE_ADMIN = "Admin"
-    ROLE_CLIENT = "Client"
-
-    Name = models.CharField(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
-
-    Email = models.CharField(max_length = 50)
-    def GetEmail(self):
-        return "%s" % (self.Email)
-
-    Password = models.CharField(max_length = 50)
-    def GetPassword(self):
-        return "%s" % (self.Password)
-
-    ActivationCode = models.CharField(max_length = 50)
-    def GetActivationCode(self):
-        return "%s" % (self.ActivationCode)
-
-    Role = models.CharField(max_length = 50)
-    def GetRole(self):
-        return "%s" % (self.Role)
+        managed = False
+        db_table = '__efmigrationshistory'
 
 
-#CLASS BRAND
-class Brand(BaseObject):
-    Name = models.CharField(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
+class PgAddress(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    zipcode = models.TextField(db_column='ZipCode', blank=True, null=True)  # Field name made lowercase.
+    city = models.TextField(db_column='City', blank=True, null=True)  # Field name made lowercase.
+    country = models.TextField(db_column='Country', blank=True, null=True)  # Field name made lowercase.
+    state = models.TextField(db_column='State', blank=True, null=True)  # Field name made lowercase.
+    street = models.TextField(db_column='Street', blank=True, null=True)  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
 
-    Description = models.CharField(max_length = 50)
-    def GetDescription(self):
-        return "%s" % (self.Description)
-
-#CLASS CARRIER
-class Carrier(BaseObject):
-    Name = models.CharField(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
-
-    Description = models.CharField(max_length = 50)
-    def GetDescription(self):
-        return "%s" % (self.Description)
-
-#CLASS CLIENT
-class Client(BaseObject):
-    LastName = models.CharField(max_length = 50)
-    def GetLastName(self):
-        return "%s" % (self.LastName)
-
-    FirstName = models.CharField(max_length = 50)
-    def GetFirstName(self):
-        return "%s" % (self.FirstName)
-
-    Email = models.CharField(max_length = 50)
-    def GetEmail(self):
-        return "%s" % (self.Email)
-        
-    Password = models.CharField(max_length = 50)
-    def GetPassword(self):
-        return "%s" % (self.Password)
-
-    AddressId = models.IntegerField()
-    def GetAddressId(self):
-        return "%s" % (self.AddressId)
-
-#CLASS IMAGE
-class Image(BaseObject):
-    Path = models.CharField(max_length = 50)
-    def GetPath(self):
-        return "%s" % (self.Path)
-
-#CLASS PRODUCT
-class Product(BaseObject):
-    Name = models.CharField(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
-
-    Description = models.CharField(max_length = 50)
-    def GetDescription(self):
-        return "%s" % (self.Description)
-        
-    Price = models.IntegerField()
-    def GetPrice(self):
-        return "%s" % (self.Price)
-
-    Quantity = models.IntegerField()
-    def GetQuantity(self):
-        return "%s" % (self.Quantity)
-
-    CategoryId = models.IntegerField()
-    BrandId = models.IntegerField()
-    AttributId = models.IntegerField()
-    CharacteristicId = models.IntegerField()
-    RetailerId = models.IntegerField()
-    PromotionId = models.IntegerField()
-    
-    
-    Images = models.ForeignKey(Image,on_delete=models.CASCADE)
-
-#CLASS CART
-class Cart(BaseObject):
-    Client = models.ForeignKey(Client,on_delete=models.CASCADE)
-    def GetClient(self):
-        return "%s" % (self.Client)
-
-    
-    #À été vérifier avec Steve suposer marcher
-    ProductId = models.ForeignKey(Product,on_delete=models.CASCADE)
-    
-
-#CLASS CATEGORY
-class Category(BaseObject):
-    Name = models.CharField(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
-
-    Description = models.CharField(max_length = 50)
-    def GetDescription(self):
-        return "%s" % (self.Description)
-
-    ImagePath = models.CharField(max_length = 50)
-    def GetImagePath(self):
-        return "%s" % (self.ImagePath)
-
-#CLASS CHARACTERISTIC
-class Characteristic(BaseObject):
-    Name = models.CharField(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
+    class Meta:
+        managed = False
+        db_table = 'pg_address'
 
 
+class PgAdmin(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    nom = models.TextField(db_column='Nom')  # Field name made lowercase.
+    email = models.TextField(db_column='Email')  # Field name made lowercase.
+    password = models.TextField(db_column='Password')  # Field name made lowercase.
+    activationcode = models.CharField(db_column='ActivationCode', max_length=36, db_collation='ascii_general_ci')  # Field name made lowercase.
+    role = models.TextField(db_column='Role', blank=True, null=True)  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_admin'
 
 
-#CLASS PROMOTION
-class Promotion(BaseObject):
-    Name = models.CharField(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
+class PgBrand(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='Name')  # Field name made lowercase.
+    description = models.TextField(db_column='Description')  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
 
-    Discount = models.FloatField()
-    def GetDiscount(self):
-        return "%s" % (self.Discount)
+    class Meta:
+        managed = False
+        db_table = 'pg_brand'
 
-#CLASS RETAILER
-class Retailer(BaseObject):
-    Name = models.CharField(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
 
-    Description = models.CharField(max_length = 50)
-    def GetDescription(self):
-        return "%s" % (self.Description)
+class PgCarrier(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='Name')  # Field name made lowercase.
+    description = models.TextField(db_column='Description')  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
 
-#CLASS TRANSACTION
-class Transaction(BaseObject):
-    PaypalId = models.CharField(max_length = 50)
-    def GetPaypalId(self):
-        return "%s" % (self.PaypalId)
+    class Meta:
+        managed = False
+        db_table = 'pg_carrier'
 
-    CurrentState = models.CharField(max_length = 50)
-    def GetCurrentState(self):
-        return "%s" % (self.CurrentState)
 
-    PaymentMethod = models.CharField(max_length = 50)
-    def GetPaymentMethod(self):
-        return "%s" % (self.PaymentMethod)
+class PgCart(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    clientid = models.ForeignKey('PgClient', models.DO_NOTHING, db_column='ClientId', blank=True, null=True)  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
 
-    ClientId = models.IntegerField()
-    CarrierId = models.IntegerField()
+    class Meta:
+        managed = False
+        db_table = 'pg_cart'
 
-#CLASS TRANSACTION PRODUCT
-class TransactionProduct(BaseObject):
-    Product = models.ForeignKey(Product,on_delete=models.CASCADE)
-    def GetProduct(self):
-        return "%s" % (self.Product)
 
-    TransactionId = models.IntegerField()
-    Price = models.FloatField()
-    def GetPrice(self):
-        return "%s" % (self.Price)
+class PgCategory(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='Name')  # Field name made lowercase.
+    description = models.TextField(db_column='Description')  # Field name made lowercase.
+    imagepath = models.TextField(db_column='ImagePath', blank=True, null=True)  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
 
-    Reduction = models.FloatField()
-    def GetReduction(self):
-        return "%s" % (self.Reduction)
+    class Meta:
+        managed = False
+        db_table = 'pg_category'
 
-#CLASS TYPEATTRIBUT
-class TypeAttribut(BaseObject):
-    Attribut = models.CharField(max_length = 50)
-    def GetAttribut(self):
-        return "%s" % (self.Attribut)
 
-#CLASS VALEURATTRIBUT
-class ValeurAttribut(BaseObject):
-    Name = models.CharField(max_length = 50)
-    def GetName(self):
-        return "%s" % (self.Name)
+class PgCharacteristic(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='Name')  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
 
-    Type = models.ForeignKey(TypeAttribut,on_delete=models.CASCADE)
-    def GetType(self):
-        return "%s" % (self.Type)
-    
+    class Meta:
+        managed = False
+        db_table = 'pg_characteristic'
+
+
+class PgClient(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    lastname = models.TextField(db_column='LastName', blank=True, null=True)  # Field name made lowercase.
+    firstname = models.TextField(db_column='FirstName', blank=True, null=True)  # Field name made lowercase.
+    email = models.TextField(db_column='Email', blank=True, null=True)  # Field name made lowercase.
+    password = models.TextField(db_column='Password', blank=True, null=True)  # Field name made lowercase.
+    addressid = models.IntegerField(db_column='AddressId')  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_client'
+
+
+class PgImage(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    path = models.TextField(db_column='Path', blank=True, null=True)  # Field name made lowercase.
+    productid = models.ForeignKey('PgProduct', models.DO_NOTHING, db_column='ProductId', blank=True, null=True)  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_image'
+
+
+class PgProduct(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='Name')  # Field name made lowercase.
+    description = models.TextField(db_column='Description')  # Field name made lowercase.
+    price = models.IntegerField(db_column='Price')  # Field name made lowercase.
+    quantity = models.IntegerField(db_column='Quantity')  # Field name made lowercase.
+    categoryid = models.IntegerField(db_column='CategoryId')  # Field name made lowercase.
+    brandid = models.IntegerField(db_column='BrandId')  # Field name made lowercase.
+    attributid = models.IntegerField(db_column='AttributId')  # Field name made lowercase.
+    caracteristicid = models.IntegerField(db_column='CaracteristicId')  # Field name made lowercase.
+    retailerid = models.IntegerField(db_column='RetailerId')  # Field name made lowercase.
+    promotionid = models.IntegerField(db_column='PromotionId', blank=True, null=True)  # Field name made lowercase.
+    cartid = models.ForeignKey(PgCart, models.DO_NOTHING, db_column='CartId', blank=True, null=True)  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_product'
+
+
+class PgPromotion(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='Name')  # Field name made lowercase.
+    discount = models.FloatField(db_column='Discount')  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_promotion'
+
+
+class PgRetailer(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='Name')  # Field name made lowercase.
+    description = models.TextField(db_column='Description')  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_retailer'
+
+
+class PgTransaction(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    paypalid = models.TextField(db_column='PaypalId', blank=True, null=True)  # Field name made lowercase.
+    currentstate = models.TextField(db_column='CurrentState', blank=True, null=True)  # Field name made lowercase.
+    paymentmethod = models.TextField(db_column='PaymentMethod', blank=True, null=True)  # Field name made lowercase.
+    clientid = models.IntegerField(db_column='ClientId')  # Field name made lowercase.
+    carrierid = models.IntegerField(db_column='CarrierId')  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_transaction'
+
+
+class PgTransactionproduct(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    productid = models.ForeignKey(PgProduct, models.DO_NOTHING, db_column='ProductId', blank=True, null=True)  # Field name made lowercase.
+    transactionid = models.IntegerField(db_column='TransactionId')  # Field name made lowercase.
+    price = models.FloatField(db_column='Price')  # Field name made lowercase.
+    reduction = models.FloatField(db_column='Reduction')  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_transactionproduct'
+
+
+class PgTypeattribut(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    attribut = models.TextField(db_column='Attribut', blank=True, null=True)  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_typeattribut'
+
+
+class PgValeurattribut(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='Name', blank=True, null=True)  # Field name made lowercase.
+    typeid = models.ForeignKey(PgTypeattribut, models.DO_NOTHING, db_column='TypeId', blank=True, null=True)  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_valeurattribut'
+
+
+class PgValeurcharacteristic(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='Name', blank=True, null=True)  # Field name made lowercase.
+    typecharacteristicid = models.ForeignKey(PgCharacteristic, models.DO_NOTHING, db_column='TypeCharacteristicId', blank=True, null=True)  # Field name made lowercase.
+    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
+    createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
+    lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
+    lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
+    deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'pg_valeurcharacteristic'

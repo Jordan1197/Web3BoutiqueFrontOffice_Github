@@ -63,32 +63,35 @@ def promotion(request, promoId):
 
 def search(request):
     template = loader.get_template("product.html")
-    form = SearchForm(method.POST)
+    form = SearchForm(request.POST)
 
     if request.method == 'POST':
          
-        Produits = Product.objects.filter(
-            Name=request.POST['Name']
+        Produits = PgProduct.objects.filter(
+            name=request.POST['Name']
         ).filter(
-            CategoryId=request.POST['Category']
+            categoryid=request.POST['Category']
         ).filter(
-            CharacteristicId=request.POST['Characteristic']
+            caracteristicid=request.POST['Characteristic']
         ).filter(
-            BrandId=request.POST['Brand']
-        )          
+            brandid=request.POST['Brand']
+        ).filter(
+            promotionid=request.POST['Promotion']
+        )    
         
         context = {
             'products': Produits,
             'form':form
         }
-        return HttpResponseRedirect("/search")
+        return HttpResponseRedirect("/product/search")
     else:
             
         context = {
-            'products': Product.objects.all(),
-            'categories': Category.objects.all(),
-            'promotions': Promotion.objects.all(),
-            'characteristics': Characteristic.objects.all(),
+            'products': PgProduct.objects.all(),
+            'categories': PgCategory.objects.all(),
+            'promotions': PgPromotion.objects.all(),
+            'brands': PgBrand.objects.all(),
+            'characteristics': PgCharacteristic.objects.all(),
             'form': form,
         }
 

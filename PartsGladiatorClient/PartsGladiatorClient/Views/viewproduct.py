@@ -65,8 +65,8 @@ def search(request):
     template = loader.get_template("product.html")
     form = SearchForm(method.POST)
 
-     if request.method == 'POST':
-         Produits = Product.objects.filter(
+    if request.method == 'POST':
+        Produits = Product.objects.filter(
             Name=request.POST['Name']
         ).filter(
             CategoryId=request.POST['Category']

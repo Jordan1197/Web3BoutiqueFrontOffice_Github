@@ -4,4 +4,33 @@
 
 <!-- Content -->
 
+<div style="text-align: center">
+    <h2>Recherche</h2>
+    <form action="" method="POST">
+            {% csrf_token %}
+            <label>Nom : </label>
+            <input type="text" name="Name"></input>
+            <label>Catégorie : </label>
+            <select name="categories">
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.Name }}</option>
+                {% endfor %}
+            </select>
+            <label>Caractéristique : </label>
+            <select name="characteristics">
+                {% for characteristic in characteristics %}
+                <option value="{{ characteristic.id }}">{{ characteristic.Name }}</option>
+                {% endfor %}
+            </select>
+            <label>Promotion : </label>
+            <select name="promotions">
+                {% for promotion in promotions %}
+                <option value="{{ promotion.id }}">{{ promotion.Name }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" value="Rechercher">
+    </form>
+</div>
+
 {% endblock %}

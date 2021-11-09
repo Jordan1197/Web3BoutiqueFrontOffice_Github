@@ -66,7 +66,8 @@ def search(request):
     form = SearchForm(method.POST)
 
     if request.method == 'POST':
-         Produits = Product.objects.filter(
+         
+        Produits = Product.objects.filter(
             Name=request.POST['Name']
         ).filter(
             CategoryId=request.POST['Category']
@@ -85,6 +86,9 @@ def search(request):
             
         context = {
             'products': Product.objects.all(),
+            'categories': Category.objects.all(),
+            'promotions': Promotion.objects.all(),
+            'characteristics': Characteristic.objects.all(),
             'form': form,
         }
 

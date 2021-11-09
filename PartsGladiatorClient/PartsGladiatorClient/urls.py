@@ -24,7 +24,7 @@ urlpatterns = [
     path('product/category/<int:categoryId>', viewproduct.category),
     path('product/brand/<int:brandId>', viewproduct.brand),
     path('product/promotion/<int:promoId>', viewproduct.promotion),
-    path('product/search/<slug:search>', viewproduct.category), #utiliser slug ou str pour string
+    path('product/search', viewproduct.search), #utiliser slug ou str pour string
     path('contact', views.contact),
     path('information', views.information),
     

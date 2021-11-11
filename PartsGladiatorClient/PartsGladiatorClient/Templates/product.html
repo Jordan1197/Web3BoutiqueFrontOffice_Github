@@ -3,51 +3,84 @@
 {% block content %}
 
 <!-- Content -->
+<section style="padding-top:65px;padding-bottom:50px" id="produits" class="services">
 
-<div style="text-align: center">
-    <h2>Recherche</h2>
-    <form action="" method="POST">
-            {% csrf_token %}
+    <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+            <p>Magasinez les Produits</p>
             <label>Nom : </label>
             <input type="text" name="Name"></input>
-            <label>Catégorie : </label>
-            <select name="Category">
-                {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
-                {% endfor %}
-            </select>
-            <label>Caractéristique : </label>
-            <select name="Characteristic">
-                {% for characteristic in characteristics %}
-                <option value="{{ characteristic.id }}">{{ characteristic.name }}</option>
-                {% endfor %}
-            </select>
-            <label>Marque : </label>
-            <select name="Brand">
-                {% for brand in brands %}
-                <option value="{{ brand.id }}">{{ brand.name }}</option>
-                {% endfor %}
-            </select>
-            <label>Promotion : </label>
-            <select name="Promotion">
-                {% for promotion in promotions %}
-                <option value="{{ promotion.id }}">{{ promotion.name }}</option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Rechercher">
-    </form>
+        </header>
 
-    <div>
-        <table>
-                {% for product in products %}
-                <tr>
-                    <td>
-                        {{ product.name }}
-                    </td>
-                </tr>
-                {% endfor %}
-        </table>
+        <div class="row gy-4">
+            <div class="col-lg-3 col-md-4">
+                <h2>
+                    Rechercher
+                </h2>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <ul style="list-style:none">
+                        <li>
+                            <label>Nom : </label>
+                            <input type="text" name="Name"></input>
+                        </li>
+                        <li>
+                            <label>Catégorie : </label>
+                            <select name="Category">
+                                {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </li>
+                        <li>
+                            <label>Caractéristique : </label>
+                            <select name="Characteristic">
+                                {% for characteristic in characteristics %}
+                                <option value="{{ characteristic.id }}">{{ characteristic.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </li>
+                        <li>
+                            <label>Marque : </label>
+                            <select name="Brand">
+                                {% for brand in brands %}
+                                <option value="{{ brand.id }}">{{ brand.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </li>
+                        <li>
+                            <label>Promotion : </label>
+                            <select name="Promotion">
+                                {% for promotion in promotions %}
+                                <option value="{{ promotion.id }}">{{ promotion.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </li>
+                        <li>
+                            <input type="submit" value="Rechercher">
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            {% for product in products %}
+            {% for image in images %}
+            {% if image.productid.id == product.id %}
+            <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-box blue">
+                    <img class="img-fluid" src="{{ image.path }}" alt="{{ product.id }}">
+                    <h3> {{ product.name }}</h3>
+                    <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure
+                        perferendis tempore et consequatur.</p>
+                    <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</div>
+
+</section><!-- End Services Section -->
 
 {% endblock %}

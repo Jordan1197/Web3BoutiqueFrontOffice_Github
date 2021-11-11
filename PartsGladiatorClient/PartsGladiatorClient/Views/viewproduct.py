@@ -12,33 +12,30 @@ from django.shortcuts import get_object_or_404
 
 def allProducts(request):
     template = loader.get_template("product.html")
-    Produits = Product.objects.all()
 
     context = {
-        'products': Produits
+        'products': PgProduct.objects.all(),
     }
     return HttpResponse(template.render(context, request))
 
 
-
 def category(request, categoryId):
     template = loader.get_template("category.html")
-    Produits = Product.objects.filter(
-        CategoryId=categoryId
+    Produits = PgProduct.objects.filter(
+        categoryid=categoryId
     )
 
     context = {
         'products': Produits
     }
-    
-    return HttpResponse(template.render(context, request))
 
+    return HttpResponse(template.render(context, request))
 
 
 def brand(request, brandId):
     template = loader.get_template("product.html")
-    Produits = Product.objects.filter(
-        PromotionId=promoId
+    Produits = PgProduct.objects.filter(
+        brandid=brandId
     )
 
     context = {
@@ -50,8 +47,8 @@ def brand(request, brandId):
 
 def promotion(request, promoId):
     template = loader.get_template("product.html")
-    Produits = Product.objects.filter(
-        PromotionId=promoId
+    Produits = PgProduct.objects.filter(
+        promotionid=promoId
     )
 
     context = {
@@ -66,26 +63,37 @@ def search(request):
     form = SearchForm(request.POST)
 
     if request.method == 'POST':
-         
-        Produits = PgProduct.objects.filter(
-            name=request.POST['Name']
-        ).filter(
-            categoryid=request.POST['Category']
-        ).filter(
-            caracteristicid=request.POST['Characteristic']
-        ).filter(
-            brandid=request.POST['Brand']
-        ).filter(
-            promotionid=request.POST['Promotion']
-        )    
-        
+
+        Produits = PgProduct.objects.all()
+
+        if request.POST['Name'] != "":
+            Produits.filter(
+                name=request.POST['Name']
+            )
+        if request.POST['Category'] != "":
+            Produits.filter(
+                categoryid=request.POST['Category']
+            )
+        if request.POST['Characteristic'] != "":
+            Produits.filter(
+                caracteristicid=request.POST['Characteristic']
+            )
+        if request.POST['Brand'] != "":
+            Produits.filter(
+                brandid=request.POST['Brand']
+            )
+        if request.POST['Promotion'] != "":
+            Produits.filter(
+                promotionid=request.POST['Promotion']
+            )
+
         context = {
             'products': Produits,
-            'form':form
+            'form': form,
         }
         return HttpResponseRedirect("/product/search")
     else:
-            
+
         context = {
             'products': PgProduct.objects.all(),
             'categories': PgCategory.objects.all(),
@@ -93,15 +101,17 @@ def search(request):
             'brands': PgBrand.objects.all(),
             'characteristics': PgCharacteristic.objects.all(),
             'form': form,
+            'images': PgImage.objects.all(),
+
         }
 
-    return HttpResponse(template.render(context, request)) 
+    return HttpResponse(template.render(context, request))
 
 
 def details(request, productId):
     template = loader.get_template("details.html")
-    Product = get_object_or_404(Product, pk=productId)
-    
+    Product = get_object_or_404(PgProduct, pk=productid)
+
     context = {
         "Name": Product.Name,
         "Brand": Product.Brand.Name,
@@ -111,10 +121,8 @@ def details(request, productId):
         "Characteristics": Product.Characteristics,
         "Attribute": Product.Attribute,
         "Description": Product.Description,
-        "Images": Product.Images,
+        "Images": Product.Images, # faire une liste qui laisse une image par product
         "Retailers": Product.Retailers,
     }
 
     return HttpResponse(template.render(context, request))
-
-

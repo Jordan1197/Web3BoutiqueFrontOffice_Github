@@ -11,26 +11,43 @@
             <label>Nom : </label>
             <input type="text" name="Name"></input>
             <label>Catégorie : </label>
-            <select name="categories">
+            <select name="Category">
                 {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.Name }}</option>
+                <option value="{{ category.id }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
             <label>Caractéristique : </label>
-            <select name="characteristics">
+            <select name="Characteristic">
                 {% for characteristic in characteristics %}
-                <option value="{{ characteristic.id }}">{{ characteristic.Name }}</option>
+                <option value="{{ characteristic.id }}">{{ characteristic.name }}</option>
+                {% endfor %}
+            </select>
+            <label>Marque : </label>
+            <select name="Brand">
+                {% for brand in brands %}
+                <option value="{{ brand.id }}">{{ brand.name }}</option>
                 {% endfor %}
             </select>
             <label>Promotion : </label>
-            <select name="promotions">
+            <select name="Promotion">
                 {% for promotion in promotions %}
-                <option value="{{ promotion.id }}">{{ promotion.Name }}</option>
+                <option value="{{ promotion.id }}">{{ promotion.name }}</option>
                 {% endfor %}
             </select>
-
             <input type="submit" value="Rechercher">
     </form>
+
+    <div>
+        <table>
+                {% for product in products %}
+                <tr>
+                    <td>
+                        {{ product.name }}
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
 </div>
 
 {% endblock %}

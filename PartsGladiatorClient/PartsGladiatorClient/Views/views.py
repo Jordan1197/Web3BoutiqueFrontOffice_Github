@@ -30,6 +30,10 @@ def index(request):
 
     return HttpResponse(template.render(context, request))
 
+def about(request):
+    template = loader.get_template("about.html")
+
+    return HttpResponse(template.render())
 
 @csrf_exempt
 def contact(request):

@@ -110,19 +110,24 @@ def search(request):
 
 def details(request, productId):
     template = loader.get_template("details.html")
-    Product = get_object_or_404(PgProduct, pk=productid)
+    Product = get_object_or_404(PgProduct, pk=productId)
+    Brand = get_object_or_404(PgBrand, pk=Product.brandid)
+    Category = get_object_or_404(PgBrand, pk=Product.categoryid)
+    Characteristics = get_object_or_404(PgBrand, pk=Product.caracteristicid)
+    Attribute = get_object_or_404(PgBrand, pk=Product.attributid)
+    Retailers = get_object_or_404(PgBrand, pk=Product.retailerid)
 
     context = {
-        "Name": Product.Name,
-        "Brand": Product.Brand.Name,
-        "Category": Product.Category.Name,
-        "Quantity": Product.Quantity,
-        "Price": Product.Price,
-        "Characteristics": Product.Characteristics,
-        "Attribute": Product.Attribute,
-        "Description": Product.Description,
-        "Images": Product.Images, # faire une liste qui laisse une image par product
-        "Retailers": Product.Retailers,
+        "Name": Product.name,
+        "Brand": Brand.name,
+        "Category": Category.name,
+        "Quantity": Product.quantity,
+        "Price": Product.price,
+        "Characteristics": Characteristics.name,
+        "Attribute": Attribute.name,
+        "Description": Product.description,
+        "Retailers": Retailers.name,
+        'images': PgImage.objects.all(),
     }
 
     return HttpResponse(template.render(context, request))

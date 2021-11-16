@@ -308,3 +308,13 @@ class PgValeurcharacteristic(models.Model):
     class Meta:
         managed = False
         db_table = 'pg_valeurcharacteristic'
+
+class OneImageProductViews(models.Model):
+    id =models.AutoField(db_column='Id', primary_key=True)
+    name= models.TextField(db_column='Name', blank=True, null=True)
+    description = models.TextField(db_column='Description', blank=True, null=True)
+    path = models.TextField(db_column='Path', blank=True, null=True)
+    
+    class Meta:
+        managed = False
+        db_table = 'OneImageProductViews'

@@ -17,9 +17,9 @@ from django.conf import settings
 
 def index(request):
     template = loader.get_template("index.html")
-    products = Product.objects.all()
-    promotions = Promotion.objects.all()
-    categories = Category.objects.all()
+    products = PgProduct.objects.all()
+    promotions = PgProduct.objects.all()
+    categories = PgProduct.objects.all()
     
 
     context = {

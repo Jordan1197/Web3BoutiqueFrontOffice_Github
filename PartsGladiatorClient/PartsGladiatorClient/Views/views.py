@@ -20,14 +20,14 @@ def index(request):
     products = PgProduct.objects.all()
     promotions = PgProduct.objects.all()
     categories = PgProduct.objects.all()
-    images = PgImage.objects.all()
+    
     produitFromViews = OneImageProductViews.objects.all()
 
     context = {
         "products": products,
         "promotions": promotions,
         "categories": categories,
-        "images": images,
+        
         "produitFromViews":produitFromViews
     }
 

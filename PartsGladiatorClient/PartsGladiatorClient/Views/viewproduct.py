@@ -104,10 +104,10 @@ def details(request, productId):
     template = loader.get_template("details.html")
     Product = get_object_or_404(PgProduct, pk=productId)
     Brand = get_object_or_404(PgBrand, pk=Product.brandid)
-    Category = get_object_or_404(PgBrand, pk=Product.categoryid)
-    Characteristics = get_object_or_404(PgBrand, pk=Product.caracteristicid)
-    Attribute = get_object_or_404(PgBrand, pk=Product.attributid)
-    Retailers = get_object_or_404(PgBrand, pk=Product.retailerid)
+    Category = get_object_or_404(PgCategory, pk=Product.categoryid)
+    Characteristics = get_object_or_404(PgCharacteristic, pk=Product.caracteristicid)
+    Attribute = get_object_or_404(PgTypeattribut, pk=Product.attributid)
+    Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
 
     context = {
         "Name": Product.name,
@@ -116,7 +116,7 @@ def details(request, productId):
         "Quantity": Product.quantity,
         "Price": Product.price,
         "Characteristics": Characteristics.name,
-        "Attribute": Attribute.name,
+        "Attribute": Attribute.attribut,
         "Description": Product.description,
         "Retailers": Retailers.name,
         'images': PgImage.objects.all(),

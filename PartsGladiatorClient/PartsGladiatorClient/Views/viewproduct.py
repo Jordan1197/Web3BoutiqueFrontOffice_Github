@@ -8,6 +8,7 @@ from django.views.decorators.http import require_http_methods
 from django.template import RequestContext
 from PartsGladiatorClient.Models.models import *
 from django.shortcuts import get_object_or_404
+from django.db.models.functions import *
 
 
 def allProducts(request):
@@ -93,7 +94,7 @@ def search(request):
         }
         return HttpResponseRedirect("/product/search")
     else:
-
+        
         context = {
             'products': PgProduct.objects.all(),
             'categories': PgCategory.objects.all(),
@@ -110,12 +111,12 @@ def search(request):
 
 def details(request, productId):
     template = loader.get_template("details.html")
-    Product = get_object_or_404(PgProduct, pk=productid)
+    Product = get_object_or_404(PgProduct, pk=productId)
 
     context = {
-        "Name": Product.Name,
-        "Brand": Product.Brand.Name,
-        "Category": Product.Category.Name,
+        "Name": Product.name,
+        "Brand": Product.brand.name,
+        "Category": Product.category.name,
         "Quantity": Product.Quantity,
         "Price": Product.Price,
         "Characteristics": Product.Characteristics,

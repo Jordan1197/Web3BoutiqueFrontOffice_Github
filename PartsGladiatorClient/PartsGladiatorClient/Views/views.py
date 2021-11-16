@@ -21,11 +21,14 @@ def index(request):
     promotions = PgProduct.objects.all()
     categories = PgProduct.objects.all()
     
+    produitFromViews = OneImageProductViews.objects.all()
 
     context = {
         "products": products,
         "promotions": promotions,
         "categories": categories,
+        
+        "produitFromViews":produitFromViews
     }
 
     return HttpResponse(template.render(context, request))

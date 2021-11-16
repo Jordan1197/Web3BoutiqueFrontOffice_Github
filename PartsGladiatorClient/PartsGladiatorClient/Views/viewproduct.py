@@ -13,10 +13,51 @@ from django.db.models.functions import *
 
 def allProducts(request):
     template = loader.get_template("product.html")
+    form = SearchForm(request.POST)
 
-    context = {
-        'products': PgProduct.objects.all(),
-    }
+    if request.method == 'POST':
+
+        Produits = PgProduct.objects.all()
+
+        if request.POST['Name'] != "":
+            Produits.filter(
+                name=request.POST['Name']
+            )
+        if request.POST['Category'] != "":
+            Produits.filter(
+                categoryid=request.POST['Category']
+            )
+        if request.POST['Characteristic'] != "":
+            Produits.filter(
+                caracteristicid=request.POST['Characteristic']
+            )
+        if request.POST['Brand'] != "":
+            Produits.filter(
+                brandid=request.POST['Brand']
+            )
+        if request.POST['Promotion'] != "":
+            Produits.filter(
+                promotionid=request.POST['Promotion']
+            )
+
+        context = {
+            'products': Produits,
+            'form': form,
+        }
+        return HttpResponseRedirect("/product")
+    else:
+        
+        context = {
+            'products': PgProduct.objects.all(),
+            'categories': PgCategory.objects.all(),
+            'promotions': PgPromotion.objects.all(),
+            'brands': PgBrand.objects.all(),
+            'characteristics': PgCharacteristic.objects.all(),
+            'form': form,
+            'images': PgImage.objects.all(),
+
+        }
+
     return HttpResponse(template.render(context, request))
 
 
@@ -55,56 +96,6 @@ def promotion(request, promoId):
     context = {
         'products': Produits
     }
-
-    return HttpResponse(template.render(context, request))
-
-
-def search(request):
-    template = loader.get_template("product.html")
-    form = SearchForm(request.POST)
-
-    if request.method == 'POST':
-
-        Produits = PgProduct.objects.all()
-
-        if request.POST['Name'] != "":
-            Produits.filter(
-                name=request.POST['Name']
-            )
-        if request.POST['Category'] != "":
-            Produits.filter(
-                categoryid=request.POST['Category']
-            )
-        if request.POST['Characteristic'] != "":
-            Produits.filter(
-                caracteristicid=request.POST['Characteristic']
-            )
-        if request.POST['Brand'] != "":
-            Produits.filter(
-                brandid=request.POST['Brand']
-            )
-        if request.POST['Promotion'] != "":
-            Produits.filter(
-                promotionid=request.POST['Promotion']
-            )
-
-        context = {
-            'products': Produits,
-            'form': form,
-        }
-        return HttpResponseRedirect("/product/search")
-    else:
-        
-        context = {
-            'products': PgProduct.objects.all(),
-            'categories': PgCategory.objects.all(),
-            'promotions': PgPromotion.objects.all(),
-            'brands': PgBrand.objects.all(),
-            'characteristics': PgCharacteristic.objects.all(),
-            'form': form,
-            'images': PgImage.objects.all(),
-
-        }
 
     return HttpResponse(template.render(context, request))
 

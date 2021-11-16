@@ -20,12 +20,11 @@ from PartsGladiatorClient.Views import views
 
 urlpatterns = [
     path('', views.index),
-    path('product', viewproduct.allProducts),
+    path('products', viewproduct.allProducts),
     path('product/<int:productId>', viewproduct.details),
     path('product/category/<int:categoryId>', viewproduct.category),
     path('product/brand/<int:brandId>', viewproduct.brand),
     path('product/promotion/<int:promoId>', viewproduct.promotion),
-    path('product/search', viewproduct.search), #utiliser slug ou str pour string
     path('contact', views.contact),
     path('information', views.information),
     path('cart',views.cart),

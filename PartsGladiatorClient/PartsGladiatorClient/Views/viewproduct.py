@@ -67,7 +67,17 @@ def allProducts(request):
         
         return HttpResponse(template.render(context, request))
     else:
-        context['products'] = PgProduct.objects.all()
+        listeProduit = []
+        for product in PgProduct.objects.all():
+            i = 0
+            for image in PgImage.objects.all():
+                if i == 0:              
+                    if product.id == image.productid:
+                        listeProduit.append()
+                        i = 1
+            
+        
+        context['products'] = listeProduit
 
     return HttpResponse(template.render(context, request))
 

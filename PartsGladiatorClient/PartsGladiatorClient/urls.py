@@ -31,3 +31,5 @@ urlpatterns = [
     path('about',views.about)
     
 ]
+
+handler404 = "PartsGladiatorClient.Views.views.page_not_found_view"

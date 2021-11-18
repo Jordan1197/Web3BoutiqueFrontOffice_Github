@@ -24,9 +24,9 @@ def index(request):
     produitFromViews = OneImageProductViews.objects.all()
 
     context = {
-        "products": products,
-        "promotions": promotions,
-        "categories": categories,
+        #"products": products,
+        #"promotions": promotions,
+        #"categories": categories,
         
         "produitFromViews":produitFromViews
     }

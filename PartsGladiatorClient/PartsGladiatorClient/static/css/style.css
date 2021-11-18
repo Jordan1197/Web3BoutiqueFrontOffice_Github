@@ -2091,3 +2091,7 @@ option[value=""]{
 option {
   color: black;
 }
+
+.center{
+  text-align: center;
+}

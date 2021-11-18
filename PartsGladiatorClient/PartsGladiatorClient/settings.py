@@ -24,8 +24,9 @@ SECRET_KEY = 'django-insecure-r$tpdgqmxdf=yn@t3g043bd8ex5jq8qeezmu^s83r4izera#ax
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# pour faire fonctionner le 404 mettre le debug a false et rouler le server en entrant la commande py manage.py runserver --insecure
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition

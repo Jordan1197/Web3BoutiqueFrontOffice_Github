@@ -31,13 +31,14 @@
 
         <div class="container" data-aos="fade-up">
             <div class="row gx-0">
-
-                <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Nos  promotions actives !</h3>
+                {% for p in promotions %}
+                <div class="col-lg-6 d-flex flex-column justify-content-center" style="margin-bottom:25px" data-aos="fade-up" data-aos-delay="200">
                     <div class="content">
-                        <h3>PRIX BLACK FRIDAY</h3>
-                        <h2>Profitez de prix exceptionnels sur la majorité de notre inventaire.</h2>
+                        
+                        <h2>{{p.name}}</h2>
                         <p>
-                            Jusqu'à 50% de réduction sur les cartes graphiques, les boîtiers, les processeurs et plus encore!
+                            Jusqu'à {{p.discount}} % sur les articles concernés !
                         </p>
                         <div class="text-center text-lg-start">
                             <a href="#" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
@@ -47,11 +48,11 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-                    <img src="../static/img/bfpromo.jpg" class="img-fluid" alt="">
+                    <img src="{{p.path}}" width="200" height="200" class="img-fluid" alt="">
                 </div>
-
+                {% endfor %}
             </div>
         </div>
 
@@ -59,23 +60,30 @@
     <!-- End About Section -->
 
     <!-- ======= Values Section ======= -->
-    <section id="values" class="values">
+    <section id="services" class="services">
 
         <div class="container" data-aos="fade-up">
 
             <header class="section-header">
-                <h2>Articles vedette</h2>
+                <h2>Articles en promotions</h2>
                 <p>Procurez-vous les articles les plus chaud du moment.</p>
             </header>
             <!-- ======= Insert product loop here ======= -->
             <div class="row">
-                {% for p in produitFromViews %}
+                {% for p in produitpromoFromView %}
 
                 <div class="col-lg-4">
-                    <div class="box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-box blue" data-aos="fade-up" data-aos-delay="0">
                         <a href="/product/{{p.id}}"><img src={{p.path}} class="img-fluid" alt=""></a>
-                        <h3>{{p.name}}</h3>
-                        <p>{{p.description}}</p>
+                        <h3>{{p.productname}}</h3>
+                        <p>Prix régulier {{p.price}} $</p>
+                        <p>Prix avec la promotion {{p.promoname}} {{p.prixrabais}} $</p>
+                        <div class="text-center text-lg-start" >
+                                <a href="/product/{{p.id}}" class="read-more">
+                                    <span>Détails</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
@@ -88,7 +96,7 @@
     <!-- End Values Section -->
 
     <!-- ======= Services Section ======= -->
-    <section id="produits" class="services">
+    <section id="services" class="services">
 
         <div class="container" data-aos="fade-up">
 
@@ -102,10 +110,16 @@
                 {% for p in produitFromViews %}
 
                 <div class="col-lg-4">
-                    <div class="box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-box blue" data-aos="fade-up" data-aos-delay="0">
                         <a href="/product/{{p.id}}"><img src={{p.path}} class="img-fluid" alt=""></a>
                         <h3>{{p.name}}</h3>
                         <p>{{p.description}}</p>
+                        <div class="text-center text-lg-start" >
+                                <a href="/product/{{p.id}}" class="read-more">
+                                    <span>Détails</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
@@ -214,12 +228,12 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
-                    Non consectetur a erat nam at lectus urna duis?
+                    Comment suivre une commande ?
                   </button>
                             </h2>
                             <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
                                 <div class="accordion-body">
-                                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+                                        Pour vérifier l'état d'une commande ou d'un suivi, connectez-vous à votre compte.
                                 </div>
                             </div>
                         </div>
@@ -227,13 +241,12 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
-                    Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?
+                    Comment retourner un article ?
                   </button>
                             </h2>
                             <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
                                 <div class="accordion-body">
-                                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in
-                                    cursus turpis massa tincidunt dui.
+                                        Afin de retourner un article, vous aurez d'abord besoin d'un numéro RMA (Return Merchandise Authorization).
                                 </div>
                             </div>
                         </div>
@@ -241,13 +254,13 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
-                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?
+                    
+                    Spécifications et détails de produits
                   </button>
                             </h2>
                             <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
                                 <div class="accordion-body">
-                                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna
-                                    molestie at elementum eu facilisis sed odio morbi quis
+                                        Les spécifications du produit, les informations sur le modèle et les détails peuvent être trouvés sous l'onglet Spécifications (spécifications), en faisant défiler vers le bas sur chaque page de produit.
                                 </div>
                             </div>
                         </div>
@@ -263,13 +276,12 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2-content-1">
-                    Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?
+                    Comment utiliser un code promo ?
                   </button>
                             </h2>
                             <div id="faq2-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
                                 <div class="accordion-body">
-                                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in
-                                    cursus turpis massa tincidunt dui.
+                                        Pour utiliser un code promotionnel, accédez à votre panier et faites défiler jusqu'à l'endroit où il est indiqué Appliquer les codes promotionnels. Entrez votre code promotionnel dans le champ.
                                 </div>
                             </div>
                         </div>
@@ -277,12 +289,12 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2-content-2">
-                    Tempus quam pellentesque nec nam aliquam sem et tortor consequat?
+                    Comment nous contacter ?
                   </button>
                             </h2>
                             <div id="faq2-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
                                 <div class="accordion-body">
-                                    Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
+                                    Sous l'onglet contact dans le haut de la page, envoyer nous un courriel.
                                 </div>
                             </div>
                         </div>
@@ -290,13 +302,12 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2-content-3">
-                    Varius vel pharetra vel turpis nunc eget lorem dolor?
+                    Garantie des produits ?
                   </button>
                             </h2>
                             <div id="faq2-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
                                 <div class="accordion-body">
-                                    Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque. Pellentesque
-                                    diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Nibh tellus molestie nunc non blandit massa enim nec.
+                                        Les produits vendus sur Parts Gladiator sont généralement couverts à la fois par la politique de retour de Parts Gladiator et par la garantie du fabricant du produit.
                                 </div>
                             </div>
                         </div>

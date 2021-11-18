@@ -17,18 +17,16 @@ from django.conf import settings
 
 def index(request):
     template = loader.get_template("index.html")
-    products = PgProduct.objects.all()
-    promotions = PgProduct.objects.all()
-    categories = PgProduct.objects.all()
-    
+    promotions = PgPromotion.objects.filter(
+        active = 1
+    )
+    produitpromoFromView = prodpromoviews.objects.all()
     produitFromViews = OneImageProductViews.objects.all()
 
-    context = {
-        "products": products,
-        "promotions": promotions,
-        "categories": categories,
-        
-        "produitFromViews":produitFromViews
+    context = {                
+        "produitFromViews":produitFromViews,
+        "produitpromoFromView":produitpromoFromView,
+        "promotions":promotions
     }
 
     return HttpResponse(template.render(context, request))

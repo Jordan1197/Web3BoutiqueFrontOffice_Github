@@ -13,26 +13,26 @@ from django.db.models.functions import *
 
 def allProducts(request):
     template = loader.get_template("product.html")
-    form = SearchForm(request.POST)
+    
+    context = {
+        'categories': PgCategory.objects.all(),
+        'promotions': PgPromotion.objects.all(),
+        'brands': PgBrand.objects.all(),
+        'images': PgImage.objects.all(),
+    }
 
-    if request.method == 'POST':
+    if request.method == "POST":
 
-        Produits = PgProduct.objects.all()
-
-        if request.POST['Name'] != "":
-            Produits.filter(
-                name=request.POST['Name']
-            )
+               
+        Products = PgProduct.objects.filter(
+            name__contains=request.POST['Name']
+        )
         if request.POST['Category'] != "":
-            Produits.filter(
+            Products.filter(
                 categoryid=request.POST['Category']
             )
-        if request.POST['Characteristic'] != "":
-            Produits.filter(
-                caracteristicid=request.POST['Characteristic']
-            )
         if request.POST['Brand'] != "":
-            Produits.filter(
+            Products.filter(
                 brandid=request.POST['Brand']
             )
         if request.POST['Promotion'] != "":
@@ -40,23 +40,12 @@ def allProducts(request):
                 promotionid=request.POST['Promotion']
             )
 
-        context = {
-            'products': Produits,
-            'form': form,
-        }
-        return HttpResponseRedirect("/product")
-    else:
-        
-        context = {
-            'products': PgProduct.objects.all(),
-            'categories': PgCategory.objects.all(),
-            'promotions': PgPromotion.objects.all(),
-            'brands': PgBrand.objects.all(),
-            'characteristics': PgCharacteristic.objects.all(),
-            'form': form,
-            'images': PgImage.objects.all(),
+        context['products'] = Products
 
-        }
+        return HttpResponse(template.render(context, request))
+    else:
+        context['products'] = PgProduct.objects.all()
+        
 
     return HttpResponse(template.render(context, request))
 
@@ -108,8 +97,11 @@ def details(request, productId):
     Characteristics = get_object_or_404(PgCharacteristic, pk=Product.caracteristicid)
     Attribute = get_object_or_404(PgTypeattribut, pk=Product.attributid)
     Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
+    Images = PgImage.objects.all()
+    result = Images.filter(productid=Product.id)
 
     context = {
+        "Product":Product,
         "Name": Product.name,
         "Brand": Brand.name,
         "Category": Category.name,
@@ -119,7 +111,8 @@ def details(request, productId):
         "Attribute": Attribute.attribut,
         "Description": Product.description,
         "Retailers": Retailers.name,
-        'images': PgImage.objects.all(),
+        'Images': Images,
+        'ProdImg': result,
     }
 
     return HttpResponse(template.render(context, request))

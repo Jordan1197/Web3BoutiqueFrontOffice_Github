@@ -198,12 +198,14 @@ class PgPromotion(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     name = models.TextField(db_column='Name')  # Field name made lowercase.
     discount = models.FloatField(db_column='Discount')  # Field name made lowercase.
+    active = models.IntegerField(db_column='active')
     createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
     createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
     lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
     lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
     deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
     deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+    path = models.TextField(db_column='Path',blank=True,null=True)
 
     class Meta:
         managed = False
@@ -318,3 +320,15 @@ class OneImageProductViews(models.Model):
     class Meta:
         managed = False
         db_table = 'OneImageProductViews'
+
+class prodpromoviews(models.Model):
+    id =models.AutoField(db_column='Id', primary_key=True)
+    productname= models.TextField(db_column='productname', blank=True, null=True)
+    price = models.FloatField(db_column='price')
+    promoname = models.TextField(db_column='promoname')
+    prixrabais = models.FloatField(db_column='prixrabais')
+    path = models.TextField(db_column='Path', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'prodpromoviews'

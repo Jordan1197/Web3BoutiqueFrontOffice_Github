@@ -322,7 +322,7 @@ class OneImageProductViews(models.Model):
         db_table = 'OneImageProductViews'
 
 class prodpromoviews(models.Model):
-    id =models.AutoField(db_column='Id', primary_key=True)
+    productid =models.AutoField(db_column='Id', primary_key=True)
     productname= models.TextField(db_column='productname', blank=True, null=True)
     price = models.FloatField(db_column='price')
     promoname = models.TextField(db_column='promoname')

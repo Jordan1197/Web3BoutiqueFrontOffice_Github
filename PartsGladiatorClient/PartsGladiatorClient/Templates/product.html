@@ -21,27 +21,21 @@
                     <ul style="list-style:none">
                         <li>
                             <label>Nom : </label>
-                            <input type="text" name="Name" id="searchBar"></input>
+                            <input id="searchBar" type="text" name="Name"></input>
                         </li>
                         <li>
                             <label>Catégorie : </label>
                             <select name="Category" id="searchBar">
+                                    <option></option>
                                 {% for category in categories %}
                                 <option value="{{ category.id }}">{{ category.name }}</option>
                                 {% endfor %}
                             </select>
                         </li>
                         <li>
-                            <label>Caractéristique : </label>
-                            <select name="Characteristic" id="searchBar">
-                                {% for characteristic in characteristics %}
-                                <option value="{{ characteristic.id }}">{{ characteristic.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </li>
-                        <li>
                             <label>Marque : </label>
                             <select name="Brand" id="searchBar">
+                                <option></option>
                                 {% for brand in brands %}
                                 <option value="{{ brand.id }}">{{ brand.name }}</option>
                                 {% endfor %}
@@ -50,6 +44,7 @@
                         <li>
                             <label>Promotion : </label>
                             <select name="Promotion" id="searchBar">
+                                    <option></option>
                                 {% for promotion in promotions %}
                                 <option value="{{ promotion.id }}">{{ promotion.name }}</option>
                                 {% endfor %}
@@ -68,8 +63,7 @@
                 <div class="service-box blue">
                     <img class="img-fluid" src="{{ image.path }}" alt="{{ product.id }}">
                     <h3> {{ product.name }}</h3>
-                    <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure
-                        perferendis tempore et consequatur.</p>
+                    <p>{{ product.description }}</p>
                     <a href="/product/{{product.id}}" class="read-more"><span>En savoir plus</span> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>

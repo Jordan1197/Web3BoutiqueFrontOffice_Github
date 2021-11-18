@@ -108,8 +108,11 @@ def details(request, productId):
     Characteristics = get_object_or_404(PgCharacteristic, pk=Product.caracteristicid)
     Attribute = get_object_or_404(PgTypeattribut, pk=Product.attributid)
     Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
+    Images = PgImage.objects.all()
+    result = Images.filter(productid=Product.id)
 
     context = {
+        "Product":Product,
         "Name": Product.name,
         "Brand": Brand.name,
         "Category": Category.name,
@@ -119,7 +122,8 @@ def details(request, productId):
         "Attribute": Attribute.attribut,
         "Description": Product.description,
         "Retailers": Retailers.name,
-        'images': PgImage.objects.all(),
+        'Images': Images,
+        'ProdImg': result,
     }
 
     return HttpResponse(template.render(context, request))

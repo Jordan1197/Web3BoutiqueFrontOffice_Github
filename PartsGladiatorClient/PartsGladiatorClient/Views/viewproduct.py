@@ -13,39 +13,61 @@ from django.db.models.functions import *
 
 def allProducts(request):
     template = loader.get_template("product.html")
-    
+
     context = {
         'categories': PgCategory.objects.all(),
         'promotions': PgPromotion.objects.all(),
         'brands': PgBrand.objects.all(),
         'images': PgImage.objects.all(),
+        'scategory': "",
+        'sbrand': "",
+        'spromotion': "",
+        'sname': "",
+        'vbrand': "",
+        'vpromotion': "",
+        'vname': "",
     }
 
     if request.method == "POST":
 
-               
         Products = PgProduct.objects.filter(
-            name__contains=request.POST['Name']
+            name__icontains=request.POST['Name']
         )
         if request.POST['Category'] != "":
             Products.filter(
                 categoryid=request.POST['Category']
             )
+            cat = get_object_or_404(PgCategory, pk=request.POST['Category'])           
+            context['scategory'] = cat.name                   
+            context['vcategory'] = cat.id
+            
         if request.POST['Brand'] != "":
             Products.filter(
                 brandid=request.POST['Brand']
             )
+            brand = get_object_or_404(PgBrand, pk=request.POST['Brand'])
+            context['vbrand'] = brand.id
+            context['sbrand'] = brand.name
+            
         if request.POST['Promotion'] != "":
-            Produits.filter(
+            Products.filter(
                 promotionid=request.POST['Promotion']
             )
+            promo = get_object_or_404(PgPromotion, pk=request.POST['Promotion'])
+            context['vpromotion'] = promo.id
+            context['spromotion'] = promo.name
 
         context['products'] = Products
-
+        context['sname'] = request.POST['Name']
+        
+        
+        
+        
+        
+        
         return HttpResponse(template.render(context, request))
     else:
         context['products'] = PgProduct.objects.all()
-        
 
     return HttpResponse(template.render(context, request))
 
@@ -94,14 +116,15 @@ def details(request, productId):
     Product = get_object_or_404(PgProduct, pk=productId)
     Brand = get_object_or_404(PgBrand, pk=Product.brandid)
     Category = get_object_or_404(PgCategory, pk=Product.categoryid)
-    Characteristics = get_object_or_404(PgCharacteristic, pk=Product.caracteristicid)
+    Characteristics = get_object_or_404(
+        PgCharacteristic, pk=Product.caracteristicid)
     Attribute = get_object_or_404(PgTypeattribut, pk=Product.attributid)
     Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
     Images = PgImage.objects.all()
     result = Images.filter(productid=Product.id)
 
     context = {
-        "Product":Product,
+        "Product": Product,
         "Name": Product.name,
         "Brand": Brand.name,
         "Category": Category.name,

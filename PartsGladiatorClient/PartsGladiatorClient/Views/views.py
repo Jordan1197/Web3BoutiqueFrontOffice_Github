@@ -17,15 +17,15 @@ from django.conf import settings
 
 def index(request):
     template = loader.get_template("index.html")
-    products = Product.objects.all()
-    promotions = Promotion.objects.all()
-    categories = Category.objects.all()
+    #products = Product.objects.all()
+    #promotions = Promotion.objects.all()
+    #categories = Category.objects.all()
     
 
     context = {
-        "products": products,
-        "promotions": promotions,
-        "categories": categories,
+        #"products": products,
+        #"promotions": promotions,
+        #"categories": categories,
     }
 
     return HttpResponse(template.render(context, request))

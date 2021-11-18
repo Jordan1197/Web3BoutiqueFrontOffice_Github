@@ -99,8 +99,7 @@ def details(request, productId):
     Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
     Images = PgImage.objects.all()
     result = Images.filter(productid=Product.id)
-    #PromoPrices = prodpromoviews.objects.all()
-    PromoPrice = prodpromoviews.objects.filter(id=Product.id)
+    PromoPrice = prodpromoviews.objects.get(productid=Product.id)
 
     context = {
         "Product":Product,

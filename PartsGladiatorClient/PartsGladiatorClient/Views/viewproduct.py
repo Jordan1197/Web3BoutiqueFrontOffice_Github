@@ -121,8 +121,14 @@ def details(request, productId):
     Attribute = get_object_or_404(PgTypeattribut, pk=Product.attributid)
     Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
     Images = PgImage.objects.all()
+    #Valeur = 
     result = Images.filter(productid=Product.id)
-    PromoPrice = prodpromoviews.objects.get(productid=Product.id)
+    try: 
+        prodpromoviews.objects.get(productid=Product.id)
+    except:
+        PromoPrice = ''
+    else:
+        PromoPrice = prodpromoviews.objects.get(productid=Product.id)
 
     context = {
         "Product": Product,

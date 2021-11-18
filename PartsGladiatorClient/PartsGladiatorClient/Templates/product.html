@@ -21,12 +21,12 @@
                     <ul style="list-style:none">
                         <li>
                             <label>Nom : </label>
-                            <input id="searchBar" type="text" name="Name"></input>
+                            <input placeholder="{{ sname }}" id="searchBar" type="text" name="Name"></input>
                         </li>
                         <li>
                             <label>Catégorie : </label>
                             <select name="Category" id="searchBar">
-                                    <option></option>
+                                    <option value="{{ vcategory }}" selected>{{ scategory }}</option>
                                 {% for category in categories %}
                                 <option value="{{ category.id }}">{{ category.name }}</option>
                                 {% endfor %}
@@ -35,7 +35,7 @@
                         <li>
                             <label>Marque : </label>
                             <select name="Brand" id="searchBar">
-                                <option></option>
+                                <option value="{{ vbrand }}" selected>{{ sbrand }}</option>
                                 {% for brand in brands %}
                                 <option value="{{ brand.id }}">{{ brand.name }}</option>
                                 {% endfor %}
@@ -44,7 +44,7 @@
                         <li>
                             <label>Promotion : </label>
                             <select name="Promotion" id="searchBar">
-                                    <option></option>
+                                    <option value="{{ vpromotion }}" selected>{{ spromotion }}</option>
                                 {% for promotion in promotions %}
                                 <option value="{{ promotion.id }}">{{ promotion.name }}</option>
                                 {% endfor %}

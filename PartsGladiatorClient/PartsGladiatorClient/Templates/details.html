@@ -31,8 +31,9 @@
             </div>
             <div class="col-lg-6">
                 <p>Prix: {{Price}}</p>
-
+                {% if PromoPrice != null or PromoPrice != None %}
                 <p>Rabais: {{PromoPrice.prixrabais}}</p>
+                {% endif %}
                 <p>Marque: {{Brand}}</p>
                 <p>Catégorie: {{Category}}</p>
                 <p>Informations: {{Description}}</p>

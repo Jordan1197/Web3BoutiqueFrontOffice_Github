@@ -10,7 +10,7 @@
         </header>
 
         <div class="row">
-            <div class="col-lg-3 col-md-4">
+            <div class="col-lg-6 ">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width:50vh;height: 50vh;">
                     <div class="carousel-inner">
                         {% for image in ProdImg %}
@@ -29,7 +29,12 @@
                     </a>
                 </div>
             </div>
-            
+            <div class="col-lg-6">
+                <p>Prix: {{Price}}</p>
+                <p>Marque: {{Brand}}</p>
+                <p>Catégorie: {{Category}}</p>
+                <p>Informations: {{Description}}</p>
+            </div>
         </div>
     </div>
     </div>

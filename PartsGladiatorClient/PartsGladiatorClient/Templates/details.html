@@ -13,11 +13,8 @@
             <div class="col-lg-3 col-md-4">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width:50vh;height: 50vh;">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="{{image.path}}" alt="First slide">
-                        </div>
                         {% for image in ProdImg %}
-                        <div class="carousel-item">
+                <div class="carousel-item carou">
                             <img class="d-block w-100" src="{{image.path}}" alt="First slide">
                         </div>
                         {% endfor %}
@@ -39,5 +36,5 @@
 
 </section><!-- End Services Section -->
 
-
+<script src="../static/js/details.js"></script>
 {% endblock %}

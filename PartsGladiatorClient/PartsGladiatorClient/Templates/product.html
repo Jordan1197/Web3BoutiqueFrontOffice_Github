@@ -21,11 +21,11 @@
                     <ul style="list-style:none">
                         <li>
                             <label>Nom : </label>
-                            <input type="text" name="Name"></input>
+                            <input type="text" name="Name" id="searchBar"></input>
                         </li>
                         <li>
                             <label>Catégorie : </label>
-                            <select name="Category">
+                            <select name="Category" id="searchBar">
                                 {% for category in categories %}
                                 <option value="{{ category.id }}">{{ category.name }}</option>
                                 {% endfor %}
@@ -33,7 +33,7 @@
                         </li>
                         <li>
                             <label>Caractéristique : </label>
-                            <select name="Characteristic">
+                            <select name="Characteristic" id="searchBar">
                                 {% for characteristic in characteristics %}
                                 <option value="{{ characteristic.id }}">{{ characteristic.name }}</option>
                                 {% endfor %}
@@ -41,7 +41,7 @@
                         </li>
                         <li>
                             <label>Marque : </label>
-                            <select name="Brand">
+                            <select name="Brand" id="searchBar">
                                 {% for brand in brands %}
                                 <option value="{{ brand.id }}">{{ brand.name }}</option>
                                 {% endfor %}
@@ -49,7 +49,7 @@
                         </li>
                         <li>
                             <label>Promotion : </label>
-                            <select name="Promotion">
+                            <select name="Promotion" id="searchBar">
                                 {% for promotion in promotions %}
                                 <option value="{{ promotion.id }}">{{ promotion.name }}</option>
                                 {% endfor %}

@@ -99,7 +99,8 @@ def details(request, productId):
     Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
     Images = PgImage.objects.all()
     result = Images.filter(productid=Product.id)
-    PromoPrice = 
+    #PromoPrices = prodpromoviews.objects.all()
+    PromoPrice = prodpromoviews.objects.filter(id=Product.id)
 
     context = {
         "Product":Product,
@@ -114,6 +115,7 @@ def details(request, productId):
         "Retailers": Retailers.name,
         'Images': Images,
         'ProdImg': result,
+        'PromoPrice': PromoPrice,
     }
 
     return HttpResponse(template.render(context, request))

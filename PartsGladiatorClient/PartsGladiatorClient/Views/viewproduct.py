@@ -8,14 +8,56 @@ from django.views.decorators.http import require_http_methods
 from django.template import RequestContext
 from PartsGladiatorClient.Models.models import *
 from django.shortcuts import get_object_or_404
+from django.db.models.functions import *
 
 
 def allProducts(request):
     template = loader.get_template("product.html")
+    form = SearchForm(request.POST)
 
-    context = {
-        'products': PgProduct.objects.all(),
-    }
+    if request.method == 'POST':
+
+        Produits = PgProduct.objects.all()
+
+        if request.POST['Name'] != "":
+            Produits.filter(
+                name=request.POST['Name']
+            )
+        if request.POST['Category'] != "":
+            Produits.filter(
+                categoryid=request.POST['Category']
+            )
+        if request.POST['Characteristic'] != "":
+            Produits.filter(
+                caracteristicid=request.POST['Characteristic']
+            )
+        if request.POST['Brand'] != "":
+            Produits.filter(
+                brandid=request.POST['Brand']
+            )
+        if request.POST['Promotion'] != "":
+            Produits.filter(
+                promotionid=request.POST['Promotion']
+            )
+
+        context = {
+            'products': Produits,
+            'form': form,
+        }
+        return HttpResponseRedirect("/product")
+    else:
+        
+        context = {
+            'products': PgProduct.objects.all(),
+            'categories': PgCategory.objects.all(),
+            'promotions': PgPromotion.objects.all(),
+            'brands': PgBrand.objects.all(),
+            'characteristics': PgCharacteristic.objects.all(),
+            'form': form,
+            'images': PgImage.objects.all(),
+
+        }
+
     return HttpResponse(template.render(context, request))
 
 
@@ -58,71 +100,26 @@ def promotion(request, promoId):
     return HttpResponse(template.render(context, request))
 
 
-def search(request):
-    template = loader.get_template("product.html")
-    form = SearchForm(request.POST)
-
-    if request.method == 'POST':
-
-        Produits = PgProduct.objects.all()
-
-        if request.POST['Name'] != "":
-            Produits.filter(
-                name=request.POST['Name']
-            )
-        if request.POST['Category'] != "":
-            Produits.filter(
-                categoryid=request.POST['Category']
-            )
-        if request.POST['Characteristic'] != "":
-            Produits.filter(
-                caracteristicid=request.POST['Characteristic']
-            )
-        if request.POST['Brand'] != "":
-            Produits.filter(
-                brandid=request.POST['Brand']
-            )
-        if request.POST['Promotion'] != "":
-            Produits.filter(
-                promotionid=request.POST['Promotion']
-            )
-
-        context = {
-            'products': Produits,
-            'form': form,
-        }
-        return HttpResponseRedirect("/product/search")
-    else:
-
-        context = {
-            'products': PgProduct.objects.all(),
-            'categories': PgCategory.objects.all(),
-            'promotions': PgPromotion.objects.all(),
-            'brands': PgBrand.objects.all(),
-            'characteristics': PgCharacteristic.objects.all(),
-            'form': form,
-            'images': PgImage.objects.all(),
-
-        }
-
-    return HttpResponse(template.render(context, request))
-
-
 def details(request, productId):
     template = loader.get_template("details.html")
-    Product = get_object_or_404(PgProduct, pk=productid)
+    Product = get_object_or_404(PgProduct, pk=productId)
+    Brand = get_object_or_404(PgBrand, pk=Product.brandid)
+    Category = get_object_or_404(PgCategory, pk=Product.categoryid)
+    Characteristics = get_object_or_404(PgCharacteristic, pk=Product.caracteristicid)
+    Attribute = get_object_or_404(PgTypeattribut, pk=Product.attributid)
+    Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
 
     context = {
-        "Name": Product.Name,
-        "Brand": Product.Brand.Name,
-        "Category": Product.Category.Name,
-        "Quantity": Product.Quantity,
-        "Price": Product.Price,
-        "Characteristics": Product.Characteristics,
-        "Attribute": Product.Attribute,
-        "Description": Product.Description,
-        "Images": Product.Images, # faire une liste qui laisse une image par product
-        "Retailers": Product.Retailers,
+        "Name": Product.name,
+        "Brand": Brand.name,
+        "Category": Category.name,
+        "Quantity": Product.quantity,
+        "Price": Product.price,
+        "Characteristics": Characteristics.name,
+        "Attribute": Attribute.attribut,
+        "Description": Product.description,
+        "Retailers": Retailers.name,
+        'images': PgImage.objects.all(),
     }
 
     return HttpResponse(template.render(context, request))

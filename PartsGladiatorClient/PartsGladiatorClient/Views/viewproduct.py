@@ -107,7 +107,6 @@ def brand(request, brandId):
 
     return HttpResponse(template.render(context, request))
 
-
 def promotion(request, promoId):
     template = loader.get_template("product.html")
     Produits = PgProduct.objects.filter(

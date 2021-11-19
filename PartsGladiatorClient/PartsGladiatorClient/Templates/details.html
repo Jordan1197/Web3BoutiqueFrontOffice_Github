@@ -30,19 +30,42 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <p>Prix: {{Price}} $</p>   
+                {% if PromoPrice != '' %}
+                    <p>Prix régulier: <s>{{Price}} $</s></p> 
+                    {% else %}
+                        <p>Prix régulier: {{Price}} $</p>   
+                {% endif %}  
+                
                 {% if PromoPrice != '' %}          
-                    <p>Prix promotionnel: {{PromoPrice.prixrabais}} $</p>   
+                    <p>Prix promotionnel: <b>{{PromoPrice.prixrabais}} $</b></p>   
                 {% endif %}          
                 <p>Marque: {{Brand}}</p>
                 <p>Catégorie: {{Category}}</p>
                 <p>Informations: {{Description}}</p>
                 <p>Informations: {{Characteristics}}</p>
-                <button class="button-9" type="submit">Ajouter au panier</button>
+                <p>Attributs:</p>
+                <ul>
+                    <li>
+                        {% for attr in AttrValues %}
+                           {% if attr.id == Attribute.id%}
+                                {{attr.name}}
+                           {% endif %}
+                        {% endfor %}
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="col-lg-2" style="margin:12px 0px 0px ;">
+                        <div class="form-group" style="text-align:center" data-toggle="tooltip" title="Maximum de 5 par client.">
+                            <input class="form-control" id="inputdefault" type="number" min="0" max="5">
+                          </div>         
+                    </div>
+                    <div class="col-lg-10">
+                        <button class="button-9" type="submit">Ajouter au panier</button>       
+                    </div>
+                </div>
                 <div class="center" style="margin-top:10px">
                     <a href="/products">Retour à la page produits</a>            
-                </div>
-                
+                </div>       
             </div>
         </div>
     </div>

@@ -128,9 +128,10 @@ def details(request, productId):
     Characteristics = get_object_or_404(
         PgCharacteristic, pk=Product.caracteristicid)
     Attribute = get_object_or_404(PgTypeattribut, pk=Product.attributid)
+    AttrValues = PgValeurattribut.objects.all()
     Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
     Images = PgImage.objects.all()
-    #Valeur = 
+    #Valeur 
     result = Images.filter(productid=Product.id)
     try: 
         prodpromoviews.objects.get(productid=Product.id)
@@ -147,7 +148,8 @@ def details(request, productId):
         "Quantity": Product.quantity,
         "Price": Product.price,
         "Characteristics": Characteristics.name,
-        "Attribute": Attribute.attribut,
+        "Attribute": Attribute,
+        "AttrValues":AttrValues,
         "Description": Product.description,
         "Retailers": Retailers.name,
         'Images': Images,

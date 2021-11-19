@@ -57,18 +57,14 @@
                 </form>
             </div>
             {% for product in products %}
-            {% for image in images %}
-            {% if image.productid.id == product.id %}
             <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="service-box blue">
-                    <img class="img-fluid" src="{{ image.path }}" alt="{{ product.id }}">
+                    <img class="img-fluid" src="{{ product.createdby }}" alt="{{ product.id }}">
                     <h3> {{ product.name }}</h3>
                     <p>{{ product.description }}</p>
                     <a href="/product/{{product.id}}" class="read-more"><span>En savoir plus</span> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
-            {% endif %}
-            {% endfor %}
             {% endfor %}
         </div>
     </div>

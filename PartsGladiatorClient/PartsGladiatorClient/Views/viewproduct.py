@@ -73,8 +73,10 @@ def allProducts(request):
             for image in PgImage.objects.all():
                 if i == 0:              
                     if product.id == image.productid:
-                        listeProduit.append()
+                        product.createdby = image.path
+                        listeProduit.append(product)
                         i = 1
+
             
         
         context['products'] = listeProduit

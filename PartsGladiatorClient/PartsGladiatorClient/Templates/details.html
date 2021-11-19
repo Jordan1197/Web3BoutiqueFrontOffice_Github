@@ -37,22 +37,24 @@
                 {% endif %}  
                 
                 {% if PromoPrice != '' %}          
-                    <p>Prix promotionnel: <b>{{PromoPrice.prixrabais}} $</b></p>   
+                    <p>Prix promotionnel: <b>{{PromoPrice}} $</b></p>   
                 {% endif %}          
                 <p>Marque: {{Brand}}</p>
                 <p>Catégorie: {{Category}}</p>
                 <p>Informations: {{Description}}</p>
                 <p>Informations: {{Characteristics}}</p>
+                <!-- TO BE IMPLEMENTED
                 <p>Attributs:</p>
                 <ul>
                     <li>
                         {% for attr in AttrValues %}
-                           {% if attr.id == Attribute.id%}
+                           {% if attr.id == Attribute.id %}
                                 {{attr.name}}
                            {% endif %}
                         {% endfor %}
                     </li>
                 </ul>
+                -->
                 <div class="row">
                     <div class="col-lg-2" style="margin:12px 0px 0px ;">
                         <div class="form-group" style="text-align:center" data-toggle="tooltip" title="Maximum de 5 par client.">

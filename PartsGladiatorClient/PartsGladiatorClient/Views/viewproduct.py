@@ -34,7 +34,7 @@ def allProducts(request):
             name__icontains=request.POST['Name']
         )
         if request.POST['Category'] != "":
-            Products.filter(
+            Products = Products.filter(
                 categoryid=request.POST['Category']
             )
             cat = get_object_or_404(PgCategory, pk=request.POST['Category'])           
@@ -42,7 +42,7 @@ def allProducts(request):
             context['vcategory'] = cat.id
             
         if request.POST['Brand'] != "":
-            Products.filter(
+            Products = Products.filter(
                 brandid=request.POST['Brand']
             )
             brand = get_object_or_404(PgBrand, pk=request.POST['Brand'])
@@ -50,14 +50,24 @@ def allProducts(request):
             context['sbrand'] = brand.name
             
         if request.POST['Promotion'] != "":
-            Products.filter(
+            Products = Products.filter(
                 promotionid=request.POST['Promotion']
             )
             promo = get_object_or_404(PgPromotion, pk=request.POST['Promotion'])
             context['vpromotion'] = promo.id
             context['spromotion'] = promo.name
 
-        context['products'] = Products
+        listeProduit = []
+        for product in Products:
+            i = 0
+            for image in PgImage.objects.all():
+                if i == 0:
+                    if product.id == image.productid.id:
+                        product.createdby = image.path
+                        listeProduit.append(product)
+                        i = 1
+
+        context['products'] = listeProduit
         context['sname'] = request.POST['Name']
         
         
@@ -68,17 +78,18 @@ def allProducts(request):
         return HttpResponse(template.render(context, request))
     else:
         listeProduit = []
-        for product in PgProduct.objects.all():
+        AllProds = PgProduct.objects.all()
+        AllImages = PgImage.objects.all()
+
+        for product in AllProds:
             i = 0
-            for image in PgImage.objects.all():
+            for image in AllImages:
                 if i == 0:              
-                    if product.id == image.productid:
+                    if product.id == image.productid.id:
                         product.createdby = image.path
                         listeProduit.append(product)
                         i = 1
 
-            
-        
         context['products'] = listeProduit
 
     return HttpResponse(template.render(context, request))
@@ -91,7 +102,7 @@ def category(request, categoryId):
     )
 
     context = {
-        'products': Produits
+        'products': Produits,
     }
 
     return HttpResponse(template.render(context, request))
@@ -116,7 +127,18 @@ def promotion(request, promoId):
     )
 
     context = {
-        'products': Produits
+        'products': Produits,
+        'categories': PgCategory.objects.all(),
+        'promotions': PgPromotion.objects.all(),
+        'brands': PgBrand.objects.all(),
+        'images': PgImage.objects.all(),
+        'scategory': "",
+        'sbrand': "",
+        'spromotion': "",
+        'sname': "",
+        'vbrand': "",
+        'vpromotion': "",
+        'vname': "",
     }
 
     return HttpResponse(template.render(context, request))
@@ -133,14 +155,18 @@ def details(request, productId):
     AttrValues = PgValeurattribut.objects.all()
     Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
     Images = PgImage.objects.all()
-    #Valeur 
     result = Images.filter(productid=Product.id)
     try: 
-        prodpromoviews.objects.get(productid=Product.id)
+        PgPromotion.objects.get(id=Product.promotionid)
     except:
         PromoPrice = ''
     else:
-        PromoPrice = prodpromoviews.objects.get(productid=Product.id)
+        PromoPrice = PgPromotion.objects.get(id=Product.promotionid)
+        if PromoPrice.active == 1:
+            PromoPrice = (PromoPrice.discount / 100) * Product.price
+        else:
+            PromoPrice = ''
+
 
     context = {
         "Product": Product,

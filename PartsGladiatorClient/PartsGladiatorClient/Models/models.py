@@ -157,6 +157,7 @@ class PgImage(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     path = models.TextField(db_column='Path', blank=True, null=True)  # Field name made lowercase.
     productid = models.ForeignKey('PgProduct', models.DO_NOTHING, db_column='ProductId', blank=True, null=True)  # Field name made lowercase.
+    mainImage = models.IntegerField(db_column='MainImage',blank=True,null=True) # Field name made lowercase.
     createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
     createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
     lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.

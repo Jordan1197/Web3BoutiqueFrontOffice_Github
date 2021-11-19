@@ -31,17 +31,18 @@
 
         <div class="container" data-aos="fade-up">
             <div class="row gx-0">
-                    <h3>Nos  promotions actives !</h3>
+                    <h3>Promo en cours!</h3>
                 {% for p in promotions %}
                 <div class="col-lg-6 d-flex flex-column justify-content-center" style="margin-bottom:25px" data-aos="fade-up" data-aos-delay="200">
                     <div class="content">
                         
                         <h2>{{p.name}}</h2>
                         <p>
-                            Jusqu'à {{p.discount}} % sur les articles concernés !
+                            Offrez-vous ce dont vous rêvez en profitant de rabais allant<br>
+                            jusqu'à {{p.discount}} % sur certains articles sélectionnés!
                         </p>
                         <div class="text-center text-lg-start">
-                            <a href="#" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
+                            <a href="/products" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
                                 <span>Promotion</span>
                                 <i class="bi bi-arrow-right"></i>
                             </a>
@@ -66,7 +67,7 @@
 
             <header class="section-header">
                 <h2>Articles en promotions</h2>
-                <p>Procurez-vous les articles les plus chaud du moment.</p>
+                <p>Procurez-vous les articles les plus chauds du moment.</p>
             </header>
             <!-- ======= Insert product loop here ======= -->
             <div class="row">
@@ -77,7 +78,7 @@
                         <a href="/product/{{p.productid}}"><img src={{p.path}} class="img-fluid" alt=""></a>
                         <h3>{{p.productname}}</h3>
                         <p>Prix régulier {{p.price}} $</p>
-                        <p>Prix avec la promotion {{p.promoname}} {{p.prixrabais}} $</p>
+                        <p>Prix promotionnel {{p.promoname}}: <b>{{p.prixrabais}} $</b></p>
                         <div class="text-center text-lg-start" >
                                 <a href="/product/{{p.productid}}" class="read-more">
                                     <span>Détails</span>
@@ -218,7 +219,7 @@
 
             <header class="section-header">
                 <h2>F.A.Q</h2>
-                <p>Frequently Asked Questions</p>
+                <p>Foire Au Questions</p>
             </header>
 
             <div class="row">

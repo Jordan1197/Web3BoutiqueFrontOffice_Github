@@ -88,3 +88,46 @@ def cart(request):
 
 def page_not_found_view(request, exception):
     return render(request, '404.html',status=404)
+
+def login(request):
+    template = loader.get_template('login.html')
+
+    context = {
+
+    }
+
+    return HttpResponse(template.render(context,request))
+
+def createuser(request):
+    template = loader.get_template('createuser.html')
+    
+    form = request.POST.get('createuserform')
+
+    if request.method == "POST":
+
+        prenom = request.POST['prenom']
+        nom = request.POST['nom']
+        courriel = request.POST['courriel']
+        password = request.POST['password']
+        confirmpassword = request.POST['confirmpassword']
+        pays = request.POST['pays']
+        region = request.POST['region']
+        ville = request.POST['ville']
+        codepostal = request.POST['zipcode']
+
+         
+        #ajout client
+        PgClient.objects.save(client) 
+
+
+        context = {
+            'prenom':prenom,
+        }
+        return HttpResponse(template.render(context,request))
+
+    else:
+        context = {
+            'form':form,
+        }
+
+        return HttpResponse(template.render(context,request))

@@ -31,6 +31,7 @@ urlpatterns = [
     path('about',views.about),
     path('connexion',views.login),
     path('identity',views.createuser),
+    path('profil',views.profil),
     
 ]
 

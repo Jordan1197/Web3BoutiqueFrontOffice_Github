@@ -17,21 +17,25 @@ from django.contrib import admin
 from django.urls import path
 from PartsGladiatorClient.Views import viewproduct
 from PartsGladiatorClient.Views import views
+from PartsGladiatorClient import Views
+from django.contrib.auth import views as auth_views
+from authen import views
 
 urlpatterns = [
-    path('', views.index),
+    path('', Views.views.index, name='home'),
     path('products', viewproduct.allProducts),
     path('product/<int:productId>', viewproduct.details),
     path('product/category/<int:categoryId>', viewproduct.category),
     path('product/brand/<int:brandId>', viewproduct.brand),
     path('product/promotion/<int:promoId>', viewproduct.promotion),
-    path('contact', views.contact),
-    path('information', views.information),
-    path('cart',views.cart),
-    path('about',views.about),
-    path('connexion',views.login),
-    path('identity',views.createuser),
-    path('profil',views.profil),
+    path('contact', Views.views.contact),
+    path('information', Views.views.information),
+    path('cart',Views.views.cart),
+    path('about',Views.views.about),
+    path('login/',auth_views.LoginView.as_view(template_name='login.html'),name='login'),
+    path('logout/',auth_views.LogoutView.as_view(), name='logout'),
+    path('createuser/', views.signup, name='signup'),
+    path('profil/<int:userid>',Views.views.profil),
     
 ]
 

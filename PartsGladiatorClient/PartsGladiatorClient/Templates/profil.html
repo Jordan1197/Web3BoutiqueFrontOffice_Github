@@ -2,8 +2,92 @@
 
 <section><br>
     <main class="container">
-        <p>hi ->{{user.lastname}}</p>
+        <form action="" method="post" name="profiluser">
+            {% csrf_token %}
+            <div class="row gy-4">
+                <div class="col-md-6" style="display:inline-block">
+                    <label for="username">Username : </label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="username" id="username" value="{{user.username}}" required/>
+                </div>
 
+                <div class="col-md-6" style="display:inline-block">
+                    <label for="prenom">Prénom : </label>
+                </div>
+                <div class="col-md-6 ">
+                    <input type="text" class="form-control" name="prenom" id="prenom" value="{{user.firstname}}" required/>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="nom">Nom : </label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="nom" id="nom" value="{{user.lastname}}" required/>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="courriel">Courriel : </label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="courriel" id="courriel" value="{{user.email}}" required/>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="password">Mot de passe : </label>
+                </div>
+                <div class="col-md-6">
+                    <input type="password" class="form-control" name="password" id="password" minlength="8" />
+                </div>
+
+
+
+
+                <div class=" col-md-6 ">
+                    <label for="pays ">Pays : </label>
+                </div>
+                <div class="col-md-6 ">
+                    <input type="text" class="form-control" name="pays" id="pays" value="{{address.country}}" required/>
+                </div>
+
+
+                <div class="col-md-6 ">
+                    <label for="region">Région : </label>
+                </div>
+                <div class="col-md-6 ">
+                    <input type="text" class="form-control" name="region" id="region" value="{{address.state}}" required/>
+                </div>
+
+                <div class="col-md-6 ">
+                    <label for="ville">Ville : </label>
+                </div>
+                <div class="col-md-6 ">
+                    <input type="text " class="form-control " name="ville" id="ville" value="{{address.city}}" required/>
+                </div>
+
+                <div class="col-md-6 ">
+                    <label for="rue">Rue : </label>
+                </div>
+                <div class="col-md-6 ">
+                    <input type="text " class="form-control" name="rue" id="rue" value="{{address.street}}" required/>
+                </div>
+
+                <div class="col-md-6 ">
+                    <label for="zipcode">Code postal : </label>
+                </div>
+                <div class="col-md-6 ">
+                    <input type="text" class="form-control " name="zipcode" id="zipcode" minlength="6 " maxlength="7 " value="{{address.zipcode}}" required/>
+                </div>
+
+            </div>
+            <br>
+            <div class="col-md-12 ">
+                <button class="button-9 " type="submit ">Enregistrer</button>
+            </div>
+        </form>
     </main>
 </section>
 

@@ -1,4 +1,5 @@
 from email.mime import text
+import re
 from django import template
 from django.db.models.fields import NullBooleanField
 from django.shortcuts import redirect, render
@@ -21,10 +22,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import base64
 import smtplib
+from authen.models import CustomUser
 
 
-
-user1 = None
 
 def index(request):
     template = loader.get_template("index.html")
@@ -100,7 +100,7 @@ def cart(request):
 def page_not_found_view(request, exception):
     return render(request, '404.html',status=404)
 
-def login(request):
+#def login(request):
     template = loader.get_template('login.html')
 
     form = request.POST.get('loginform')
@@ -119,8 +119,7 @@ def login(request):
             context = {
                 'user':user,
             }
-            global user1
-            user1 =user
+            
             return HttpResponseRedirect("/profil")
         except:
             context = {
@@ -134,15 +133,56 @@ def login(request):
         }
         return HttpResponse(template.render(context,request))
 
-def profil(request):
+def profil(request,userid):
     template = loader.get_template('profil.html')
+    form = request.POST.get('profiluser')
+    u = CustomUser.objects.get(id = userid)
+    address = PgAddress.objects.get(id = u.addressid)
+    if request.method == "POST":
+        #modif address
+        address.zipcode = request.POST['zipcode']
+        address.city = request.POST['ville']
+        address.country = request.POST['pays']
+        address.state = request.POST['region']
+        address.street = request.POST['rue']
+        address.lastupdatedate = datetime.now()
 
-    context = {
-        'user':user1
-    }
-    return HttpResponse(template.render(context,request))
+        address.save()
+        #modif user
+        if request.POST['password'] != "":
+            u.set_password(request.POST['password'])
+            u.username = request.POST['username']
+            u.firstname = request.POST['prenom']
+            u.lastname = request.POST['nom']
+            u.email = request.POST['courriel']
 
-def createuser(request):
+            u.lastupdateddate = datetime.now()
+            u.save()
+            
+
+            return redirect("home")
+
+        else:
+            u.username = request.POST['username']
+            u.firstname = request.POST['prenom']
+            u.lastname = request.POST['nom']
+            u.email = request.POST['courriel']
+
+            u.lastupdateddate = datetime.now()
+            u.save()
+            
+            return redirect("home")
+
+    else:
+        context = {
+            'form':form,
+            'address':address
+        }
+
+        return HttpResponse(template.render(context,request))
+
+
+#def createuser(request):
     template = loader.get_template('createuser.html')
     
     form = request.POST.get('createuserform')

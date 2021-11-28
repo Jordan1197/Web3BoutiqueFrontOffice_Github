@@ -13,7 +13,7 @@
                         </div>
 
                         <div class="col-md-6 ">
-                            <input type="email" class="form-control" name="username" id="username" placeholder="Entrer votre courriel" required/>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Entrer votre nom d'utilisateur" required/>
                             <input type="hidden">
                             <p style="color: red;">{{errorcred}}</p>
                         </div>
@@ -31,7 +31,7 @@
                     <br>
                     <div class="row gy-4">
                         <div class="col-md-6 ">
-                            <button class="button-9" type="submit"><a href="identity" style="color: white; text-decoration: none;">Nouveau compte</a></button>
+                            <button class="button-9" type="submit"><a href="{% url 'signup' %}" style="color: white; text-decoration: none;">Nouveau compte</a></button>
                         </div><br>
                         <div class="col-md-6 ">
                             <button class="button-9" type="submit">Connexion</button>

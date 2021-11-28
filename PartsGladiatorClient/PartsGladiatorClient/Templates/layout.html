@@ -52,9 +52,10 @@
 
             <a href="/" class="logo d-flex align-items-center">
                 <img src="../static/img/PG-logo.png" alt="">
-                <span>Parts Gladiator</span>
+                <span>Parts </span>
+                <span>Gladiator</span>
             </a>
-
+            {% if user.is_authenticated %}
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="nav-link scrollto active" href="/">Accueil</a></li>
@@ -78,11 +79,42 @@
                     </li>
                     <li><a class="nav-link scrollto" href="/#avantages">Avantages</a></li>
                     <li><a class="nav-link scrollto" href="/contact">Contact</a></li>
-                    <li><a class="nav-link scrollto" href="/connexion">Connexion</a></li>
+                    <li><a class="nav-link scrollto" href="/profil/{{user.id}}">Profil - {{user.firstname}} {{user.lastname}}</a></li>
+                    <li><a class="nav-link scrollto" href="/logout">Logout</a></li>
                     <li><a class="getstarted scrollto" href="/cart"><i class="fas fa-shopping-cart"></i>&nbsp Panier</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
+            {% else %}
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="/">Accueil</a></li>
+                    <li><a class="nav-link scrollto" href="/information">À propos</a></li>
+                    <li class="dropdown"><a href="/products"><span>Produits</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#case">Boîtiers</a></li>
+                            <li><a href="#graphic-cards">Cartes Graphique</a></li>
+                            <li><a href="#processor">Processeurs</a></li>
+                            <li><a href="#monitor">Moniteurs</a></li>
+                            <li class="dropdown"><a href="#"><span>Accessoires</span> <i class="bi bi-chevron-right"></i></a>
+                                <ul>
+                                    <li><a href="#cables">Câbles</a></li>
+                                    <li><a href="#keyboard">Clavier</a></li>
+                                    <li><a href="#headset">Casques d'écoute</a></li>
+                                    <li><a href="#mouse">Souris</a></li>
+                                    <li><a href="#mats">Tapis de souris</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link scrollto" href="/#avantages">Avantages</a></li>
+                    <li><a class="nav-link scrollto" href="/contact">Contact</a></li>
+                    <li><a class="nav-link scrollto" href="/login">Connexion</a></li>
+                    <li><a class="getstarted scrollto" href="/cart"><i class="fas fa-shopping-cart"></i>&nbsp Panier</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            {% endif %}
             <!-- .navbar -->
 
         </div>

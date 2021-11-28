@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'PartsGladiatorClient',
+    'authen.apps.AuthenConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -52,11 +54,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'PartsGladiatorClient.urls'
-
+import os
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'Templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,4 +136,11 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'partgaldiator@gmail.com'
 EMAIL_HOST_PASSWORD = 'part123gladiator'
+
+AUTH_USER_MODEL = 'authen.CustomUser'
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

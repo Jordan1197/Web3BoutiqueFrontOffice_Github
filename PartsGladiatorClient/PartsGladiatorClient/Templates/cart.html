@@ -257,7 +257,11 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <button class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Paiement</button>
+                    {% if user.is_authenticated %}
+                    {{form.render}}
+                    {% else %}
+                    <a href="login">Connecter vous</a>
+                    {% endif %}
                     <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continuer à magasiner</button>
 
                 </div>
@@ -283,7 +287,11 @@
                     </span>
                     <div class="m-t-sm">
                         <div class="btn-group">
-                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Paiement</a>
+                                {% if user.is_authenticated %}
+                                {{form.render}}
+                                {% else %}
+                                <a href="login">Connecter vous</a>
+                                {% endif %}
                         <a href="#" class="btn btn-white btn-sm"> Annuler</a>
                         </div>
                     </div>

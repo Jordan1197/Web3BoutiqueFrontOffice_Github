@@ -95,7 +95,7 @@ def information(request):
     return HttpResponse(template.render(context, request))
 
 def cart(request):
-def cart(request):
+    def cart(request):
     template = loader.get_template("cart.html")
     host = request.get_host()
     paypal_dict = {
@@ -117,7 +117,7 @@ def cart(request):
     
     listeProduit = []
 	
-    #for product in CartProducts: 
+    for product in CartProducts: 
         listeProduit.append(PgProduct.objects.get(id=product.productid.id))
 
                                               

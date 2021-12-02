@@ -562,3 +562,12 @@ class PgValeurcharacteristic(models.Model):
     class Meta:
         managed = False
         db_table = 'pg_valeurcharacteristic'
+
+    productname = models.TextField(db_column='productname', blank=True, null=True)
+        
+    class Meta:
+        managed = False
+        db_table = 'prodpromoviews'
+    class Meta:
+        managed = False
+        db_table = 'OneImageProductViews'

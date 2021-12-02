@@ -30,6 +30,7 @@ from paypal.standard.forms import PayPalPaymentsForm
 from django.views.generic import TemplateView
 from paypal.standard.models import ST_PP_COMPLETED
 from paypal.standard.ipn.signals import valid_ipn_received
+from PartsGladiatorClient.Models import models
 
 
 
@@ -98,11 +99,25 @@ def cart(request):
     
     template = loader.get_template("cart.html")
     host = request.get_host()
+    
+    CartProducts = Cartproduct.objects.filter(cartid=request.session['cartid'])
+    
+    listeProduit = []
+	
+    for product in CartProducts: 
+        listeProduit.append(PgProduct.objects.get(id=product.productid.id))
+        
+    prix =0
+    
+    for p in listeProduit:
+        prix = p.price + prix
+        
+                                              
+    
     paypal_dict = {
         'business': PAYPAL_RECEIVER_EMAIL ,
-        'amount': '1',#ajouter le prix du panier ici
-        'item_name': 'Item_Name_xyz',
-        'invoice': 'test5',
+        'amount': prix,#ajouter le prix du panier ici
+        'item_name': n,
         'currency_code': 'USD',
         'notify_url': 'http://{}{}'.format(host,
                                            reverse('paypal-ipn')),
@@ -115,11 +130,8 @@ def cart(request):
     form = PayPalPaymentsForm(initial=paypal_dict)
     CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
     
-    listeProduit = []
-    
      
 	
-    for product in CartProducts: 
         NewProduct = PgProduct.objects.get(id=product.productid.id)
         NewProduct.quantity = product.quantity
         
@@ -136,14 +148,11 @@ def cart(request):
         NewProduct.price = PromoPrice
         
         listeProduit.append(NewProduct)
-
-                                              
-    
-    form = PayPalPaymentsForm(initial=paypal_dict)
     
     context = {
         "product": listeProduit,
         'form':form,
+        'price':prix,
     }
 
     return HttpResponse(template.render(context, request))

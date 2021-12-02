@@ -443,7 +443,7 @@ class PgCart(models.Model):
     clientid = models.ForeignKey(
         'PgClient', models.DO_NOTHING, db_column='ClientId', blank=True, null=True)
     # Field name made lowercase.
-    createddate = models.DateTimeField(db_column='CreatedDate')
+    createddate = models.DateTimeField(db_column='CreatedDate', blank=True,)
     # Field name made lowercase.
     createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)
     # Field name made lowercase.

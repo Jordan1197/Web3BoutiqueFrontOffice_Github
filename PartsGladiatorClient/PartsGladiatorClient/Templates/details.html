@@ -62,8 +62,8 @@
                           </div>         
                     </div>
                     <div class="col-lg-10">
-                        <form>
-                            <input type="text" value="{{user.id}}" name="userid" hidden>
+                        <form action="" method="POST">
+                                {% csrf_token %}
                             <button class="button-9" type="submit">Ajouter au panier</button> 
                         </form>
                               

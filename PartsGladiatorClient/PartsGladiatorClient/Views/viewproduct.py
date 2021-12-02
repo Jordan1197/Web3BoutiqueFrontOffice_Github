@@ -9,6 +9,7 @@ from django.template import RequestContext
 from PartsGladiatorClient.Models.models import *
 from django.shortcuts import get_object_or_404
 from django.db.models.functions import *
+from datetime import date, datetime
 
 
 def allProducts(request):
@@ -186,12 +187,18 @@ def details(request, productId):
     }
     
     if request.method == "POST":
-        Cart = PgCart.objects.filter(
-            clientid=clientid
-        )
+        NewCart = None
+        if request.session.get('cartid') == None:
+            NewCart = PgCart.objects.create(createddate = datetime.now())
+            request.session['cartid'] = PgCart.objects.latest('id').id
         
-        NewProduct = Cartproduct.objects.create(cartid=Cart.id,userid=request.POST['userid'])
-        NewProduct.save()
+        Cart = PgCart.objects.get(id = request.session['cartid'])
+        
+        if NewCart != None:
+            Cart = NewCart
+        
+        NewProduct = PgProduct.objects.get(id=productId)
+        NewOrder = Cartproduct.objects.create(cartid=Cart,productid=NewProduct)
         
         
 

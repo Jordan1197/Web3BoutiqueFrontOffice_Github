@@ -94,7 +94,7 @@ def information(request):
 
     return HttpResponse(template.render(context, request))
 
-#def cart(request, userid):
+def cart(request):
 def cart(request):
     template = loader.get_template("cart.html")
     host = request.get_host()
@@ -113,15 +113,15 @@ def cart(request):
                                               
     }
     form = PayPalPaymentsForm(initial=paypal_dict)
-    #Cart = PgCart.objects.get(clientid=userid)
-    #CartProducts = Cartproduct.objects.get(cartid=Cart.id)
+    CartProducts = Cartproduct.objects.filter(cartid=request.session['cartid'])
     
     listeProduit = []
 	
     #for product in CartProducts: 
-    #    listeProduit.append(PgProduct.objects.get(id=product.productid))
+        listeProduit.append(PgProduct.objects.get(id=product.productid.id))
 
-
+                                              
+    
     form = PayPalPaymentsForm(initial=paypal_dict)
     
     context = {

@@ -14,12 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from PartsGladiatorClient.Views import viewproduct
 from PartsGladiatorClient.Views import views
 from PartsGladiatorClient import Views
 from django.contrib.auth import views as auth_views
 from authen import views
+
 
 urlpatterns = [
     path('', Views.views.index, name='home'),
@@ -36,6 +37,9 @@ urlpatterns = [
     path('logout/',auth_views.LogoutView.as_view(), name='logout'),
     path('createuser/', views.signup, name='signup'),
     path('profil/<int:userid>',Views.views.profil),
+    path('paypal/',include('paypal.standard.ipn.urls')),
+
+    #path(r'purchase_thanks/',Views.views.purchase_thanks, name=purchase_thanks),
     
 ]
 

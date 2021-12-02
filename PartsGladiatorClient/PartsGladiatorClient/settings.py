@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'PartsGladiatorClient',
     'authen.apps.AuthenConfig',
     'crispy_forms',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -143,4 +144,7 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+PAYPAL_RECEIVER_EMAIL = 'partgaldiator@gmail.com'
+PAYPAL_TEST = True
 

@@ -31,7 +31,7 @@ urlpatterns = [
     path('product/promotion/<int:promoId>', viewproduct.promotion),
     path('contact', Views.views.contact),
     path('information', Views.views.information),
-    path('cart/<int:userid>',Views.views.cart),
+    path('cart/',Views.views.cart),
     path('about',Views.views.about),
     path('login/',auth_views.LoginView.as_view(template_name='login.html'),name='login'),
     path('logout/',auth_views.LogoutView.as_view(), name='logout'),

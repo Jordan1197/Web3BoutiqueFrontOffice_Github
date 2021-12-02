@@ -184,5 +184,15 @@ def details(request, productId):
         'ProdImg': result,
         'PromoPrice': PromoPrice,
     }
+    
+    if request.method == "POST":
+        Cart = PgCart.objects.filter(
+            clientid=clientid
+        )
+        
+        NewProduct = Cartproduct.objects.create(cartid=Cart.id,userid=request.POST['userid'])
+        NewProduct.save()
+        
+        
 
     return HttpResponse(template.render(context, request))

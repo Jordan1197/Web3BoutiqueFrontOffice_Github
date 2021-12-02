@@ -87,11 +87,20 @@ def information(request):
 
     return HttpResponse(template.render(context, request))
 
-def cart(request):
+def cart(request, userid):
     template = loader.get_template("cart.html")
+    Cart = PgCart.objects.get(clientid=userid)
+    CartProducts = Cartproduct.objects.get(cartid=Cart.id)
+    
+    listeProduit = []
 
+    for product in CartProducts: 
+        listeProduit.append(PgProduct.objects.get(id=product.productid))
+
+
+    
     context = {
-        #"products": products,
+        "products": listeProduit,
     }
 
     return HttpResponse(template.render(context, request))

@@ -198,7 +198,7 @@ def details(request, productId):
             Cart = NewCart
         
         NewProduct = PgProduct.objects.get(id=productId)
-        NewOrder = Cartproduct.objects.create(cartid=Cart,productid=NewProduct)
+        NewOrder = PgCartproduct.objects.create(cartid=Cart,productid=NewProduct,quantity=request.POST["qty"])
         
         
 

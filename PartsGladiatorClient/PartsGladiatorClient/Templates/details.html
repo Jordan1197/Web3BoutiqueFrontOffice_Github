@@ -31,14 +31,14 @@
             </div>
             <div class="col-lg-6">
                 {% if PromoPrice != '' %}
-                    <p>Prix régulier: <s>{{Price}} $</s></p> 
-                    {% else %}
-                        <p>Prix régulier: {{Price}} $</p>   
-                {% endif %}  
-                
-                {% if PromoPrice != '' %}          
-                    <p>Prix promotionnel: <b>{{PromoPrice}} $</b></p>   
-                {% endif %}          
+                <p>Prix régulier: <s>{{Price}} $</s></p>
+                {% else %}
+                <p>Prix régulier: {{Price}} $</p>
+                {% endif %}
+
+                {% if PromoPrice != '' %}
+                <p>Prix promotionnel: <b>{{PromoPrice}} $</b></p>
+                {% endif %}
                 <p>Marque: {{Brand}}</p>
                 <p>Catégorie: {{Category}}</p>
                 <p>Informations: {{Description}}</p>
@@ -56,22 +56,21 @@
                 </ul>
                 -->
                 <div class="row">
-                    <div class="col-lg-2" style="margin:12px 0px 0px ;">
-                        <div class="form-group" style="text-align:center" data-toggle="tooltip" title="Maximum de 5 par client.">
-                            <input class="form-control" id="inputdefault" type="number" min="0" max="5">
-                          </div>         
-                    </div>
-                    <div class="col-lg-10">
-                        <form action="" method="POST">
-                                {% csrf_token %}
-                            <button class="button-9" type="submit">Ajouter au panier</button> 
-                        </form>
-                              
-                    </div>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="col-lg-2" style="margin:12px 0px 0px ;">
+                            <div class="form-group" style="text-align:center" data-toggle="tooltip" title="Maximum de 5 par client.">
+                                <input class="form-control" id="inputdefault" name="qty" type="number" min="0" max="5">
+                            </div>
+                        </div>
+                        <div class="col-lg-10">
+                            <button class="button-9" type="submit">Ajouter au panier</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="center" style="margin-top:10px">
-                    <a href="/products">Retour à la page produits</a>            
-                </div>       
+                    <a href="/products">Retour à la page produits</a>
+                </div>
             </div>
         </div>
     </div>

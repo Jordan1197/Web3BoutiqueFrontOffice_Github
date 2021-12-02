@@ -113,19 +113,36 @@ def cart(request):
                                               
     }
     form = PayPalPaymentsForm(initial=paypal_dict)
-    CartProducts = Cartproduct.objects.filter(cartid=request.session['cartid'])
+    CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
     
     listeProduit = []
+    
+     
 	
     for product in CartProducts: 
-        listeProduit.append(PgProduct.objects.get(id=product.productid.id))
+        NewProduct = PgProduct.objects.get(id=product.productid.id)
+        NewProduct.quantity = product.quantity
+        
+        try: 
+            PgPromotion.objects.get(id=NewProduct.promotionid)
+        except:
+            PromoPrice = ''
+        else:
+            PromoPrice = PgPromotion.objects.get(id=NewProduct.promotionid)
+            if PromoPrice.active == 1:
+                PromoPrice = (PromoPrice.discount / 100) * NewProduct.price
+            else:
+                PromoPrice = ''
+        NewProduct.price = PromoPrice
+        
+        listeProduit.append(NewProduct)
 
                                               
     
     form = PayPalPaymentsForm(initial=paypal_dict)
     
     context = {
-        "products": listeProduit,
+        "product": listeProduit,
         'form':form,
     }
 

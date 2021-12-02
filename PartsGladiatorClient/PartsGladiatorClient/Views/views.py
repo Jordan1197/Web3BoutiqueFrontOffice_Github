@@ -94,31 +94,34 @@ def information(request):
 
     return HttpResponse(template.render(context, request))
 
-def cart(request, userid):
+#def cart(request, userid):
+def cart(request):
     template = loader.get_template("cart.html")
-     host = request.get_host()
+    host = request.get_host()
     paypal_dict = {
         'business': PAYPAL_RECEIVER_EMAIL ,
         'amount': '1',#ajouter le prix du panier ici
         'item_name': 'Item_Name_xyz',
-        'invoice': 'Test Payment Invoice',
+        'invoice': 'test5',
         'currency_code': 'USD',
-        #'return_url':'',
-        'cancel_return': '/cart',
+        'notify_url': 'http://{}{}'.format(host,
+                                           reverse('paypal-ipn')),
+        'return_url': 'http://{}{}'.format(host,
+                                           reverse('payment_done')),
+        'cancel_return': 'http://{}{}'.format(host,
+                                              reverse('payment_canceled')),
                                               
     }
     form = PayPalPaymentsForm(initial=paypal_dict)
-    Cart = PgCart.objects.get(clientid=userid)
-    CartProducts = Cartproduct.objects.get(cartid=Cart.id)
+    #Cart = PgCart.objects.get(clientid=userid)
+    #CartProducts = Cartproduct.objects.get(cartid=Cart.id)
     
     listeProduit = []
 	
-    for product in CartProducts: 
-        listeProduit.append(PgProduct.objects.get(id=product.productid))
+    #for product in CartProducts: 
+    #    listeProduit.append(PgProduct.objects.get(id=product.productid))
 
 
-                                              
-    }
     form = PayPalPaymentsForm(initial=paypal_dict)
     
     context = {
@@ -127,6 +130,42 @@ def cart(request, userid):
     }
 
     return HttpResponse(template.render(context, request))
+
+       
+
+@csrf_exempt
+def payment_done(request):
+    user = CustomUser.objects.get(id=request.user.id) 
+    #cart = PgCart.objects.get(clientid=user.id)
+    #cartProduct = Cartproduct.objects.get(cartid=cart.id)
+
+    #MAIL
+    mail_content = "félicitation pour votre achat !"
+    sender_address = EMAIL_HOST_USER
+    send_pass = EMAIL_HOST_PASSWORD
+    receiver_address = user.email
+    #setup MIME
+    message = MIMEMultipart()
+    message['From'] = sender_address
+    message['To'] = receiver_address
+    message['Subject'] = "félicitation pour votre achat !"
+    #le message
+    message.attach(MIMEText(mail_content, 'plain'))
+    #session smtp
+    session = smtplib.SMTP('smtp.gmail.com',587)
+    session.starttls()
+    session.login(sender_address,send_pass)
+    text = message.as_string()
+    session.sendmail(sender_address,receiver_address,text)
+    session.quit()
+
+
+    return render(request, 'payment_done.html',{'user':user})
+
+
+@csrf_exempt
+def payment_canceled(request):
+    return render(request, 'payment_canceled.html')
 
 
 def page_not_found_view(request, exception):

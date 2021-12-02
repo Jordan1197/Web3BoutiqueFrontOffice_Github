@@ -31,7 +31,8 @@ urlpatterns = [
     path('product/promotion/<int:promoId>', viewproduct.promotion),
     path('contact', Views.views.contact),
     path('information', Views.views.information),
-    path('cart/<int:userid>',Views.views.cart),
+    path('cart/',Views.views.cart),
+    #path('cart/<int:userid>',Views.views.cart),
     path('about',Views.views.about),
     path('login/',auth_views.LoginView.as_view(template_name='login.html'),name='login'),
     path('logout/',auth_views.LogoutView.as_view(), name='logout'),
@@ -39,7 +40,9 @@ urlpatterns = [
     path('profil/<int:userid>',Views.views.profil),
     path('paypal/',include('paypal.standard.ipn.urls')),
 
-    #path(r'purchase_thanks/',Views.views.purchase_thanks, name=purchase_thanks),
+    
+    path('payment-done/',Views.views.payment_done, name='payment_done'),
+    path('payment-canceled/',Views.views.payment_canceled, name='payment_canceled'),
     
 ]
 

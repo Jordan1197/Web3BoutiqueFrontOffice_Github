@@ -45,9 +45,10 @@
                                                     {% csrf_token %}
                                                     <div>
                                                         <input class="form-control" name="id" type="input" hidden>
-                                                        <a type="submit"><i class="fa fa-trash"></i> Retirer l'article</a>
+                                                        <button class="button-9" type="submit"><i class="fa fa-trash"></i> Retirer l'article</button>
                                                     </div>
                                                 </form>
+
                                             </div>
                                         </td>
 
@@ -63,7 +64,7 @@
                                             {% endif %}
                                         </td>
                                         <td width="65">
-                                            <input type="submit" class="form-control" placeholder="{{p.quantity}}">
+                                            <input type="text" class="form-control" placeholder="{{p.quantity}}">
                                         </td>
                                         <td>
                                             <h4>
@@ -84,7 +85,7 @@
                         {% if user.is_authenticated %}
                         {{form.render}}
                         {% else %}
-                        <a href="login">Connecter vous</a>
+                        <a href="/login">Connecter vous</a>
                         {% endif %}
                         <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continuer à magasiner</button>
 
@@ -114,7 +115,7 @@
                                 {% if user.is_authenticated %}
                                 {{form.render}}
                                 {% else %}
-                                <a href="login">Connecter vous</a>
+                                <a href="/login">Connecter vous</a>
                                 {% endif %}
                                 <a href="#" class="btn btn-white btn-sm"> Annuler</a>
                             </div>

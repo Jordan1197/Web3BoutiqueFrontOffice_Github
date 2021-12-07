@@ -197,8 +197,9 @@ def payment_done(request):
     session.sendmail(sender_address,receiver_address,text)
     session.quit()
 
-    listeProduit = []
-    AllProds = PgProduct.objects.all()
+    
+    AllProds = listeProduit
+    listeProduit  = []
     AllImages = PgImage.objects.all()
 
     for product in AllProds:
@@ -210,12 +211,16 @@ def payment_done(request):
                     listeProduit.append(product)
                     i = 1
 
+   
     
+                
+                
 
     context = {
         'products':listeProduit,
         'user':user,
         'images': PgImage.objects.all(),
+        'cartproduct':CartProducts,
     }            
 
     return render(request, 'payment_done.html',context)

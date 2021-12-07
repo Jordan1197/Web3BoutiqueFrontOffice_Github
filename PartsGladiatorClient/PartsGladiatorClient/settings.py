@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'authen.apps.AuthenConfig',
     'crispy_forms',
     'paypal.standard.ipn',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [

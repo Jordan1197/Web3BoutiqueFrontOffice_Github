@@ -1,23 +1,46 @@
-{% extends 'layout.html' %}
+{% extends 'layout.html' %}{% load mathfilters %}
 {% block content %}
 <section id="about" class="about"></section>
 <div class="container">
         <div class="row">
                 <div class="col-sm-12" style="text-align:center">
                     <h1>Paiement complété</h1><br>
-                    <h2>Un courriel de confirmation vous a été envoyé a l'adresse suivante {{user.courriel}}</h2>
-                    <a href="/">Accueil</a>
-                    <p>{{user}}</p>
+                    <h5>Un courriel de confirmation vous a été envoyé a l'adresse suivante {{user.email}}</h5>
+                </div><br>
+                <div class="col-sm-12" style="text-align:center">
+                    <h5>Détails</h5>
                 </div>  
         </div>
         <div class=" row">
-            <div class="col-sm-6">
-                    {% for p in products %}
-                    <img class="img-fluid" src="{{ p.createdby }}" alt="{{ p.id }}">
-                    <h3>{{ p.name }}</h3>
-                    {% endfor %}
+            <div class="col-sm-12 center">
+                <div class="row">
+                        {% for p in products %}
+                        <div class="col-sm-6">
+                            <img class="img-fluid" width="90" height="90" src="{{ p.createdby }}" alt="{{ p.id }}">
+                        </div>
+                        <div class="col-sm-6" style="text-align:left">
+                            <h5>{{ p.name }}</h5><br>
+                            <h5>Prix unitaire : {{ p.price}}</h5><br>
+                            
+                            {% for cp in cartproduct %}
+                            {% if cp.productid.id == p.id %}
+                            <h5>Quantité : {{ cp.quantity }}</h5><br>
+                            <h5>Total : {{p.price|mul:cp.quantity}}$</h5><br>
+                            {% endif %}
+                            {% endfor %}
+
+                                                       
+                                                      
+                            
+                        </div>                                        
+                        {% endfor %}
+                </div>                                        
             </div>
+            
         </div>
+        <div class="center">
+            <a class="btn btn-primary" href="/">Accueil</a>
+        </div><br>
 </div>
 
         

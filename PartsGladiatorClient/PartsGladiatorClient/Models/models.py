@@ -356,13 +356,13 @@ class PgCategory(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     name = models.TextField(db_column='Name')  # Field name made lowercase.
     description = models.TextField(db_column='Description')  # Field name made lowercase.
-    imagepath = models.TextField(db_column='ImagePath', blank=True, null=True)  # Field name made lowercase.
     createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
     createdby = models.TextField(db_column='CreatedBy', blank=True, null=True)  # Field name made lowercase.
     lastupdateddate = models.DateTimeField(db_column='LastUpdatedDate', blank=True, null=True)  # Field name made lowercase.
     lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
     deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
     deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+    imagepath = models.TextField(db_column='ImagePath', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -449,7 +449,7 @@ class PgPromotion(models.Model):
     name = models.TextField(db_column='Name')  # Field name made lowercase.
     discount = models.FloatField(db_column='Discount')  # Field name made lowercase.
     active = models.IntegerField(db_column='Active')  # Field name made lowercase.
-    path = models.TextField(db_column='Path')  # Field name made lowercase.
+    path = models.TextField(db_column='Path', blank=True, null=True)  # Field name made lowercase.
     startdate = models.DateTimeField(db_column='StartDate')  # Field name made lowercase.
     enddate = models.DateTimeField(db_column='EndDate')  # Field name made lowercase.
     createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
@@ -458,6 +458,7 @@ class PgPromotion(models.Model):
     lastupdatedby = models.TextField(db_column='LastUpdatedBy', blank=True, null=True)  # Field name made lowercase.
     deleteddate = models.DateTimeField(db_column='DeletedDate', blank=True, null=True)  # Field name made lowercase.
     deletedby = models.TextField(db_column='DeletedBy', blank=True, null=True)  # Field name made lowercase.
+    type = models.IntegerField(db_column='Type')  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -563,9 +564,6 @@ class PgValeurcharacteristic(models.Model):
         managed = False
         db_table = 'pg_valeurcharacteristic'
 
-    
-
-    
 class prodpromoviews(models.Model):
     productid = models.AutoField(db_column='productid', primary_key=True)
     productname = models.TextField(

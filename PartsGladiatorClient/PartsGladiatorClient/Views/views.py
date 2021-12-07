@@ -99,35 +99,35 @@ def cart(request):
     
     template = loader.get_template("cart.html")
     host = request.get_host()
-    
-    CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
-    
     listeProduit = []
-	
-    for product in CartProducts: 
-        listeProduit.append(PgProduct.objects.get(id=product.productid.id))
+    
+    if 'cartid' in request.session:
+        CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
+           
+        for product in CartProducts: 
+            listeProduit.append(PgProduct.objects.get(id=product.productid.id))
         
     
-    CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
+        CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
     
      
 	
-    NewProduct = PgProduct.objects.get(id=product.productid.id)
-    NewProduct.quantity = product.quantity
+        NewProduct = PgProduct.objects.get(id=product.productid.id)
+        NewProduct.quantity = product.quantity
         
-    try: 
-        PgPromotion.objects.get(id=NewProduct.promotionid)
-    except:
-        PromoPrice = ''
-    else:
-        PromoPrice = PgPromotion.objects.get(id=NewProduct.promotionid)
-        if PromoPrice.active == 1:
-            PromoPrice = (PromoPrice.discount / 100) * NewProduct.price
-        else:
+        try: 
+            PgPromotion.objects.get(id=NewProduct.promotionid)
+        except:
             PromoPrice = ''
-    NewProduct.price = PromoPrice
+        else:
+            PromoPrice = PgPromotion.objects.get(id=NewProduct.promotionid)
+            if PromoPrice.active == 1:
+                PromoPrice = (PromoPrice.discount / 100) * NewProduct.price
+            else:
+                PromoPrice = ''
+        NewProduct.price = PromoPrice
         
-    listeProduit.append(NewProduct)
+        listeProduit.append(NewProduct)
     
     prix =0
     n = ""

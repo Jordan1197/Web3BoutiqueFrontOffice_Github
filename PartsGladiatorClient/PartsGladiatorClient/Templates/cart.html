@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% load mathfilters %}
+
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/cart.css">
 <div class="container" style="margin-top:100px">
@@ -39,31 +41,33 @@
                                             </dl>
 
                                             <div class="m-t-sm">
-                                                <a href="#" class="text-muted"><i class="fa fa-gift"></i> Ajouter un
-                                                    emballage cadeau</a>
-                                                |
-                                                <a href="#" class="text-muted"><i class="fa fa-trash"></i> Retirer
-                                                    l'article</a>
+                                                <form action="" method="POST">
+                                                    {% csrf_token %}
+                                                    <div>
+                                                        <input class="form-control" name="id" type="input" hidden>
+                                                        <a type="submit"><i class="fa fa-trash"></i> Retirer l'article</a>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </td>
 
                                         <td>
                                             {% if p.price != '' %}
-                                            <p>Prix régulier: <s>{{p.price}} $</s></p>
+                                            <p>Prix régulier: <s>{{ p.brandid|stringformat:".2f" }}$</s></p>
                                             {% else %}
-                                            <p>Prix régulier: {{p.price}} $</p>
+                                            <p>Prix régulier: {{ p.price|stringformat:".2f" }}$</p>
                                             {% endif %}
 
                                             {% if p.price != '' %}
-                                            <p>Prix promotionnel: <b>{{p.price}} $</b></p>
+                                            <p>Prix promotionnel: <b>{{ p.price|stringformat:".2f" }}$</b></p>
                                             {% endif %}
                                         </td>
                                         <td width="65">
-                                            <input type="text" class="form-control" placeholder="{{p.quantity}}">
+                                            <input type="submit" class="form-control" placeholder="{{p.quantity}}">
                                         </td>
                                         <td>
                                             <h4>
-                                                $180,00 `
+                                                {{ p.price|mul:p.quantity|stringformat:".2f" }}$
                                             </h4>
                                         </td>
                                     </tr>
@@ -98,7 +102,7 @@
                             Total
                         </span>
                         <h2 class="font-bold">
-                        {{price}}
+                            {{ price|stringformat:".2f" }}$
                         </h2>
 
                         <hr>

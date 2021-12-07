@@ -164,7 +164,7 @@ def details(request, productId):
     else:
         PromoPrice = PgPromotion.objects.get(id=Product.promotionid)
         if PromoPrice.active == 1:
-            PromoPrice = (PromoPrice.discount / 100) * Product.price
+            PromoPrice = Product.price - (PromoPrice.discount / 100) * Product.price
         else:
             PromoPrice = ''
 

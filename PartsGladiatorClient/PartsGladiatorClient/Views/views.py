@@ -107,6 +107,7 @@ def cart(request):
         for product in CartProducts:     	
             NewProduct = PgProduct.objects.get(id=product.productid.id)
             NewProduct.quantity = product.quantity
+            NewProduct.brandid = NewProduct.price
             
             try: 
                 PgPromotion.objects.get(id=NewProduct.promotionid)
@@ -115,7 +116,7 @@ def cart(request):
             else:
                 PromoPrice = PgPromotion.objects.get(id=NewProduct.promotionid)
                 if PromoPrice.active == 1:
-                    PromoPrice = (PromoPrice.discount / 100) * NewProduct.price
+                    PromoPrice = NewProduct.price - (PromoPrice.discount / 100) * NewProduct.price
                 else:
                     PromoPrice = ''
             NewProduct.price = PromoPrice

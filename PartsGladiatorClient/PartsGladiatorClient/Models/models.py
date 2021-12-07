@@ -563,11 +563,29 @@ class PgValeurcharacteristic(models.Model):
         managed = False
         db_table = 'pg_valeurcharacteristic'
 
+    
+
+    
+class prodpromoviews(models.Model):
+    productid = models.AutoField(db_column='productid', primary_key=True)
+    productname = models.TextField(
+        db_column='productname', blank=True, null=True)
     productname = models.TextField(db_column='productname', blank=True, null=True)
         
+    price = models.FloatField(db_column='price')
+    promoname = models.TextField(db_column='promoname')
+    prixrabais = models.FloatField(db_column='prixrabais')
+    path = models.TextField(db_column='Path', blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'prodpromoviews'
+
+
+class OneImageProductViews(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)
+    name = models.TextField(db_column='Name', blank=True, null=True)
+    description = models.TextField(db_column='Description', blank=True, null=True)
+    path = models.TextField(db_column='Path', blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'OneImageProductViews'

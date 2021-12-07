@@ -132,22 +132,22 @@ def cart(request):
     
      
 	
-        NewProduct = PgProduct.objects.get(id=product.productid.id)
-        NewProduct.quantity = product.quantity
+    NewProduct = PgProduct.objects.get(id=product.productid.id)
+    NewProduct.quantity = product.quantity
         
-        try: 
-            PgPromotion.objects.get(id=NewProduct.promotionid)
-        except:
-            PromoPrice = ''
+    try: 
+        PgPromotion.objects.get(id=NewProduct.promotionid)
+    except:
+        PromoPrice = ''
+    else:
+        PromoPrice = PgPromotion.objects.get(id=NewProduct.promotionid)
+        if PromoPrice.active == 1:
+            PromoPrice = (PromoPrice.discount / 100) * NewProduct.price
         else:
-            PromoPrice = PgPromotion.objects.get(id=NewProduct.promotionid)
-            if PromoPrice.active == 1:
-                PromoPrice = (PromoPrice.discount / 100) * NewProduct.price
-            else:
-                PromoPrice = ''
-        NewProduct.price = PromoPrice
+            PromoPrice = ''
+    NewProduct.price = PromoPrice
         
-        listeProduit.append(NewProduct)
+    listeProduit.append(NewProduct)
     
     context = {
         "product": listeProduit,

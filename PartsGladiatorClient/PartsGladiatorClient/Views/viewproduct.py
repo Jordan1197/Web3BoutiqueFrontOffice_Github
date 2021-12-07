@@ -151,7 +151,7 @@ def details(request, productId):
     Brand = get_object_or_404(PgBrand, pk=Product.brandid)
     Category = get_object_or_404(PgCategory, pk=Product.categoryid)
     Characteristics = get_object_or_404(
-        PgCharacteristic, pk=Product.caracteristicid)
+    PgCharacteristic, pk=Product.caracteristicid)
     Attribute = get_object_or_404(PgTypeattribut, pk=Product.attributid)
     AttrValues = PgValeurattribut.objects.all()
     Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)

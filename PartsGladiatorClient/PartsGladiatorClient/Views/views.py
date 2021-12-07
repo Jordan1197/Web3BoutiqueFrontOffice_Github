@@ -135,12 +135,14 @@ def cart(request):
         prix = p.price + prix
         n = p.name = " "
                                               
+    taxes = prix * 0.05
     
     paypal_dict = {
         'business': PAYPAL_RECEIVER_EMAIL ,
         'amount': prix,#ajouter le prix du panier ici
         'item_name': n,
-        'currency_code': 'USD',
+        'tax':taxes,
+        'currency_code': 'CAD',
         'notify_url': 'http://{}{}'.format(host,
                                            reverse('paypal-ipn')),
         'return_url': 'http://{}{}'.format(host,
@@ -163,9 +165,24 @@ def cart(request):
 
 @csrf_exempt
 def payment_done(request):
+    loader.get_template("payment_done.html")
+    host = request.get_host()
     user = CustomUser.objects.get(id=request.user.id) 
-    #cart = PgCart.objects.get(clientid=user.id)
-    #cartProduct = Cartproduct.objects.get(cartid=cart.id)
+    CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
+    
+    listeProduit = []
+	
+    for product in CartProducts: 
+        listeProduit.append(PgProduct.objects.get(id=product.productid.id))
+
+    prix =0
+    taxes=0
+    for p in listeProduit:
+        prix = p.price + prix
+        
+                                              
+    taxes = prix * 0.05
+
 
     #MAIL
     mail_content = "félicitation pour votre achat !"
@@ -187,8 +204,28 @@ def payment_done(request):
     session.sendmail(sender_address,receiver_address,text)
     session.quit()
 
+    listeProduit = []
+    AllProds = PgProduct.objects.all()
+    AllImages = PgImage.objects.all()
 
-    return render(request, 'payment_done.html',{'user':user})
+    for product in AllProds:
+        i = 0
+        for image in AllImages:
+            if i == 0:              
+                if product.id == image.productid.id:
+                    product.createdby = image.path
+                    listeProduit.append(product)
+                    i = 1
+
+    
+
+    context = {
+        'products':listeProduit,
+        'user':user,
+        'images': PgImage.objects.all(),
+    }            
+
+    return render(request, 'payment_done.html',context)
 
 
 @csrf_exempt

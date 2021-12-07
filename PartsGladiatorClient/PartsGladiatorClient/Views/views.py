@@ -100,7 +100,7 @@ def cart(request):
     template = loader.get_template("cart.html")
     host = request.get_host()
     
-    CartProducts = Cartproduct.objects.filter(cartid=request.session['cartid'])
+    CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
     
     listeProduit = []
 	
@@ -108,10 +108,10 @@ def cart(request):
         listeProduit.append(PgProduct.objects.get(id=product.productid.id))
         
     prix =0
-    
+    n = ""
     for p in listeProduit:
         prix = p.price + prix
-        
+        n = p.name = " "
                                               
     
     paypal_dict = {

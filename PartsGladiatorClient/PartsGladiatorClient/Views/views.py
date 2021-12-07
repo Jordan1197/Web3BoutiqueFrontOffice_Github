@@ -107,6 +107,28 @@ def cart(request):
     for product in CartProducts: 
         listeProduit.append(PgProduct.objects.get(id=product.productid.id))
         
+    
+    CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
+    
+     
+	
+    NewProduct = PgProduct.objects.get(id=product.productid.id)
+    NewProduct.quantity = product.quantity
+        
+    try: 
+        PgPromotion.objects.get(id=NewProduct.promotionid)
+    except:
+        PromoPrice = ''
+    else:
+        PromoPrice = PgPromotion.objects.get(id=NewProduct.promotionid)
+        if PromoPrice.active == 1:
+            PromoPrice = (PromoPrice.discount / 100) * NewProduct.price
+        else:
+            PromoPrice = ''
+    NewProduct.price = PromoPrice
+        
+    listeProduit.append(NewProduct)
+    
     prix =0
     n = ""
     for p in listeProduit:
@@ -128,26 +150,6 @@ def cart(request):
                                               
     }
     form = PayPalPaymentsForm(initial=paypal_dict)
-    CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
-    
-     
-	
-    NewProduct = PgProduct.objects.get(id=product.productid.id)
-    NewProduct.quantity = product.quantity
-        
-    try: 
-        PgPromotion.objects.get(id=NewProduct.promotionid)
-    except:
-        PromoPrice = ''
-    else:
-        PromoPrice = PgPromotion.objects.get(id=NewProduct.promotionid)
-        if PromoPrice.active == 1:
-            PromoPrice = (PromoPrice.discount / 100) * NewProduct.price
-        else:
-            PromoPrice = ''
-    NewProduct.price = PromoPrice
-        
-    listeProduit.append(NewProduct)
     
     context = {
         "product": listeProduit,

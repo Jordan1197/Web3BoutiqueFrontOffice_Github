@@ -188,7 +188,7 @@ def details(request, productId):
     
     if request.method == "POST":
         NewCart = None
-        if request.session.get('cartid') == None:
+        if 'cartid' not in request.session:
             NewCart = PgCart.objects.create(createddate = datetime.now())
             request.session['cartid'] = PgCart.objects.latest('id').id
         

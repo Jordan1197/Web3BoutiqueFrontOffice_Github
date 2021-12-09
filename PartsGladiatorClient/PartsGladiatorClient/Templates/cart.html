@@ -44,7 +44,7 @@
                                                 <form action="" method="POST">
                                                     {% csrf_token %}
                                                     <div>
-                                                        <input class="form-control" name="id" type="input" value="{{p.categoryid}}" hidden>
+                                                        <input class="form-control" name="remove" type="input" value="{{p.categoryid}}" hidden>
                                                         <button class="button-9" type="submit"><i class="fa fa-trash"></i> Retirer l'article</button>
                                                     </div>
                                                 </form>

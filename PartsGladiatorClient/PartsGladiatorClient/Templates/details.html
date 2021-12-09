@@ -1,6 +1,4 @@
-{% extends 'layout.html' %}
-
-{% block content %}
+{% extends 'layout.html' %} {% block content %}
 <section style="padding-top:65px;padding-bottom:50px" id="produits" class="services">
 
     <div class="container" data-aos="fade-up">
@@ -34,9 +32,7 @@
                 <p>Prix régulier: <s>{{Price}} $</s></p>
                 {% else %}
                 <p>Prix régulier: {{Price}} $</p>
-                {% endif %}
-
-                {% if PromoPrice != '' %}
+                {% endif %} {% if PromoPrice != '' %}
                 <p>Prix promotionnel: <b>{{PromoPrice}} $</b></p>
                 {% endif %}
                 <p>Marque: {{Brand}}</p>
@@ -60,8 +56,11 @@
                         {% csrf_token %}
                         <div class="col-lg-2" style="margin:12px 0px 0px ;">
                             <div class="form-group" style="text-align:center" data-toggle="tooltip" title="Maximum de 5 par client.">
-                                <input class="form-control" id="inputdefault" name="qty" type="number" min="0" max="5">
+                                <input class="form-control" id="inputdefault" name="qty" type="number" min="1" max="5" value=1>
                             </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <p style="color: red;">{{noquantity}}</p>
                         </div>
                         <div class="col-lg-10">
                             <button class="button-9" type="submit">Ajouter au panier</button>
@@ -76,7 +75,8 @@
     </div>
     </div>
 
-</section><!-- End Services Section -->
+</section>
+<!-- End Services Section -->
 
 <script src="../static/js/details.js"></script>
 {% endblock %}

@@ -168,7 +168,28 @@ def details(request, productId):
         else:
             PromoPrice = ''
 
-
+    noquantity= ""
+    
+    
+    if request.method == "POST":
+        NewCart = None
+        if 'cartid' not in request.session:
+            NewCart = PgCart.objects.create(createddate = datetime.now())
+            request.session['cartid'] = PgCart.objects.latest('id').id
+        
+        Cart = PgCart.objects.get(id = request.session['cartid'])
+        
+        if NewCart != None:
+            Cart = NewCart
+        
+        
+        NewProduct = PgProduct.objects.get(id=productId)
+        if int(request.POST["qty"]) <= NewProduct.quantity:
+            NewOrder = PgCartproduct.objects.create(cartid=Cart,productid=NewProduct,quantity=request.POST["qty"])
+            
+        else:
+            noquantity = "Cette article est en rupture de stock. " + str(NewProduct.quantity)+ " restants"
+        
     context = {
         "Product": Product,
         "Name": Product.name,
@@ -184,22 +205,7 @@ def details(request, productId):
         'Images': Images,
         'ProdImg': result,
         'PromoPrice': PromoPrice,
-    }
-    
-    if request.method == "POST":
-        NewCart = None
-        if 'cartid' not in request.session:
-            NewCart = PgCart.objects.create(createddate = datetime.now())
-            request.session['cartid'] = PgCart.objects.latest('id').id
-        
-        Cart = PgCart.objects.get(id = request.session['cartid'])
-        
-        if NewCart != None:
-            Cart = NewCart
-        
-        NewProduct = PgProduct.objects.get(id=productId)
-        NewOrder = PgCartproduct.objects.create(cartid=Cart,productid=NewProduct,quantity=request.POST["qty"])
-        
-        
+        'noquantity':noquantity,
+    }   
 
     return HttpResponse(template.render(context, request))

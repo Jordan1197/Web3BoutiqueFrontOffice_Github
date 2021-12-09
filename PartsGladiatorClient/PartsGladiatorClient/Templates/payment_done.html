@@ -4,11 +4,12 @@
     <div class="row">
         <div class="col-sm-12" style="text-align:center">
             <h1>Paiement complété</h1><br>
-            <h5>Un courriel de confirmation vous a été envoyé a l'adresse suivante {{user.email}}</h5>
+            <h1>Un courriel de confirmation vous a été envoyé a l'adresse suivante {{user.email}}</h1>
         </div><br>
         <div class="col-sm-12" style="text-align:center">
-            <h5>Détails</h5>
+            <h4>Détails</h4>
         </div>
+        <hr>
     </div>
     <div class=" row">
         <div class="col-sm-12 center">
@@ -17,27 +18,35 @@
                 <div class="col-sm-6">
                     <img class="img-fluid" width="90" height="90" src="{{ p.createdby }}" alt="{{ p.id }}">
                 </div>
-                <div class="col-sm-6" style="text-align:left">
+                <div class="col-sm-6" style="text-align:right">
                     <h5>{{ p.name }}</h5><br>
                     <h5>Prix unitaire : {{ p.price}}</h5><br> {% for cp in cartproduct %} {% if cp.productid.id == p.id %}
                     <h5>Quantité : {{ cp.quantity }}</h5><br>
                     <h5>Total : {{p.price|mul:cp.quantity}}$</h5><br> {% endif %} {% endfor %}
-
-
-
-
                 </div>
-                {% endfor %}
+                <hr> {% endfor %}
             </div>
         </div>
         <div class="col-sm-6 center">
-            <div>
-                <h5>Coût total : </h5>
+            <div style="text-align: center;">
+                <h5>Coût total sans taxe</h5><br>
+            </div>
+            <div style="text-align: center;">
+                <h5>Taxes</h5><br>
+            </div>
+            <div style="text-align: center;">
+                <h5>Coût total</h5><br>
             </div>
         </div>
-        <div class="col-sm-6 center">
+        <div class="col-sm-6 center" style="text-align:right">
             <div>
-                <h5>{{prix}}</h5>
+                <h5>{{prix}}$</h5><br>
+            </div>
+            <div>
+                <h5>{{taxes|stringformat:".3f"}}$</h5><br>
+            </div>
+            <div>
+                <h5>{{prixwithtaxe|stringformat:".2f"}}$</h5><br>
             </div>
         </div>
 

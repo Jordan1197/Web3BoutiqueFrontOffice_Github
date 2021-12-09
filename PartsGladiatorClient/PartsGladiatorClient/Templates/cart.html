@@ -1,8 +1,4 @@
-{% extends 'layout.html' %}
-
-{% block content %}
-
-{% load mathfilters %}
+{% extends 'layout.html' %} {% block content %} {% load mathfilters %}
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/cart.css">
@@ -57,9 +53,7 @@
                                             <p>Prix régulier: <s>{{ p.brandid|stringformat:".2f" }}$</s></p>
                                             {% else %}
                                             <p>Prix régulier: {{ p.price|stringformat:".2f" }}$</p>
-                                            {% endif %}
-
-                                            {% if p.price != '' %}
+                                            {% endif %} {% if p.price != '' %}
                                             <p>Prix promotionnel: <b>{{ p.price|stringformat:".2f" }}$</b></p>
                                             {% endif %}
                                         </td>
@@ -82,11 +76,8 @@
 
 
                     <div class="ibox-content">
-                        {% if user.is_authenticated %}
-                        {{form.render}}
-                        {% else %}
-                        <a href="/login">Connecter vous</a>
-                        {% endif %}
+                        {% if user.is_authenticated %} {{form.render}} {% else %}
+                        <a href="/login">Connecter vous</a> {% endif %}
                         <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continuer à magasiner</button>
 
                     </div>
@@ -112,11 +103,8 @@
                         </span>
                         <div class="m-t-sm">
                             <div class="btn-group">
-                                {% if user.is_authenticated %}
-                                {{form.render}}
-                                {% else %}
-                                <a href="/login">Connecter vous</a>
-                                {% endif %}
+                                {% if user.is_authenticated %} {{form.render}} {% else %}
+                                <a href="/login">Connecter vous</a> {% endif %}
                                 <a href="#" class="btn btn-white btn-sm"> Annuler</a>
                             </div>
                         </div>

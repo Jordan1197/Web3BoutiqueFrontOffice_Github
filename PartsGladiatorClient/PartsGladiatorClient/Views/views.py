@@ -96,62 +96,71 @@ def information(request):
     return HttpResponse(template.render(context, request))
 
 def cart(request):
-    
     template = loader.get_template("cart.html")
-    host = request.get_host()
-    listeProduit = []
-    
-    if 'cartid' in request.session:
-        CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
-           
-        for product in CartProducts:     	
-            NewProduct = PgProduct.objects.get(id=product.productid.id)
-            NewProduct.quantity = product.quantity
-            NewProduct.brandid = NewProduct.price
+
+    if request.method == "POST":
+        Product = PgCartproduct.objects.filter(id=request.POST["remove"])        
+        Product.delete()
+
+    else:        
+        host = request.get_host()
+        listeProduit = []
+        nbArticle = 0
+        
+        if 'cartid' in request.session:
+            CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
             
-            try: 
-                PgPromotion.objects.get(id=NewProduct.promotionid)
-            except:
-                PromoPrice = ''
-            else:
-                PromoPrice = PgPromotion.objects.get(id=NewProduct.promotionid)
-                if PromoPrice.active == 1:
-                    PromoPrice = NewProduct.price - (PromoPrice.discount / 100) * NewProduct.price
-                else:
+            for product in CartProducts:     	
+                NewProduct = PgProduct.objects.get(id=product.productid.id)
+                NewProduct.quantity = product.quantity
+                NewProduct.brandid = NewProduct.price
+                NewProduct.categoryid = product.productid.id #jo remove productid si marche pas
+                
+                try: 
+                    PgPromotion.objects.get(id=NewProduct.promotionid)
+                except:
                     PromoPrice = ''
-            NewProduct.price = PromoPrice
-            
-            listeProduit.append(NewProduct)
-    
-    prix = 0
-    n = ""
-    for p in listeProduit:
-        prix = (p.price * p.quantity) + prix
-        n = p.name = " "
-                                              
-    taxes = prix * 0.05
-    
-    paypal_dict = {
-        'business': PAYPAL_RECEIVER_EMAIL ,
-        'amount': prix,#ajouter le prix du panier ici
-        'item_name': n,
-        'tax':taxes,
-        'currency_code': 'CAD',
-        'notify_url': 'http://{}{}'.format(host,
-                                           reverse('paypal-ipn')),
-        'return_url': 'http://{}{}'.format(host,
-                                           reverse('payment_done')),
-        'cancel_return': 'http://{}{}'.format(host,
-                                              reverse('payment_canceled')),
-                                              
-    }
-    form = PayPalPaymentsForm(initial=paypal_dict)
-    
-    context = {
-        "product": listeProduit,
-        'form':form,
-        'price':prix,
-    }
+                else:
+                    PromoPrice = PgPromotion.objects.get(id=NewProduct.promotionid)
+                    if PromoPrice.active == 1:
+                        PromoPrice = NewProduct.price - (PromoPrice.discount / 100) * NewProduct.price
+                    else:
+                        PromoPrice = ''
+                NewProduct.price = PromoPrice
+                
+                nbArticle += 1
+                listeProduit.append(NewProduct)
+        
+        prix = 0
+        n = ""
+        for p in listeProduit:
+            prix = (p.price * p.quantity) + prix
+            n = p.name = " "
+                                                
+        taxes = prix * 0.05
+        
+        paypal_dict = {
+            'business': PAYPAL_RECEIVER_EMAIL ,
+            'amount': prix,#ajouter le prix du panier ici
+            'item_name': n,
+            'tax':taxes,
+            'currency_code': 'CAD',
+            'notify_url': 'http://{}{}'.format(host,
+                                            reverse('paypal-ipn')),
+            'return_url': 'http://{}{}'.format(host,
+                                            reverse('payment_done')),
+            'cancel_return': 'http://{}{}'.format(host,
+                                                reverse('payment_canceled')),
+                                                
+        }
+        form = PayPalPaymentsForm(initial=paypal_dict)
+        
+        context = {
+            "product": listeProduit,
+            'form':form,
+            'price':prix,
+            'nbArticle':nbArticle,
+        }
 
     return HttpResponse(template.render(context, request))
 

@@ -12,7 +12,7 @@
             <div class="col-md-9">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <span class="pull-right">(<strong>5</strong>) articles</span>
+                        <span class="pull-right">(<strong>{{nbArticle}}</strong>) articles</span>
                         <h5>Articles dans votre panier</h5>
                     </div>
                     {% for p in product %}
@@ -44,7 +44,7 @@
                                                 <form action="" method="POST">
                                                     {% csrf_token %}
                                                     <div>
-                                                        <input class="form-control" name="id" type="input" hidden>
+                                                        <input class="form-control" name="id" type="input" value="{{p.categoryid}}" hidden>
                                                         <button class="button-9" type="submit"><i class="fa fa-trash"></i> Retirer l'article</button>
                                                     </div>
                                                 </form>

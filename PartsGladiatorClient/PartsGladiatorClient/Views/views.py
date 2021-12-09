@@ -167,20 +167,25 @@ def payment_done(request):
     listeProduit = []
 	
     for product in CartProducts: 
-        listeProduit.append(PgProduct.objects.get(id=product.productid.id))
+        newprod = PgProduct.objects.get(id = product.productid.id)
+
+        newprod.quantity = newprod.quantity - product.quantity
+        newprod.save()
+
+        newprod.quantity = product.quantity
+
+        listeProduit.append(newprod)
 
     prix =0
     taxes=0
     for p in listeProduit:
-        for cp in CartProducts:
-            if cp.productid.id == p.id:
-                prix = p.price * cp.quantity
+        prix = (p.price * p.quantity)+prix
         
         
         
                                               
     taxes = prix * 0.05
-
+    prixwithtaxe = prix+taxes
 
     #MAIL
     mail_content = "félicitation pour votre achat !"
@@ -227,6 +232,8 @@ def payment_done(request):
         'images': PgImage.objects.all(),
         'cartproduct':CartProducts,
         'prix':prix,
+        'taxes':taxes,
+        'prixwithtaxe':prixwithtaxe,
     }            
 
     return render(request, 'payment_done.html',context)

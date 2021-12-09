@@ -168,7 +168,7 @@ def details(request, productId):
         else:
             PromoPrice = ''
 
-
+    noquantity= ""
     context = {
         "Product": Product,
         "Name": Product.name,
@@ -184,6 +184,7 @@ def details(request, productId):
         'Images': Images,
         'ProdImg': result,
         'PromoPrice': PromoPrice,
+        'noquantity':noquantity,
     }
     
     if request.method == "POST":
@@ -197,8 +198,12 @@ def details(request, productId):
         if NewCart != None:
             Cart = NewCart
         
+        
         NewProduct = PgProduct.objects.get(id=productId)
-        NewOrder = PgCartproduct.objects.create(cartid=Cart,productid=NewProduct,quantity=request.POST["qty"])
+        if int(request.POST["qty"]) <= NewProduct.quantity:
+            NewOrder = PgCartproduct.objects.create(cartid=Cart,productid=NewProduct,quantity=request.POST["qty"])
+            noquantity = "Cette article est en rupture de stock."
+            return render(request,'details.html',context)
         
         
 

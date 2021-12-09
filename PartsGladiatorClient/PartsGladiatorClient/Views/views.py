@@ -181,7 +181,11 @@ def payment_done(request):
     prix =0
     taxes=0
     for p in listeProduit:
-        prix = p.price + prix
+        for cp in CartProducts:
+            if cp.productid.id == p.id:
+                prix = p.price * cp.quantity
+        
+        
         
                                               
     taxes = prix * 0.05
@@ -231,6 +235,7 @@ def payment_done(request):
         'user':user,
         'images': PgImage.objects.all(),
         'cartproduct':CartProducts,
+        'prix':prix,
     }            
 
     return render(request, 'payment_done.html',context)

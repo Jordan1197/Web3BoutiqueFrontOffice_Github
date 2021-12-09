@@ -169,23 +169,7 @@ def details(request, productId):
             PromoPrice = ''
 
     noquantity= ""
-    context = {
-        "Product": Product,
-        "Name": Product.name,
-        "Brand": Brand.name,
-        "Category": Category.name,
-        "Quantity": Product.quantity,
-        "Price": Product.price,
-        "Characteristics": Characteristics.name,
-        "Attribute": Attribute,
-        "AttrValues":AttrValues,
-        "Description": Product.description,
-        "Retailers": Retailers.name,
-        'Images': Images,
-        'ProdImg': result,
-        'PromoPrice': PromoPrice,
-        'noquantity':noquantity,
-    }
+    
     
     if request.method == "POST":
         NewCart = None
@@ -202,9 +186,26 @@ def details(request, productId):
         NewProduct = PgProduct.objects.get(id=productId)
         if int(request.POST["qty"]) <= NewProduct.quantity:
             NewOrder = PgCartproduct.objects.create(cartid=Cart,productid=NewProduct,quantity=request.POST["qty"])
-            noquantity = "Cette article est en rupture de stock."
-            return render(request,'details.html',{'noquantity':noquantity})
+            
+        else:
+            noquantity = "Cette article est en rupture de stock. " + str(NewProduct.quantity)+ " restants"
         
-        
+    context = {
+        "Product": Product,
+        "Name": Product.name,
+        "Brand": Brand.name,
+        "Category": Category.name,
+        "Quantity": Product.quantity,
+        "Price": Product.price,
+        "Characteristics": Characteristics.name,
+        "Attribute": Attribute,
+        "AttrValues":AttrValues,
+        "Description": Product.description,
+        "Retailers": Retailers.name,
+        'Images': Images,
+        'ProdImg': result,
+        'PromoPrice': PromoPrice,
+        'noquantity':noquantity,
+    }   
 
     return HttpResponse(template.render(context, request))

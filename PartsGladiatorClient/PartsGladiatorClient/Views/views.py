@@ -114,7 +114,7 @@ def cart(request):
             NewProduct = PgProduct.objects.get(id=product.productid.id)
             NewProduct.quantity = product.quantity
             NewProduct.brandid = NewProduct.price
-            NewProduct.categoryid = product.productid.id #jo remove productid si marche pas
+            NewProduct.categoryid = product.id #jo remove productid si marche pas
                 
             try: 
                 PgPromotion.objects.get(id=NewProduct.promotionid)

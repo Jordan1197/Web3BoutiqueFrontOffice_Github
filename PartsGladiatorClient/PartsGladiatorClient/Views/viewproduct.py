@@ -203,7 +203,7 @@ def details(request, productId):
         if int(request.POST["qty"]) <= NewProduct.quantity:
             NewOrder = PgCartproduct.objects.create(cartid=Cart,productid=NewProduct,quantity=request.POST["qty"])
             noquantity = "Cette article est en rupture de stock."
-            return render(request,'details.html',context)
+            return render(request,'details.html',{'noquantity':noquantity})
         
         
 

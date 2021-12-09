@@ -126,7 +126,7 @@ def cart(request):
     prix = 0
     n = ""
     for p in listeProduit:
-        prix = p.price + prix
+        prix = (p.price * p.quantity) + prix
         n = p.name = " "
                                               
     taxes = prix * 0.05

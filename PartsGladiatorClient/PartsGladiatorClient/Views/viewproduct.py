@@ -184,7 +184,13 @@ def details(request, productId):
         
         
         NewProduct = PgProduct.objects.get(id=productId)
-        if int(request.POST["qty"]) <= NewProduct.quantity:
+
+        CheckProduct = PgCartproduct.objects.filter(productid=productId)
+        Nb = 0
+        for produit in CheckProduct:
+            Nb += produit.quantity
+
+        if Nb <= (NewProduct.quantity + int(request.POST["qty"])):
             NewOrder = PgCartproduct.objects.create(cartid=Cart,productid=NewProduct,quantity=request.POST["qty"])
             
         else:

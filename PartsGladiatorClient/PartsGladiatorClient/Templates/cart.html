@@ -76,9 +76,10 @@
 
 
                     <div class="ibox-content">
-                        {% if user.is_authenticated %} {{form.render}} {% else %}
+                        {% if user.is_authenticated %}
+                        <div class="center">{{form.render}}</div> {% else %}
                         <a href="/login">Connecter vous</a> {% endif %}
-                        <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continuer à magasiner</button>
+                        <button class="btn btn-white"><i class="fa fa-arrow-left"></i><a href="/products">Continuer à magasiner</a></button>
 
                     </div>
                 </div>
@@ -101,11 +102,11 @@
                         <span class="text-muted small">
                             *Les taxes dépendent de votre emplacement.
                         </span>
-                        <div class="m-t-sm">
+                        <div class="m-t-sm ce">
                             <div class="btn-group">
-                                {% if user.is_authenticated %} {{form.render}} {% else %}
+                                {% if user.is_authenticated %}
+                                <div class="center">{{form.render}}</div> {% else %}
                                 <a href="/login">Connecter vous</a> {% endif %}
-                                <a href="#" class="btn btn-white btn-sm"> Annuler</a>
                             </div>
                         </div>
                     </div>
@@ -116,43 +117,10 @@
                         <h5>Support</h5>
                     </div>
                     <div class="ibox-content text-center">
-                        <h3><i class="fa fa-phone"></i> +43 100 783 001</h3>
+                        <h3><i class="fa fa-phone"></i> +1 418-123-4567</h3>
                         <span class="small">
                             Contactez-nous si vous avez des interrogations. Nous sommes disponible 24h.
                         </span>
-                    </div>
-                </div>
-
-                <div class="ibox">
-                    <div class="ibox-content">
-
-                        <p class="font-bold">
-                            Autres produits pouvant vous intéresser.
-                        </p>
-                        <hr>
-                        <div>
-                            <a href="#" class="product-name"> Product 1</a>
-                            <div class="small m-t-xs">
-                                Many desktop publishing packages and web page editors now.
-                            </div>
-                            <div class="m-t text-righ">
-
-                                <a href="#" class="btn btn-xs btn-outline btn-primary">Voir <i class="fa fa-long-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="product-name"> Product 2</a>
-                            <div class="small m-t-xs">
-                                Many desktop publishing packages and web page editors now.
-                            </div>
-                            <div class="m-t text-righ">
-
-                                <a href="#" class="btn btn-xs btn-outline btn-primary">Voir <i class="fa fa-long-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

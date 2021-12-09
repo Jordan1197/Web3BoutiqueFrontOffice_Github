@@ -156,6 +156,7 @@ def details(request, productId):
     AttrValues = PgValeurattribut.objects.all()
     Retailers = get_object_or_404(PgRetailer, pk=Product.retailerid)
     Images = PgImage.objects.all()
+    Nb = 0
     result = Images.filter(productid=Product.id)
     try: 
         PgPromotion.objects.get(id=Product.promotionid)
@@ -186,13 +187,16 @@ def details(request, productId):
         NewProduct = PgProduct.objects.get(id=productId)
 
         CheckProduct = PgCartproduct.objects.filter(productid=productId)
-        Nb = 0
+        CheckProduct = CheckProduct.filter(cartid = request.session['cartid'])
+
         for produit in CheckProduct:
             Nb += produit.quantity
 
-        if Nb <= (NewProduct.quantity + int(request.POST["qty"])):
-            NewOrder = PgCartproduct.objects.create(cartid=Cart,productid=NewProduct,quantity=request.POST["qty"])
-            
+        if (int(request.POST["qty"]) + Nb)  <= NewProduct.quantity + 1 :
+            if (int(request.POST["qty"]) + Nb) <= 5:
+                NewOrder = PgCartproduct.objects.create(cartid=Cart,productid=NewProduct,quantity=request.POST["qty"])
+            else:
+                noquantity = "Vous avez atteint le maximum d'article dans votre panier."
         else:
             noquantity = "Cette article est en rupture de stock. " + str(NewProduct.quantity)+ " restants"
         

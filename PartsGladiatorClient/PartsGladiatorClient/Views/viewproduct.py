@@ -65,6 +65,16 @@ def allProducts(request):
                 if i == 0:
                     if product.id == image.productid.id:
                         product.createdby = image.path
+                        try: 
+                            PgPromotion.objects.get(id=product.promotionid)
+                        except:
+                            PromoPrice = ''
+                        else:
+                            PromoPrice = PgPromotion.objects.get(id=Product.promotionid)
+                            if PromoPrice.active == 1:
+                                product.price = Product.price - (PromoPrice.discount / 100) * Product.price
+                            else:
+                                PromoPrice = ''
                         listeProduit.append(product)
                         i = 1
 
@@ -88,6 +98,16 @@ def allProducts(request):
                 if i == 0:              
                     if product.id == image.productid.id:
                         product.createdby = image.path
+                        try: 
+                            PgPromotion.objects.get(id=product.promotionid)
+                        except:
+                            PromoPrice = ''
+                        else:
+                            PromoPrice = PgPromotion.objects.get(id=Product.promotionid)
+                            if PromoPrice.active == 1:
+                                product.price = Product.price - (PromoPrice.discount / 100) * Product.price
+                            else:
+                                PromoPrice = ''
                         listeProduit.append(product)
                         i = 1
 

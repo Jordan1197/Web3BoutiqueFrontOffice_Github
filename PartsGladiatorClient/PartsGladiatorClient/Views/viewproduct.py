@@ -70,9 +70,9 @@ def allProducts(request):
                         except:
                             PromoPrice = ''
                         else:
-                            PromoPrice = PgPromotion.objects.get(id=Product.promotionid)
+                            PromoPrice = PgPromotion.objects.get(id=product.promotionid)
                             if PromoPrice.active == 1:
-                                product.price = Product.price - (PromoPrice.discount / 100) * Product.price
+                                product.price = product.price - (PromoPrice.discount / 100) * product.price
                             else:
                                 PromoPrice = ''
                         listeProduit.append(product)
@@ -103,9 +103,9 @@ def allProducts(request):
                         except:
                             PromoPrice = ''
                         else:
-                            PromoPrice = PgPromotion.objects.get(id=Product.promotionid)
+                            PromoPrice = PgPromotion.objects.get(id=product.promotionid)
                             if PromoPrice.active == 1:
-                                product.price = Product.price - (PromoPrice.discount / 100) * Product.price
+                                product.price = product.price - (PromoPrice.discount / 100) * product.price
                             else:
                                 PromoPrice = ''
                         listeProduit.append(product)

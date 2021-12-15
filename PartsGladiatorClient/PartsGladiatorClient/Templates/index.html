@@ -41,10 +41,18 @@
                             Offrez-vous ce dont vous rêvez en profitant de rabais allant<br> jusqu'à {{p.discount}} % sur certains articles sélectionnés!
                         </p>
                         <div class="text-center text-lg-start">
-                            <a href="/product/{{p.id}}" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
-                                <span>Promotion</span>
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
+                            <form action="/products" method="POST">
+                                {% csrf_token %}
+                                <input name="Promotion" value="{{p.id}}" hidden/>
+                                <input name="Name" hidden/>
+                                <input name="Category" hidden/>
+                                <input name="Brand" hidden/>
+                                <button type="submit" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"><span>Promotion</span>
+                                    <i class="bi bi-arrow-right"></i></button>
+                            </form>
+
+
+                            </button>
                         </div>
                     </div>
                 </div>

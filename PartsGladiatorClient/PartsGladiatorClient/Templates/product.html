@@ -1,6 +1,4 @@
-{% extends 'layout.html' %}
-
-{% block content %}
+{% extends 'layout.html' %} {% block content %}
 
 <!-- Content -->
 <section style="padding-top:65px;padding-bottom:50px" id="produits" class="services">
@@ -27,8 +25,8 @@
                             <label>Catégorie : </label>
                             <select class="form-control pointer" name="Category" id="searchBar">
                                 <option value="{{ vcategory }}" selected>{{ scategory }}</option>
-                                {% if vcategory %}
-                                    <option value="" ></option>
+                                {% if vcategory > 0 %}
+                                    <option> </option>
                                 {% endif %}
                                 {% for category in categories %}
                                 <option value="{{ category.id }}">{{ category.name }}</option>
@@ -39,8 +37,8 @@
                             <label>Marque : </label>
                             <select class="form-control pointer" name="Brand" id="searchBar">
                                 <option value="{{ vbrand }}" selected>{{ sbrand }}</option>
-                                {% if vbrand %}
-                                    <option value="" ></option>
+                                {% if vbrand > 0%}
+                                    <option> </option>
                                 {% endif %}
                                 {% for brand in brands %}
                                 <option value="{{ brand.id }}">{{ brand.name }}</option>
@@ -51,8 +49,8 @@
                             <label>Promotion : </label>
                             <select class="form-control pointer" name="Promotion" id="searchBar">
                                 <option value="{{ vpromotion }}" selected>{{ spromotion }}</option>
-                                {% if vpromotion %}
-                                    <option value="" ></option>
+                                {% if vpromotion > 0%}
+                                    <option> </option>
                                 {% endif %}
                                 {% for promotion in promotions %}
                                 {% if promotion.active == 1 %}
@@ -67,25 +65,26 @@
                     </ul>
                 </form>
             </div>
-            
+
             {% for product in products %}
             <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="service-box blue">
                     <img class="img-fluid" src="{{ product.createdby }}" alt="{{ product.id }}">
                     <h3> {{ product.name }}</h3>
                     <p>{{ product.description }}</p>
-                    <p>{{ product.price }}</p>
+                    <p>{{ product.price|stringformat:".2f" }}</p>
                     <a href="/product/{{product.id}}" class="read-more"><span>En savoir plus</span> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
             {% empty %}
             <div class="col-lg-3 col-md-4">
                 Aucun Résultat
-            </div> 
+            </div>
             {% endfor %}
         </div>
     </div>
 
-</section><!-- End Services Section -->
+</section>
+<!-- End Services Section -->
 
 {% endblock %}

@@ -38,7 +38,7 @@ def index(request):
     template = loader.get_template("index.html")
     promotions = PgPromotion.objects.filter(
         active = 1
-    ).order_by('name')
+    ).order_by('name').order_by('startdate')
     produitpromoFromView = prodpromoviews.objects.all()
     produitFromViews = OneImageProductViews.objects.all()
 

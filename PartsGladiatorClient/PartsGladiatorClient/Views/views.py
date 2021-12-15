@@ -38,7 +38,7 @@ def index(request):
     template = loader.get_template("index.html")
     promotions = PgPromotion.objects.filter(
         active = 1
-    )
+    ).order_by('name')
     produitpromoFromView = prodpromoviews.objects.all()
     produitFromViews = OneImageProductViews.objects.all()
 
@@ -130,7 +130,7 @@ def cart(request):
                 
             nbArticle += 1
             listeProduit.append(NewProduct)
-        
+            
     prix = 0
     n = ""
     for p in listeProduit:
@@ -154,12 +154,12 @@ def cart(request):
                                                 
     }
     form = PayPalPaymentsForm(initial=paypal_dict)
-        
+    
     context = {
         "product": listeProduit,
         'form':form,
         'price':prix,
-        'nbArticle':nbArticle,
+        'nbArticle':nbArticle,        
     }
 
     return HttpResponse(template.render(context, request))

@@ -1,4 +1,4 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} {% block content %}{% load mathfilters %}
 <section style="padding-top:65px;padding-bottom:50px" id="produits" class="services">
 
     <div class="container" data-aos="fade-up">
@@ -33,7 +33,7 @@
                 {% else %}
                 <p>Prix régulier: {{Price}} $</p>
                 {% endif %} {% if PromoPrice != '' %}
-                <p>Prix promotionnel: <b>{{PromoPrice}} $</b></p>
+                <p>Prix promotionnel: <b>{{PromoPrice|stringformat:".2f"}} $</b></p>
                 {% endif %}
                 <p>Marque: {{Brand}}</p>
                 <p>Catégorie: {{Category}}</p>

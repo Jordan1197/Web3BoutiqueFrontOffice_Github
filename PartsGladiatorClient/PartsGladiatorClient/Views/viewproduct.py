@@ -16,9 +16,9 @@ def allProducts(request):
     template = loader.get_template("product.html")
 
     context = {
-        'categories': PgCategory.objects.all(),
-        'promotions': PgPromotion.objects.all(),
-        'brands': PgBrand.objects.all(),
+        'categories': PgCategory.objects.all().order_by('name'),
+        'promotions': PgPromotion.objects.all().order_by('name'),
+        'brands': PgBrand.objects.all().order_by('name'),
         'images': PgImage.objects.all(),
         'scategory': "",
         'sbrand': "",
@@ -33,7 +33,7 @@ def allProducts(request):
 
         Products = PgProduct.objects.filter(
             name__icontains=request.POST['Name']
-        )
+        ).order_by('name')
         if request.POST['Category'] != "":
             Products = Products.filter(
                 categoryid=request.POST['Category']
@@ -79,7 +79,7 @@ def allProducts(request):
         return HttpResponse(template.render(context, request))
     else:
         listeProduit = []
-        AllProds = PgProduct.objects.all()
+        AllProds = PgProduct.objects.all().order_by('name')
         AllImages = PgImage.objects.all()
 
         for product in AllProds:
@@ -90,7 +90,7 @@ def allProducts(request):
                         product.createdby = image.path
                         listeProduit.append(product)
                         i = 1
-
+        
         context['products'] = listeProduit
 
     return HttpResponse(template.render(context, request))

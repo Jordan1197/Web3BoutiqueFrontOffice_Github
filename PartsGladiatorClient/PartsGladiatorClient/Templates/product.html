@@ -26,7 +26,10 @@
                         <li>
                             <label>Catégorie : </label>
                             <select class="form-control pointer" name="Category" id="searchBar">
-                                    <option value="{{ vcategory }}" selected>{{ scategory }}</option>
+                                <option value="{{ vcategory }}" selected>{{ scategory }}</option>
+                                {% if vcategory %}
+                                    <option value="" ></option>
+                                {% endif %}
                                 {% for category in categories %}
                                 <option value="{{ category.id }}">{{ category.name }}</option>
                                 {% endfor %}
@@ -36,6 +39,9 @@
                             <label>Marque : </label>
                             <select class="form-control pointer" name="Brand" id="searchBar">
                                 <option value="{{ vbrand }}" selected>{{ sbrand }}</option>
+                                {% if vbrand %}
+                                    <option value="" ></option>
+                                {% endif %}
                                 {% for brand in brands %}
                                 <option value="{{ brand.id }}">{{ brand.name }}</option>
                                 {% endfor %}
@@ -44,7 +50,10 @@
                         <li>
                             <label>Promotion : </label>
                             <select class="form-control pointer" name="Promotion" id="searchBar">
-                                    <option value="{{ vpromotion }}" selected>{{ spromotion }}</option>
+                                <option value="{{ vpromotion }}" selected>{{ spromotion }}</option>
+                                {% if vpromotion %}
+                                    <option value="" ></option>
+                                {% endif %}
                                 {% for promotion in promotions %}
                                 {% if promotion.active == 1 %}
                                 <option value="{{ promotion.id }}">{{ promotion.name }}</option>
@@ -58,15 +67,21 @@
                     </ul>
                 </form>
             </div>
+            
             {% for product in products %}
             <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="service-box blue">
                     <img class="img-fluid" src="{{ product.createdby }}" alt="{{ product.id }}">
                     <h3> {{ product.name }}</h3>
                     <p>{{ product.description }}</p>
+                    <p>{{ product.price }}</p>
                     <a href="/product/{{product.id}}" class="read-more"><span>En savoir plus</span> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
+            {% empty %}
+            <div class="col-lg-3 col-md-4">
+                Aucun Résultat
+            </div> 
             {% endfor %}
         </div>
     </div>

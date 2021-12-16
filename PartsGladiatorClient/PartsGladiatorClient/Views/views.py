@@ -219,7 +219,9 @@ def payment_done(request):
     prixwithtaxe = prix+taxes
 
     #MAIL
-    mail_content = "félicitation pour votre achat !"
+    for p in listeProduit:
+        mail_content = p.name + p.price + " \n"
+    
     sender_address = EMAIL_HOST_USER
     send_pass = EMAIL_HOST_PASSWORD
     receiver_address = user.email

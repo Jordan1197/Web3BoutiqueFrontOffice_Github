@@ -8,7 +8,7 @@ class SignUpForm(UserCreationForm):
     prenom= forms.CharField(max_length=100,help_text="Requis.")
     nom= forms.CharField(max_length=100,help_text="Requis.")
     
-    courriel= forms.CharField(max_length=100,help_text="Requis.")
+    email= forms.CharField(max_length=100,help_text="Requis.")
     
     pays = forms.CharField(max_length=100,help_text="Requis.")
     region = forms.CharField(max_length=100,help_text="Requis.")
@@ -18,4 +18,4 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = UserCreationForm.Meta.fields + ('prenom','nom', 'courriel','pays','region','ville','rue','zipcode')
+        fields = UserCreationForm.Meta.fields + ('prenom','nom', 'email','pays','region','ville','rue','zipcode')

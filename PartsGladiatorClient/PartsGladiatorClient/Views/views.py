@@ -298,8 +298,8 @@ def profil(request,userid):
         if request.POST['password'] != "":
             u.set_password(request.POST['password'])
             u.username = request.POST['username']
-            u.firstname = request.POST['prenom']
-            u.lastname = request.POST['nom']
+            u.prenom = request.POST['prenom']
+            u.nom = request.POST['nom']
             u.email = request.POST['courriel']
 
             u.lastupdateddate = datetime.now()
@@ -310,8 +310,8 @@ def profil(request,userid):
 
         else:
             u.username = request.POST['username']
-            u.firstname = request.POST['prenom']
-            u.lastname = request.POST['nom']
+            u.prenom = request.POST['prenom']
+            u.nom = request.POST['nom']
             u.email = request.POST['courriel']
 
             u.lastupdateddate = datetime.now()

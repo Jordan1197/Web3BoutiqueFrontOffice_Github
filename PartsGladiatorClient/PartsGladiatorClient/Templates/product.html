@@ -72,7 +72,7 @@
                     <img class="img-fluid" src="{{ product.createdby }}" alt="{{ product.id }}">
                     <h3> {{ product.name }}</h3>
                     <p>{{ product.description }}</p>
-                    <p>{{ product.price|stringformat:".2f" }}</p>
+                    <p>{{ product.price|stringformat:".2f" }} $</p>
                     <a href="/product/{{product.id}}" class="read-more"><span>En savoir plus</span> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>

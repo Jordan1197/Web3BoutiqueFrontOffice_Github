@@ -49,11 +49,11 @@
                                         </td>
 
                                         <td>
-                                            {% if p.price != '' %}
+                                            {% if p.promotionid != 0 %}
                                             <p>Prix régulier: <s>{{ p.brandid|stringformat:".2f" }}$</s></p>
                                             {% else %}
                                             <p>Prix régulier: {{ p.price|stringformat:".2f" }}$</p>
-                                            {% endif %} {% if p.price != '' %}
+                                            {% endif %} {% if p.promotionid != 0 %}
                                             <p>Prix promotionnel: <b>{{ p.price|stringformat:".2f" }}$</b></p>
                                             {% endif %}
                                         </td>

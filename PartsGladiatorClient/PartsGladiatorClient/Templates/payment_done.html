@@ -20,9 +20,9 @@
                 </div>
                 <div class="col-sm-6" style="text-align:right">
                     <h5>{{ p.name }}</h5><br>
-                    <h5>Prix unitaire : {{ p.price}}</h5><br> {% for cp in cartproduct %} {% if cp.productid.id == p.id %}
+                    <h5>Prix unitaire : {{ p.price|stringformat:".2f"}}</h5><br> {% for cp in cartproduct %} {% if cp.productid.id == p.id %}
                     <h5>Quantité : {{ cp.quantity }}</h5><br>
-                    <h5>Total : {{p.price|mul:cp.quantity}}$</h5><br> {% endif %} {% endfor %}
+                    <h5>Total : {{p.price|mul:cp.quantity|stringformat:".2f"}}$</h5><br> {% endif %} {% endfor %}
                 </div>
                 <hr> {% endfor %}
             </div>
@@ -40,10 +40,10 @@
         </div>
         <div class="col-sm-6 center" style="text-align:right">
             <div>
-                <h5>{{prix}}$</h5><br>
+                <h5>{{prix|stringformat:".2f"}}$</h5><br>
             </div>
             <div>
-                <h5>{{taxes|stringformat:".3f"}}$</h5><br>
+                <h5>{{taxes|stringformat:".2f"}}$</h5><br>
             </div>
             <div>
                 <h5>{{prixwithtaxe|stringformat:".2f"}}$</h5><br>

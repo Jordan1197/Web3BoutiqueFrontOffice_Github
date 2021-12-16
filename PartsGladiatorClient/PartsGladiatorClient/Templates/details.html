@@ -28,17 +28,36 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                {% if PromoPrice != '' %}
-                <p>Prix régulier: <s>{{Price}} $</s></p>
-                {% else %}
-                <p>Prix régulier: {{Price}} $</p>
-                {% endif %} {% if PromoPrice != '' %}
-                <p>Prix promotionnel: <b>{{PromoPrice|stringformat:".2f"}} $</b></p>
-                {% endif %}
-                <p>Marque: {{Brand}}</p>
-                <p>Catégorie: {{Category}}</p>
-                <p>Informations: {{Description}}</p>
-                <p>Informations: {{Characteristics}}</p>
+                <div class="row">
+                    {% if PromoPrice != '' %}
+                    <div class="col-md-6">
+                        <p style="font-weight:bold;">Prix régulier:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <s>{{Price}} $</s>
+                    </div>
+
+                    {% else %}
+                    <div class="col-md-6">
+                        <p style="font-weight:bold;">Prix régulier:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{Price}} $</p>
+                    </div>
+                    {% endif %} {% if PromoPrice != '' %}
+                    <p class="col-md-6" style="font-weight: bold;">Prix promotionnel:</p>
+                    <p class="col-md-6">{{PromoPrice|stringformat:".2f"}} $</p>
+                    {% endif %}
+                    <p class="col-md-6" style="font-weight: bold;">Marque:</p>
+                    <p class="col-md-6">{{Brand}}</p>
+                    <p class="col-md-6" style="font-weight: bold;">Catégorie: </p>
+                    <p class="col-md-6">{{Category}}</p>
+                    <p class="col-md-6" style="font-weight: bold;">Description: </p>
+                    <p class="col-md-6">{{Description}}</p>
+                    <p class="col-md-6" style="font-weight: bold;">Spécifications: </p>
+                    <p class="col-md-6">{{Characteristics}}</p>
+                </div>
+
                 <!-- TO BE IMPLEMENTED
                 <p>Attributs:</p>
                 <ul>
@@ -67,9 +86,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="center" style="margin-top:10px">
-                    <a href="/products">Retour à la page produits</a>
-                </div>
+
             </div>
         </div>
     </div>

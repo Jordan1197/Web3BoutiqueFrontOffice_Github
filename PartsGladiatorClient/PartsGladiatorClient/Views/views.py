@@ -31,6 +31,7 @@ from django.views.generic import TemplateView
 from paypal.standard.models import ST_PP_COMPLETED
 from paypal.standard.ipn.signals import valid_ipn_received
 from PartsGladiatorClient.Models import models
+import math
 
 
 
@@ -126,7 +127,7 @@ def cart(request):
                     PromoPrice = NewProduct.price - (PromoPrice.discount / 100) * NewProduct.price
                 else:
                     PromoPrice = ''
-            NewProduct.price = PromoPrice
+                NewProduct.price = PromoPrice
                 
             nbArticle += 1
             listeProduit.append(NewProduct)
@@ -182,6 +183,17 @@ def payment_done(request):
         newprod.save()
 
         newprod.quantity = product.quantity
+        try: 
+            PgPromotion.objects.get(id=newprod.promotionid)
+        except:
+            PromoPrice = ''
+        else:
+            PromoPrice = PgPromotion.objects.get(id=newprod.promotionid)
+            if PromoPrice.active == 1:
+                PromoPrice = newprod.price - (PromoPrice.discount / 100) * newprod.price
+            else:
+                PromoPrice = ''
+            newprod.price = PromoPrice
 
         listeProduit.append(newprod)
 

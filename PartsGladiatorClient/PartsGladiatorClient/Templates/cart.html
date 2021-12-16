@@ -19,7 +19,7 @@
                                     <tr>
                                         <td width="90">
                                             <div class="cart-product-imitation">
-                                                <img src="{{p.createdby}}" alt="{{p.name}}">
+                                                <img src="{{p.createdby}}" style="height: 50px;" alt="{{p.name}}">
                                             </div>
                                         </td>
                                         <td class="desc">
@@ -49,11 +49,11 @@
                                         </td>
 
                                         <td>
-                                            {% if p.price != '' %}
+                                            {% if p.promotionid != 0 %}
                                             <p>Prix régulier: <s>{{ p.brandid|stringformat:".2f" }}$</s></p>
                                             {% else %}
                                             <p>Prix régulier: {{ p.price|stringformat:".2f" }}$</p>
-                                            {% endif %} {% if p.price != '' %}
+                                            {% endif %} {% if p.promotionid != 0 %}
                                             <p>Prix promotionnel: <b>{{ p.price|stringformat:".2f" }}$</b></p>
                                             {% endif %}
                                         </td>
@@ -79,7 +79,7 @@
                         {% if user.is_authenticated %}
                         <div class="center">{{form.render}}</div> {% else %}
                         <a href="/login">Connecter vous</a> {% endif %}
-                        <button class="btn btn-white"><i class="fa fa-arrow-left"></i><a href="/products">Continuer à magasiner</a></button>
+                        <button class="btn btn-white"><i class="fa fa-arrow-left"></i> <a href="/products">Continuer à magasiner</a></button>
 
                     </div>
                 </div>
@@ -111,7 +111,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>Support</h5>

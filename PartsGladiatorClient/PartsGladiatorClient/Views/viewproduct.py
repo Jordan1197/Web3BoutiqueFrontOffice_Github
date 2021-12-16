@@ -16,9 +16,9 @@ def allProducts(request):
     template = loader.get_template("product.html")
 
     context = {
-        'categories': PgCategory.objects.all(),
-        'promotions': PgPromotion.objects.all(),
-        'brands': PgBrand.objects.all(),
+        'categories': PgCategory.objects.all().order_by('name'),
+        'promotions': PgPromotion.objects.all().order_by('name'),
+        'brands': PgBrand.objects.all().order_by('name'),
         'images': PgImage.objects.all(),
         'scategory': "",
         'sbrand': "",
@@ -33,7 +33,7 @@ def allProducts(request):
 
         Products = PgProduct.objects.filter(
             name__icontains=request.POST['Name']
-        )
+        ).order_by('name')
         if request.POST['Category'] != "":
             Products = Products.filter(
                 categoryid=request.POST['Category']
@@ -61,22 +61,23 @@ def allProducts(request):
         listeProduit = []
         for product in Products:
             i = 0
-            for image in PgImage.objects.all():
-                if i == 0:
-                    if product.id == image.productid.id:
-                        product.createdby = image.path
-                        try: 
-                            PgPromotion.objects.get(id=product.promotionid)
-                        except:
-                            PromoPrice = ''
-                        else:
-                            PromoPrice = PgPromotion.objects.get(id=Product.promotionid)
-                            if PromoPrice.active == 1:
-                                product.price = Product.price - (PromoPrice.discount / 100) * Product.price
-                            else:
+            if product.deleteddate is None:
+                for image in PgImage.objects.all():
+                    if i == 0:
+                        if product.id == image.productid.id:
+                            product.createdby = image.path
+                            try: 
+                                PgPromotion.objects.get(id=product.promotionid)
+                            except:
                                 PromoPrice = ''
-                        listeProduit.append(product)
-                        i = 1
+                            else:
+                                PromoPrice = PgPromotion.objects.get(id=product.promotionid)
+                                if PromoPrice.active == 1:
+                                    product.price = product.price - (PromoPrice.discount / 100) * product.price
+                                else:
+                                    PromoPrice = ''
+                            listeProduit.append(product)
+                            i = 1
 
         context['products'] = listeProduit
         context['sname'] = request.POST['Name']
@@ -89,28 +90,29 @@ def allProducts(request):
         return HttpResponse(template.render(context, request))
     else:
         listeProduit = []
-        AllProds = PgProduct.objects.all()
+        AllProds = PgProduct.objects.all().order_by('name')
         AllImages = PgImage.objects.all()
 
         for product in AllProds:
             i = 0
-            for image in AllImages:
-                if i == 0:              
-                    if product.id == image.productid.id:
-                        product.createdby = image.path
-                        try: 
-                            PgPromotion.objects.get(id=product.promotionid)
-                        except:
-                            PromoPrice = ''
-                        else:
-                            PromoPrice = PgPromotion.objects.get(id=Product.promotionid)
-                            if PromoPrice.active == 1:
-                                product.price = Product.price - (PromoPrice.discount / 100) * Product.price
-                            else:
+            if product.deleteddate is None:
+                for image in AllImages:
+                    if i == 0:              
+                        if product.id == image.productid.id:
+                            product.createdby = image.path
+                            try: 
+                                PgPromotion.objects.get(id=product.promotionid)
+                            except:
                                 PromoPrice = ''
-                        listeProduit.append(product)
-                        i = 1
-
+                            else:
+                                PromoPrice = PgPromotion.objects.get(id=product.promotionid)
+                                if PromoPrice.active == 1:
+                                    product.price = product.price - (PromoPrice.discount / 100) * product.price
+                                else:
+                                    PromoPrice = ''
+                            listeProduit.append(product)
+                            i = 1
+        
         context['products'] = listeProduit
 
     return HttpResponse(template.render(context, request))

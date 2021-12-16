@@ -31,6 +31,7 @@ from django.views.generic import TemplateView
 from paypal.standard.models import ST_PP_COMPLETED
 from paypal.standard.ipn.signals import valid_ipn_received
 from PartsGladiatorClient.Models import models
+import math
 
 
 
@@ -38,9 +39,9 @@ def index(request):
     template = loader.get_template("index.html")
     promotions = PgPromotion.objects.filter(
         active = 1
-    )
-    produitpromoFromView = prodpromoviews.objects.all()
-    produitFromViews = OneImageProductViews.objects.all()
+    ).order_by('name').order_by('startdate')[:9]
+    produitpromoFromView = prodpromoviews.objects.all()[:9]
+    produitFromViews = OneImageProductViews.objects.all()[:9]
 
     context = {                
         "produitFromViews":produitFromViews,
@@ -97,7 +98,7 @@ def information(request):
 
 def cart(request):
     template = loader.get_template("cart.html")
-
+    AllImages = PgImage.objects.all()
     if request.method == "POST":
         Product = PgCartproduct.objects.filter(id=request.POST["remove"])        
         Product.delete()
@@ -110,12 +111,19 @@ def cart(request):
     if 'cartid' in request.session:
         CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
             
-        for product in CartProducts:     	
+        for product in CartProducts:
+                 	
             NewProduct = PgProduct.objects.get(id=product.productid.id)
             NewProduct.quantity = product.quantity
-            NewProduct.brandid = NewProduct.price
+            NewProduct.brandid = NewProduct.price            
             NewProduct.categoryid = product.id #jo remove productid si marche pas
-                
+            i =0
+            for image in AllImages:
+                if i == 0:              
+                    if NewProduct.id == image.productid.id:
+                        NewProduct.createdby = image.path
+                        
+                        i = 1   
             try: 
                 PgPromotion.objects.get(id=NewProduct.promotionid)
             except:
@@ -126,11 +134,13 @@ def cart(request):
                     PromoPrice = NewProduct.price - (PromoPrice.discount / 100) * NewProduct.price
                 else:
                     PromoPrice = ''
-            NewProduct.price = PromoPrice
+                NewProduct.price = PromoPrice
                 
             nbArticle += 1
             listeProduit.append(NewProduct)
         
+        
+                
     prix = 0
     n = ""
     for p in listeProduit:
@@ -154,12 +164,13 @@ def cart(request):
                                                 
     }
     form = PayPalPaymentsForm(initial=paypal_dict)
-        
+    
+    
     context = {
         "product": listeProduit,
         'form':form,
         'price':prix,
-        'nbArticle':nbArticle,
+        'nbArticle':nbArticle,        
     }
 
     return HttpResponse(template.render(context, request))
@@ -182,6 +193,17 @@ def payment_done(request):
         newprod.save()
 
         newprod.quantity = product.quantity
+        try: 
+            PgPromotion.objects.get(id=newprod.promotionid)
+        except:
+            PromoPrice = ''
+        else:
+            PromoPrice = PgPromotion.objects.get(id=newprod.promotionid)
+            if PromoPrice.active == 1:
+                PromoPrice = newprod.price - (PromoPrice.discount / 100) * newprod.price
+            else:
+                PromoPrice = ''
+            newprod.price = PromoPrice
 
         listeProduit.append(newprod)
 
@@ -279,8 +301,8 @@ def profil(request,userid):
         if request.POST['password'] != "":
             u.set_password(request.POST['password'])
             u.username = request.POST['username']
-            u.firstname = request.POST['prenom']
-            u.lastname = request.POST['nom']
+            u.prenom = request.POST['prenom']
+            u.nom = request.POST['nom']
             u.email = request.POST['courriel']
 
             u.lastupdateddate = datetime.now()
@@ -291,8 +313,8 @@ def profil(request,userid):
 
         else:
             u.username = request.POST['username']
-            u.firstname = request.POST['prenom']
-            u.lastname = request.POST['nom']
+            u.prenom = request.POST['prenom']
+            u.nom = request.POST['nom']
             u.email = request.POST['courriel']
 
             u.lastupdateddate = datetime.now()

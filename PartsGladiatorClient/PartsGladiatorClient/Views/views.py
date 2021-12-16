@@ -220,7 +220,7 @@ def payment_done(request):
 
     #MAIL
     for p in listeProduit:
-        mail_content = p.name + p.price + " \n"
+        mail_content = p.name +" \n"
     
     sender_address = EMAIL_HOST_USER
     send_pass = EMAIL_HOST_PASSWORD

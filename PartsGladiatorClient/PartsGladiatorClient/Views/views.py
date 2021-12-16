@@ -230,7 +230,10 @@ def payment_done(request):
                     listeProduit.append(product)
                     i = 1
 
-   
+    CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
+
+    for cp in CartProducts:
+        cp.delete()
     
                 
                 

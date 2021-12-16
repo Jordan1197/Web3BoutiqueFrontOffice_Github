@@ -39,9 +39,9 @@ def index(request):
     template = loader.get_template("index.html")
     promotions = PgPromotion.objects.filter(
         active = 1
-    ).order_by('name').order_by('startdate')
-    produitpromoFromView = prodpromoviews.objects.all()
-    produitFromViews = OneImageProductViews.objects.all()
+    ).order_by('name').order_by('startdate')[:9]
+    produitpromoFromView = prodpromoviews.objects.all()[:9]
+    produitFromViews = OneImageProductViews.objects.all()[:9]
 
     context = {                
         "produitFromViews":produitFromViews,
@@ -98,7 +98,7 @@ def information(request):
 
 def cart(request):
     template = loader.get_template("cart.html")
-
+    AllImages = PgImage.objects.all()
     if request.method == "POST":
         Product = PgCartproduct.objects.filter(id=request.POST["remove"])        
         Product.delete()
@@ -111,12 +111,19 @@ def cart(request):
     if 'cartid' in request.session:
         CartProducts = PgCartproduct.objects.filter(cartid=request.session['cartid'])
             
-        for product in CartProducts:     	
+        for product in CartProducts:
+                 	
             NewProduct = PgProduct.objects.get(id=product.productid.id)
             NewProduct.quantity = product.quantity
-            NewProduct.brandid = NewProduct.price
+            NewProduct.brandid = NewProduct.price            
             NewProduct.categoryid = product.id #jo remove productid si marche pas
-                
+            i =0
+            for image in AllImages:
+                if i == 0:              
+                    if NewProduct.id == image.productid.id:
+                        NewProduct.createdby = image.path
+                        
+                        i = 1   
             try: 
                 PgPromotion.objects.get(id=NewProduct.promotionid)
             except:
@@ -131,7 +138,9 @@ def cart(request):
                 
             nbArticle += 1
             listeProduit.append(NewProduct)
-            
+        
+        
+                
     prix = 0
     n = ""
     for p in listeProduit:
@@ -155,6 +164,7 @@ def cart(request):
                                                 
     }
     form = PayPalPaymentsForm(initial=paypal_dict)
+    
     
     context = {
         "product": listeProduit,

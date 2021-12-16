@@ -61,22 +61,23 @@ def allProducts(request):
         listeProduit = []
         for product in Products:
             i = 0
-            for image in PgImage.objects.all():
-                if i == 0:
-                    if product.id == image.productid.id:
-                        product.createdby = image.path
-                        try: 
-                            PgPromotion.objects.get(id=product.promotionid)
-                        except:
-                            PromoPrice = ''
-                        else:
-                            PromoPrice = PgPromotion.objects.get(id=product.promotionid)
-                            if PromoPrice.active == 1:
-                                product.price = product.price - (PromoPrice.discount / 100) * product.price
-                            else:
+            if product.deleteddate is None:
+                for image in PgImage.objects.all():
+                    if i == 0:
+                        if product.id == image.productid.id:
+                            product.createdby = image.path
+                            try: 
+                                PgPromotion.objects.get(id=product.promotionid)
+                            except:
                                 PromoPrice = ''
-                        listeProduit.append(product)
-                        i = 1
+                            else:
+                                PromoPrice = PgPromotion.objects.get(id=product.promotionid)
+                                if PromoPrice.active == 1:
+                                    product.price = product.price - (PromoPrice.discount / 100) * product.price
+                                else:
+                                    PromoPrice = ''
+                            listeProduit.append(product)
+                            i = 1
 
         context['products'] = listeProduit
         context['sname'] = request.POST['Name']
@@ -94,22 +95,23 @@ def allProducts(request):
 
         for product in AllProds:
             i = 0
-            for image in AllImages:
-                if i == 0:              
-                    if product.id == image.productid.id:
-                        product.createdby = image.path
-                        try: 
-                            PgPromotion.objects.get(id=product.promotionid)
-                        except:
-                            PromoPrice = ''
-                        else:
-                            PromoPrice = PgPromotion.objects.get(id=product.promotionid)
-                            if PromoPrice.active == 1:
-                                product.price = product.price - (PromoPrice.discount / 100) * product.price
-                            else:
+            if product.deleteddate is None:
+                for image in AllImages:
+                    if i == 0:              
+                        if product.id == image.productid.id:
+                            product.createdby = image.path
+                            try: 
+                                PgPromotion.objects.get(id=product.promotionid)
+                            except:
                                 PromoPrice = ''
-                        listeProduit.append(product)
-                        i = 1
+                            else:
+                                PromoPrice = PgPromotion.objects.get(id=product.promotionid)
+                                if PromoPrice.active == 1:
+                                    product.price = product.price - (PromoPrice.discount / 100) * product.price
+                                else:
+                                    PromoPrice = ''
+                            listeProduit.append(product)
+                            i = 1
         
         context['products'] = listeProduit
 
